@@ -11,7 +11,7 @@ namespace Data_Access_Layer
     public class CactusesManagerDbContext : DbContext
     {
         public DbSet<Cactus> Cactuses { get; set; }
-        public DbSet<CounterOffer> CounterOffers { get; set; }
+        public DbSet<TradeOffer> CounterOffers { get; set; }
         public DbSet<Genus> Genuses { get; set; }
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Species> Species { get; set; }

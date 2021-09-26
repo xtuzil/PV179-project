@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Data_Access_Layer.Models
 {
-    public class Genus
+    public class Genus : BaseEntity
     {
-        public int Id { get; set; }
+        public string Name { get; set; }
         public IEnumerable<Species> Species { get; set; }
     }
 }
