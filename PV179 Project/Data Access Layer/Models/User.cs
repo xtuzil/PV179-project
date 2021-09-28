@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Data_Access_Layer.Models
 {
@@ -18,7 +14,7 @@ namespace Data_Access_Layer.Models
 
 
         // should be class alone
-        public string Address { get; set;}
+        public string Address { get; set; }
         public IEnumerable<Cactus> Cactuses { get; set; }
         public IEnumerable<Offer> Offers { get; set; }
         public IEnumerable<TradeOffer> TradeOffers { get; set; }
