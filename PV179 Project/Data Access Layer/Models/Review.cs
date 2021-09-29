@@ -1,23 +1,20 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data_Access_Layer.Models
 {
-    public class Review : BaseEntity
+    public class Review : DatedEntity
     {
-        public DateTime Date { get; set; }
-        public string ReviewText { get; set; }
-        public double ReviewScore { get; set; }
+        public string Text { get; set; }
+        public double Score { get; set; }
+
         public User SellerId { get; set; }
 
         [ForeignKey(nameof(SellerId))]
         public virtual User Seller { get; set; }
+
         public User AuthorId { get; set; }
 
         [ForeignKey(nameof(AuthorId))]
         public virtual User Author { get; set; }
-
-
-
     }
 }

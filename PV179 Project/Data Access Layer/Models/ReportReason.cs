@@ -2,10 +2,11 @@
 
 namespace Data_Access_Layer.Models
 {
-    public class Genus : BaseEntity
+    public class ReportReason : BaseEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public IEnumerable<Species> Species { get; set; }
+
+        public IEnumerable<Report> Reports { get; set; }
     }
 }

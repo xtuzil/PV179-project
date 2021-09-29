@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data_Access_Layer.Models
 {
-    class NewSpeciesRequest : BaseEntity
+    class NewSpeciesRequest : DatedEntity
     {
         public int AdvertiserId { get; set; }
 
@@ -16,7 +15,5 @@ namespace Data_Access_Layer.Models
 
         [ForeignKey(nameof(GenusId))]
         public virtual Genus Genus { get; set; }
-
-        public DateTime CreationDate { get; set; }
     }
 }

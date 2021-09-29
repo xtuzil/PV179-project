@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data_Access_Layer.Models
 {
-    public class BaseOffer : BaseEntity
+    public class BaseOffer : DatedEntity
     {
         public int AdvertiserId { get; set; }
 
@@ -15,7 +14,6 @@ namespace Data_Access_Layer.Models
         [ForeignKey(nameof(BuyerId))]
         public User Buyer { get; set; }
 
-        public DateTime CreationDate { get; set; }
         public bool Sold { get; set; }
 
     }

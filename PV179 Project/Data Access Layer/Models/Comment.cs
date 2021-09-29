@@ -1,11 +1,9 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Data_Access_Layer.Models
 {
-    class Comment : BaseEntity
+    class Comment : DatedEntity
     {
-        public DateTime Date { get; set; }
         public string Text { get; set; }
         public User AuthorId { get; set; }
 
