@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PV179 Project", "PV179 Project\PV179 Project.csproj", "{26E37840-D5B9-406F-B689-093DEF73D14E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CactusDAL", "Data Access Layer\CactusDAL.csproj", "{F7DD4FC3-F847-4846-94A3-B1A7EC05573F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CactusDAL", "DAL\CactusDAL.csproj", "{F7DD4FC3-F847-4846-94A3-B1A7EC05573F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
