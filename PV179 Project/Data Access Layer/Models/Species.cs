@@ -32,5 +32,7 @@ namespace Data_Access_Layer.Models
         public int ConfirmedById { get; set; }
         [ForeignKey(nameof(ConfirmedById))]
         public User ConfirmedBy { get; set; }
+
+        public IEnumerable<User> WishlistedBy { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Data_Access_Layer.Models
         // separate bool 'BannedForever' or DateTime.MaxValue?
         public DateTime BannedUntil { get; set; }
 
-        // TODO: account balance? or should we always calculate it from the history of transactions?
+        public double AccountBalance { get; set; }
 
         public string PhoneNumber { get; set; }
 
@@ -31,9 +31,13 @@ namespace Data_Access_Layer.Models
         public PostalAddress Address { get; set; }
 
         public IEnumerable<Cactus> Cactuses { get; set; }
-        public IEnumerable<Offer> Offers { get; set; }
-        public IEnumerable<TradeOffer> TradeOffers { get; set; }
+        //public IEnumerable<Offer> Offers { get; set; }
+        //public IEnumerable<TradeOffer> TradeOffers { get; set; }
         public IEnumerable<Review> Review { get; set; }
         public IEnumerable<Report> Reports { get; set; }
+        public IEnumerable<Species> Wishlist { get; set; }
+
+        public IEnumerable<MyBaseOffer> OffersSent { get; set; }
+        public IEnumerable<MyBaseOffer> OffersReceived { get; set; }
     }
 }

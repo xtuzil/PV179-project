@@ -17,6 +17,8 @@ namespace Data_Access_Layer.Models
 
         public IEnumerable<CactusPhoto> Photos { get; set; }
 
+        public bool ForSale { get; set; }
+
         // TODO: any additional details that could be optionally stored?
 
         public string Note { get; set; }

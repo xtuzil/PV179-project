@@ -15,6 +15,5 @@ namespace Data_Access_Layer.Models
         public User Buyer { get; set; }
 
         public bool Sold { get; set; }
-
     }
 }

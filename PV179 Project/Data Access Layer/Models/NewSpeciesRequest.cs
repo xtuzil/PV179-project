@@ -2,6 +2,7 @@
 
 namespace Data_Access_Layer.Models
 {
+    // TODO: I guess we won't need this, it is enough to set whether a species is already accepted or not
     class NewSpeciesRequest : DatedEntity
     {
         public int AdvertiserId { get; set; }
