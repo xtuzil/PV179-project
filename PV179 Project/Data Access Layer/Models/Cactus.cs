@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Data_Access_Layer.Models
+namespace CactusDAL.Models
 {
     public class Cactus : DatedEntity
     {
@@ -22,6 +22,8 @@ namespace Data_Access_Layer.Models
         public IEnumerable<CactusOffered> Offers { get; set; }
         public IEnumerable<MyBaseOffer> OfferedIn { get; set; }
         //public IEnumerable<CactusOffered> OfferedIn { get; set; }
+
+        public IEnumerable<Transfer> Transfers { get; set; }
 
         public bool ForSale { get; set; }
 

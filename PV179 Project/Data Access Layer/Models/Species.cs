@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Data_Access_Layer.Models
+namespace CactusDAL.Models
 {
     public class Species : BaseEntity
     {

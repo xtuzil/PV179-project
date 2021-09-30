@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Data_Access_Layer.Models
+namespace CactusDAL.Models
 {
     public class User : BaseEntity
     {
@@ -44,5 +44,8 @@ namespace Data_Access_Layer.Models
 
         public IEnumerable<Review> ReviewsSent { get; set; }
         public IEnumerable<Review> ReviewsReceived { get; set; }
+
+        public IEnumerable<Transfer> TransfersFrom { get; set; }
+        public IEnumerable<Transfer> TransfersTo { get; set; }
     }
 }

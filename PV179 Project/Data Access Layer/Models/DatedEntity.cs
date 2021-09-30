@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace Data_Access_Layer.Models
+namespace CactusDAL.Models
 {
     public class DatedEntity : BaseEntity
     {

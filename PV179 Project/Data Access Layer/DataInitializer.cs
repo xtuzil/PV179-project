@@ -1,8 +1,7 @@
-﻿using Data_Access_Layer.Models;
+﻿using CactusDAL.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
-namespace Data_Access_Layer
+namespace CactusDAL
 {
     public static class DataInitializer
     {
@@ -56,7 +55,8 @@ namespace Data_Access_Layer
                 Password = "password",
                 AddressId = userAddress.Id,
                 PhoneNumber = "501-868-1478",
-                Role = Role.User
+                Role = Role.User,
+                AccountBalance = 50
             };
 
             var userProfilePhoto = new ProfilePhoto
@@ -162,7 +162,7 @@ namespace Data_Access_Layer
                 Id = 1,
                 SpeciesId = species.Id,
                 OwnerId = user.Id,
-                
+
             };
 
             var cactus2 = new Cactus
@@ -233,6 +233,25 @@ namespace Data_Access_Layer
             };
 
             modelBuilder.Entity<Shipment>().HasData(shipment);
+
+            var moneyTransfer = new Transfer
+            {
+                Id = 1,
+                FromId = user3.Id,
+                ToId = user2.Id,
+                Amount = 50
+            };
+
+            var cactusTransfer = new Transfer
+            {
+                Id = 2,
+                FromId = user2.Id,
+                ToId = user3.Id,
+                CactusId = cactus2.Id
+            };
+
+            modelBuilder.Entity<Transfer>().HasData(moneyTransfer);
+            modelBuilder.Entity<Transfer>().HasData(cactusTransfer);
         }
     }
 }

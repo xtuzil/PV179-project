@@ -1,11 +1,11 @@
-﻿using Data_Access_Layer.Models;
+﻿using CactusDAL.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
-namespace Data_Access_Layer
+namespace CactusDAL
 {
-    public class CactusesManagerDbContext : DbContext
+    public class CactusDbContext : DbContext
     {
         public DbSet<Cactus> Cactuses { get; set; }
         //public DbSet<TradeOffer> CounterOffers { get; set; }
@@ -17,12 +17,12 @@ namespace Data_Access_Layer
 
         private string connectionString = "Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database=CactusesManager;Trusted_Connection=True;";
 
-        public CactusesManagerDbContext()
+        public CactusDbContext()
         {
 
         }
 
-        public CactusesManagerDbContext(string connectionString)
+        public CactusDbContext(string connectionString)
         {
             this.connectionString = connectionString;
         }
@@ -72,6 +72,14 @@ namespace Data_Access_Layer
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.User)
                 .WithMany(u => u.ReviewsReceived);
+
+            modelBuilder.Entity<Transfer>()
+                .HasOne(t => t.From)
+                .WithMany(u => u.TransfersFrom);
+
+            modelBuilder.Entity<Transfer>()
+                .HasOne(t => t.To)
+                .WithMany(u => u.TransfersTo);
 
             //modelBuilder.Entity<CactusOffered>().HasKey(co => new { co.CactusId, co.OfferId });
             //modelBuilder.Entity<CactusRequested>().HasKey(cr => new { cr.CactusId, cr.OfferId });
