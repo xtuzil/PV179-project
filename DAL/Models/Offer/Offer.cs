@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CactusDAL.Models
 {
-    public class MyBaseOffer : DatedEntity
+    public class Offer : DatedEntity
     {
         public int SenderId { get; set; }
         [ForeignKey(nameof(SenderId))]
@@ -15,23 +15,21 @@ namespace CactusDAL.Models
         public User Receiver { get; set; }
 
         public IEnumerable<Cactus> OfferedCactuses { get; set; }
-        public IEnumerable<CactusOffered> Offers { get; set; }
-        //public IEnumerable<CactusOffered> OfferedCactuses { get; set; }
+        public IEnumerable<CactusOffered> CactusOffers { get; set; }
         public double? OfferedMoney { get; set; }
 
         public IEnumerable<Cactus> RequestedCactuses { get; set; }
-        public IEnumerable<CactusRequested> Requests { get; set; }
-        //public IEnumerable<CactusRequested> RequestedCactuses { get; set; }
+        public IEnumerable<CactusRequested> CactusRequests { get; set; }
         public double? RequestedMoney { get; set; }
 
         public OfferResponse Response { get; set; }
         public DateTime ResponseDate { get; set; }
 
-        public MyBaseOffer NextOffer { get; set; }
-
         public int? PreviousOfferId { get; set; }
         [ForeignKey(nameof(PreviousOfferId))]
-        public MyBaseOffer PreviousOffer { get; set; }
+        public Offer PreviousOffer { get; set; }
+
+        public Offer NextOffer { get; set; }
 
         public Shipment Shipment { get; set; }
     }

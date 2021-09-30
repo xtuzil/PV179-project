@@ -198,7 +198,7 @@ namespace CactusDAL
             modelBuilder.Entity<Cactus>().HasData(cactus, cactus2);
             modelBuilder.Entity<CactusPhoto>().HasData(cactusPhoto, cactusPhoto2);
 
-            var offerRejected = new MyBaseOffer
+            var offerRejected = new Offer
             {
                 Id = 1,
                 SenderId = user2.Id,
@@ -206,11 +206,11 @@ namespace CactusDAL
                 Response = OfferResponse.Declined
             };
 
-            modelBuilder.Entity<MyBaseOffer>().HasData(offerRejected);
+            modelBuilder.Entity<Offer>().HasData(offerRejected);
             modelBuilder.Entity<CactusOffered>().HasData(new CactusOffered { CactusId = cactus2.Id, OfferId = offerRejected.Id });
             modelBuilder.Entity<CactusRequested>().HasData(new CactusRequested { CactusId = cactus.Id, OfferId = offerRejected.Id });
 
-            var offerAccepted = new MyBaseOffer
+            var offerAccepted = new Offer
             {
                 Id = 2,
                 PreviousOfferId = offerRejected.Id,
@@ -220,7 +220,7 @@ namespace CactusDAL
                 OfferedMoney = 50
             };
 
-            modelBuilder.Entity<MyBaseOffer>().HasData(offerAccepted);
+            modelBuilder.Entity<Offer>().HasData(offerAccepted);
             modelBuilder.Entity<CactusRequested>().HasData(new CactusRequested { CactusId = cactus2.Id, OfferId = offerAccepted.Id });
 
             var shipment = new Shipment

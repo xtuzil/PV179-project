@@ -9,7 +9,7 @@ namespace CactusDAL.Models
         [Key]
         public int OfferId { get; set; }
         [ForeignKey(nameof(OfferId))]
-        public MyBaseOffer Offer { get; set; }
+        public Offer Offer { get; set; }
 
         public ShipmentStatus Status { get; set; }
         public string TrackingCode { get; set; }

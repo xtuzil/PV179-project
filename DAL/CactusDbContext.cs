@@ -8,11 +8,9 @@ namespace CactusDAL
     public class CactusDbContext : DbContext
     {
         public DbSet<Cactus> Cactuses { get; set; }
-        //public DbSet<TradeOffer> CounterOffers { get; set; }
         public DbSet<Genus> Genuses { get; set; }
-        public DbSet<MyBaseOffer> Offers { get; set; }
+        public DbSet<Offer> Offers { get; set; }
         public DbSet<Species> Species { get; set; }
-        // public DbSet<Transaction> Transactions { get; set; }
         public DbSet<User> Users { get; set; }
 
         private string connectionString = "Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database=CactusesManager;Trusted_Connection=True;";
@@ -37,15 +35,15 @@ namespace CactusDAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MyBaseOffer>()
+            modelBuilder.Entity<Offer>()
                 .HasOne(o => o.PreviousOffer)
                 .WithOne(o => o.NextOffer);
 
-            modelBuilder.Entity<MyBaseOffer>()
+            modelBuilder.Entity<Offer>()
                 .HasOne(o => o.Sender)
                 .WithMany(u => u.OffersSent);
 
-            modelBuilder.Entity<MyBaseOffer>()
+            modelBuilder.Entity<Offer>()
                 .HasOne(o => o.Receiver)
                 .WithMany(u => u.OffersReceived);
 
@@ -81,40 +79,17 @@ namespace CactusDAL
                 .HasOne(t => t.To)
                 .WithMany(u => u.TransfersTo);
 
-            //modelBuilder.Entity<CactusOffered>().HasKey(co => new { co.CactusId, co.OfferId });
-            //modelBuilder.Entity<CactusRequested>().HasKey(cr => new { cr.CactusId, cr.OfferId });
-
-            //modelBuilder.Entity<CactusOffered>()
-            //    .HasOne(co => co.Cactus)
-            //    .WithMany(c => c.OfferedIn)
-            //    .HasForeignKey(co => co.CactusId);
-
-            //modelBuilder.Entity<CactusOffered>()
-            //    .HasOne(co => co.Offer)
-            //    .WithMany(c => c.OfferedCactuses)
-            //    .HasForeignKey(co => co.OfferId);
-
-            //modelBuilder.Entity<CactusRequested>()
-            //    .HasOne(co => co.Cactus)
-            //    .WithMany(c => c.RequestedIn)
-            //    .HasForeignKey(co => co.CactusId);
-
-            //modelBuilder.Entity<CactusRequested>()
-            //    .HasOne(co => co.Offer)
-            //    .WithMany(c => c.RequestedCactuses)
-            //    .HasForeignKey(co => co.OfferId);
-
             modelBuilder.Entity<Cactus>()
                 .HasMany(c => c.OfferedIn)
                 .WithMany(o => o.OfferedCactuses)
                 .UsingEntity<CactusOffered>(
                     j => j
                         .HasOne(co => co.Offer)
-                        .WithMany(o => o.Offers)
+                        .WithMany(o => o.CactusOffers)
                         .HasForeignKey(co => co.OfferId),
                     j => j
                         .HasOne(co => co.Cactus)
-                        .WithMany(c => c.Offers)
+                        .WithMany(c => c.CactusOffers)
                         .HasForeignKey(co => co.CactusId),
                     j =>
                     {
@@ -127,11 +102,11 @@ namespace CactusDAL
                 .UsingEntity<CactusRequested>(
                     j => j
                         .HasOne(co => co.Offer)
-                        .WithMany(o => o.Requests)
+                        .WithMany(o => o.CactusRequests)
                         .HasForeignKey(co => co.OfferId),
                     j => j
                         .HasOne(co => co.Cactus)
-                        .WithMany(c => c.Requests)
+                        .WithMany(c => c.CactusRequests)
                         .HasForeignKey(co => co.CactusId),
                     j =>
                     {

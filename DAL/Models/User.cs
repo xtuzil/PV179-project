@@ -29,12 +29,10 @@ namespace CactusDAL.Models
         public PostalAddress Address { get; set; }
 
         public IEnumerable<Cactus> Cactuses { get; set; }
-        //public IEnumerable<Offer> Offers { get; set; }
-        //public IEnumerable<TradeOffer> TradeOffers { get; set; }
         public IEnumerable<Species> Wishlist { get; set; }
 
-        public IEnumerable<MyBaseOffer> OffersSent { get; set; }
-        public IEnumerable<MyBaseOffer> OffersReceived { get; set; }
+        public IEnumerable<Offer> OffersSent { get; set; }
+        public IEnumerable<Offer> OffersReceived { get; set; }
 
         public IEnumerable<Species> SpeciesSuggested { get; set; }
         public IEnumerable<Species> SpeciesConfirmed { get; set; }
