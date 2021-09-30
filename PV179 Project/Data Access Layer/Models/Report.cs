@@ -4,9 +4,9 @@ namespace Data_Access_Layer.Models
 {
     public class Report : DatedEntity
     {
-        public int UserId { get; set; }
-        [ForeignKey(nameof(UserId))]
-        public User User { get; set; }
+        public int TargetId { get; set; }
+        [ForeignKey(nameof(TargetId))]
+        public User Target { get; set; }
 
         public int AuthorId { get; set; }
         [ForeignKey(nameof(AuthorId))]

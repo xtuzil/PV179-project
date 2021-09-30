@@ -18,17 +18,19 @@ namespace Data_Access_Layer.Models
         public User Receiver { get; set; }
 
         public IEnumerable<Cactus> OfferedCactuses { get; set; }
+        public IEnumerable<CactusOffered> Offers { get; set; }
+        //public IEnumerable<CactusOffered> OfferedCactuses { get; set; }
         public double? OfferedMoney { get; set; }
 
         public IEnumerable<Cactus> RequestedCactuses { get; set; }
+        public IEnumerable<CactusRequested> Requests { get; set; }
+        //public IEnumerable<CactusRequested> RequestedCactuses { get; set; }
         public double? RequestedMoney { get; set; }
 
         public OfferResponse Response { get; set; }
         public DateTime ResponseDate { get; set; }
 
-        public int? CounterofferId { get; set; }
-        [ForeignKey(nameof(CounterofferId))]
-        public MyBaseOffer Counteroffer { get; set; }
+        public MyBaseOffer NextOffer { get; set; }
 
         public int? PreviousOfferId { get; set; }
         [ForeignKey(nameof(PreviousOfferId))]

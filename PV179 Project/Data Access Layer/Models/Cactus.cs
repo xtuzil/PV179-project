@@ -16,6 +16,12 @@ namespace Data_Access_Layer.Models
         public Species Species { get; set; }
 
         public IEnumerable<CactusPhoto> Photos { get; set; }
+        public IEnumerable<CactusRequested> Requests { get; set; }
+        public IEnumerable<MyBaseOffer> RequestedIn { get; set; }
+        //public IEnumerable<CactusRequested> RequestedIn { get; set; }
+        public IEnumerable<CactusOffered> Offers { get; set; }
+        public IEnumerable<MyBaseOffer> OfferedIn { get; set; }
+        //public IEnumerable<CactusOffered> OfferedIn { get; set; }
 
         public bool ForSale { get; set; }
 

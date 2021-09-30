@@ -11,15 +11,13 @@ namespace Data_Access_Layer.Models
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public int ProfilePhotoId { get; set; }
-        [ForeignKey(nameof(ProfilePhotoId))]
         public ProfilePhoto ProfilePhoto { get; set; }
 
         public Role Role { get; set; }
 
         // TODO: banned indefinitely?
         // separate bool 'BannedForever' or DateTime.MaxValue?
-        public DateTime BannedUntil { get; set; }
+        public DateTime? BannedUntil { get; set; }
 
         public double AccountBalance { get; set; }
 
@@ -33,11 +31,18 @@ namespace Data_Access_Layer.Models
         public IEnumerable<Cactus> Cactuses { get; set; }
         //public IEnumerable<Offer> Offers { get; set; }
         //public IEnumerable<TradeOffer> TradeOffers { get; set; }
-        public IEnumerable<Review> Review { get; set; }
-        public IEnumerable<Report> Reports { get; set; }
         public IEnumerable<Species> Wishlist { get; set; }
 
         public IEnumerable<MyBaseOffer> OffersSent { get; set; }
         public IEnumerable<MyBaseOffer> OffersReceived { get; set; }
+
+        public IEnumerable<Species> SpeciesSuggested { get; set; }
+        public IEnumerable<Species> SpeciesConfirmed { get; set; }
+
+        public IEnumerable<Report> ReportsSent { get; set; }
+        public IEnumerable<Report> ReportsReceived { get; set; }
+
+        public IEnumerable<Review> ReviewsSent { get; set; }
+        public IEnumerable<Review> ReviewsReceived { get; set; }
     }
 }
