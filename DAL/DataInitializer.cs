@@ -190,6 +190,13 @@ namespace CactusDAL
                 CactusId = cactus2.Id
             };
 
+            var comment = new Comment
+            {
+                Id = 1,
+                AuthorId = 1,
+                Text = "A random comment",
+            };
+
             modelBuilder.Entity<PostalAddress>().HasData(adminAddress, userAddress, userAddress2, userAddress3);
             modelBuilder.Entity<User>().HasData(admin, user, user2, user3);
             modelBuilder.Entity<ProfilePhoto>().HasData(adminProfilePhoto, userProfilePhoto, userProfilePhoto2, userProfilePhoto3);
@@ -197,6 +204,7 @@ namespace CactusDAL
             modelBuilder.Entity<Species>().HasData(species, species2);
             modelBuilder.Entity<Cactus>().HasData(cactus, cactus2);
             modelBuilder.Entity<CactusPhoto>().HasData(cactusPhoto, cactusPhoto2);
+            modelBuilder.Entity<Comment>().HasData(comment);
 
             var like = new Like
             {

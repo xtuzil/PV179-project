@@ -2,10 +2,10 @@
 
 namespace CactusDAL.Models
 {
-    class Comment : DatedEntity
+    public class Comment : DatedEntity
     {
         public string Text { get; set; }
-        public User AuthorId { get; set; }
+        public int AuthorId { get; set; }
 
         [ForeignKey(nameof(AuthorId))]
         public virtual User Author { get; set; }

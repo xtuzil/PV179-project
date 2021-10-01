@@ -13,6 +13,8 @@ namespace CactusDAL.Models
 
         public ProfilePhoto ProfilePhoto { get; set; }
 
+        public IEnumerable<Comment> Comments { get; set; }
+
         public Role Role { get; set; }
 
         // TODO: banned indefinitely?
