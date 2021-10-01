@@ -12,6 +12,7 @@ namespace CactusDAL.Models
         public string Password { get; set; }
 
         public ProfilePhoto ProfilePhoto { get; set; }
+        public IEnumerable<CactusPhoto> UploadedCactusPhotos { get; set; }
 
         public IEnumerable<Comment> Comments { get; set; }
 
