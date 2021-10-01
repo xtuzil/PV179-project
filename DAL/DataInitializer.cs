@@ -31,7 +31,7 @@ namespace CactusDAL
 
             var adminProfilePhoto = new ProfilePhoto
             {
-                Id = 1,
+                Id = 3,
                 Path = "https://randomuser.me/api/portraits/women/57.jpg",
                 ThumbnailPath = "https://randomuser.me/api/portraits/women/57.jpg",
                 UserId = admin.Id
@@ -61,7 +61,7 @@ namespace CactusDAL
 
             var userProfilePhoto = new ProfilePhoto
             {
-                Id = 2,
+                Id = 4,
                 Path = "https://randomuser.me/api/portraits/women/82.jpg",
                 ThumbnailPath = "https://randomuser.me/api/portraits/women/82.jpg",
                 UserId = user.Id
@@ -90,7 +90,7 @@ namespace CactusDAL
 
             var userProfilePhoto2 = new ProfilePhoto
             {
-                Id = 3,
+                Id = 5,
                 Path = "https://randomuser.me/api/portraits/men/44.jpg",
                 ThumbnailPath = "https://randomuser.me/api/portraits/men/44.jpg",
                 UserId = user2.Id
@@ -119,7 +119,7 @@ namespace CactusDAL
 
             var userProfilePhoto3 = new ProfilePhoto
             {
-                Id = 4,
+                Id = 6,
                 Path = "https://randomuser.me/api/portraits/men/18.jpg",
                 ThumbnailPath = "https://randomuser.me/api/portraits/men/18.jpg",
                 UserId = user3.Id
@@ -198,6 +198,13 @@ namespace CactusDAL
             modelBuilder.Entity<Cactus>().HasData(cactus, cactus2);
             modelBuilder.Entity<CactusPhoto>().HasData(cactusPhoto, cactusPhoto2);
 
+            var like = new Like
+            {
+                Id = 1,
+                UserId = 1,
+                PhotoId = 1,
+            };
+
             var offerRejected = new Offer
             {
                 Id = 1,
@@ -206,6 +213,7 @@ namespace CactusDAL
                 Response = OfferResponse.Declined
             };
 
+            modelBuilder.Entity<Like>().HasData(like);
             modelBuilder.Entity<Offer>().HasData(offerRejected);
             modelBuilder.Entity<CactusOffered>().HasData(new CactusOffered { CactusId = cactus2.Id, OfferId = offerRejected.Id });
             modelBuilder.Entity<CactusRequested>().HasData(new CactusRequested { CactusId = cactus.Id, OfferId = offerRejected.Id });

@@ -31,6 +31,8 @@ namespace CactusDAL.Models
         public IEnumerable<Cactus> Cactuses { get; set; }
         public IEnumerable<Species> Wishlist { get; set; }
 
+        public IEnumerable<Like> Likes { get; set; }
+
         public IEnumerable<Offer> OffersSent { get; set; }
         public IEnumerable<Offer> OffersReceived { get; set; }
 
