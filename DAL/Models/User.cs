@@ -20,7 +20,7 @@ namespace CactusDAL.Models
 
         // TODO: banned indefinitely?
         // separate bool 'BannedForever' or DateTime.MaxValue?
-        public DateTime? BannedUntil { get; set; }
+        public bool Banned { get; set; }
 
         public double AccountBalance { get; set; }
 
@@ -34,13 +34,13 @@ namespace CactusDAL.Models
         public IEnumerable<Cactus> Cactuses { get; set; }
         public IEnumerable<Species> Wishlist { get; set; }
 
-        public IEnumerable<Like> Likes { get; set; }
+        //public IEnumerable<Like> Likes { get; set; }
 
         public IEnumerable<Offer> OffersSent { get; set; }
         public IEnumerable<Offer> OffersReceived { get; set; }
 
-        public IEnumerable<Species> SpeciesSuggested { get; set; }
-        public IEnumerable<Species> SpeciesConfirmed { get; set; }
+        //public IEnumerable<Species> SpeciesSuggested { get; set; }
+        //public IEnumerable<Species> SpeciesConfirmed { get; set; }
 
         public IEnumerable<Report> ReportsSent { get; set; }
         public IEnumerable<Report> ReportsReceived { get; set; }
