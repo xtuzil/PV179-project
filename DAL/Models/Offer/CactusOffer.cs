@@ -2,7 +2,7 @@
 
 namespace CactusDAL.Models
 {
-    public class CactusOffer
+    public class CactusOffer: BaseEntity
     {
         public int CactusId { get; set; }
         [ForeignKey(nameof(CactusId))]

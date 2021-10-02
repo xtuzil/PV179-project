@@ -46,6 +46,19 @@ namespace CactusDAL
                 .HasOne(o => o.Receiver)
                 .WithMany(u => u.OffersReceived);
 
+            modelBuilder.Entity<Offer>()
+                .HasMany(o => o.CactusOffers)
+                .WithOne(cactusOffer => cactusOffer.Offer);
+
+
+            modelBuilder.Entity<Species>()
+                .HasMany(s => s.WishlistedBy)
+                .WithMany(u => u.Wishlist);
+
+
+
+
+
             modelBuilder.Entity<Report>()
                 .HasOne(r => r.Author);
 

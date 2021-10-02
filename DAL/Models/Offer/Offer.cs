@@ -14,11 +14,9 @@ namespace CactusDAL.Models
         [ForeignKey(nameof(ReceiverId))]
         public User Receiver { get; set; }
 
-        public IEnumerable<Cactus> OfferedCactuses { get; set; }
         public IEnumerable<CactusOffer> CactusOffers { get; set; }
         public double? OfferedMoney { get; set; }
 
-        public IEnumerable<Cactus> RequestedCactuses { get; set; }
         public IEnumerable<CactusOffer> CactusRequests { get; set; }
         public double? RequestedMoney { get; set; }
 
