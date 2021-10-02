@@ -21,19 +21,15 @@ namespace PV179_Project
                     .Include(o => o.OfferedCactuses)
                     .Include(o => o.RequestedCactuses)
                     .ThenInclude(c => c.Transfers)
-                    .ThenInclude(t => t.Cactus)
-                    .ThenInclude(c => c.Photos)
-                    .Include(o => o.Shipment)
                     .Where(o => o.Id == 2)
                     .First();
 
                 System.Console.WriteLine(offer.PreviousOffer.Response);
                 System.Console.WriteLine(offer.OfferedCactuses.ToList().Count);
                 System.Console.WriteLine(offer.RequestedCactuses.ToList().Count);
-                System.Console.WriteLine(offer.Shipment.Status);
-                System.Console.WriteLine(offer.RequestedCactuses.First().Transfers.First().Cactus.CreationDate);
+                System.Console.WriteLine(offer.RequestedCactuses.First().Species.Name);
 
-                System.Console.WriteLine(db.Users.Include(u => u.TransfersTo).Where(u => u.Id == 3).First().TransfersTo.First().Amount);
+                System.Console.WriteLine(db.Users.Include(u => u.TransfersTo).Where(u => u.Id == 3).First().TransfersTo.First());
             }
         }
     }

@@ -17,16 +17,12 @@ namespace CactusDAL.Models
         public IEnumerable<Comment> Comments { get; set; }
 
         public Role Role { get; set; }
-
-        // TODO: banned indefinitely?
-        // separate bool 'BannedForever' or DateTime.MaxValue?
         public bool Banned { get; set; }
 
         public double AccountBalance { get; set; }
 
         public string PhoneNumber { get; set; }
 
-        // TODO: be able to store multiple addresses and set one primary perhaps?
         public int AddressId { get; set; }
         [ForeignKey(nameof(AddressId))]
         public PostalAddress Address { get; set; }
@@ -34,18 +30,9 @@ namespace CactusDAL.Models
         public IEnumerable<Cactus> Cactuses { get; set; }
         public IEnumerable<Species> Wishlist { get; set; }
 
-        //public IEnumerable<Like> Likes { get; set; }
-
         public IEnumerable<Offer> OffersSent { get; set; }
         public IEnumerable<Offer> OffersReceived { get; set; }
 
-        //public IEnumerable<Species> SpeciesSuggested { get; set; }
-        //public IEnumerable<Species> SpeciesConfirmed { get; set; }
-
-        public IEnumerable<Report> ReportsSent { get; set; }
-        public IEnumerable<Report> ReportsReceived { get; set; }
-
-        public IEnumerable<Review> ReviewsSent { get; set; }
         public IEnumerable<Review> ReviewsReceived { get; set; }
 
         public IEnumerable<Transfer> TransfersFrom { get; set; }
