@@ -12,9 +12,6 @@ namespace CactusDAL.Models
         [ForeignKey(nameof(AuthorId))]
         public User Author { get; set; }
 
-        public int ReasonId { get; set; }
-        [ForeignKey(nameof(ReasonId))]
-        //public ReportReason Reason { get; set; }
         public string Description;
     }
 }

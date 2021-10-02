@@ -2,11 +2,12 @@
 
 namespace CactusDAL.Models
 {
-    public class CactusOffered
+    public class CactusOffer
     {
         public int CactusId { get; set; }
         [ForeignKey(nameof(CactusId))]
         public Cactus Cactus { get; set; }
+        public int Amount { get; set; }
 
         public int OfferId { get; set; }
         [ForeignKey(nameof(OfferId))]

@@ -6,7 +6,5 @@ namespace CactusDAL.Models
     {
         public string Path { get; set; }
         public string ThumbnailPath { get; set; }
-
-        public IEnumerable<Like> Likes { get; set; }
     }
 }

@@ -15,22 +15,22 @@ namespace CactusDAL.Models
         public User Receiver { get; set; }
 
         public IEnumerable<Cactus> OfferedCactuses { get; set; }
-        public IEnumerable<CactusOffered> CactusOffers { get; set; }
+        public IEnumerable<CactusOffer> CactusOffers { get; set; }
         public double? OfferedMoney { get; set; }
 
         public IEnumerable<Cactus> RequestedCactuses { get; set; }
-        public IEnumerable<CactusRequested> CactusRequests { get; set; }
+        public IEnumerable<CactusOffer> CactusRequests { get; set; }
         public double? RequestedMoney { get; set; }
 
-        public OfferResponse Response { get; set; }
+        public OfferStatus Response { get; set; }
         public DateTime ResponseDate { get; set; }
+
+        public IEnumerable<Comment> Comments { get; set; }
 
         public int? PreviousOfferId { get; set; }
         [ForeignKey(nameof(PreviousOfferId))]
         public Offer PreviousOffer { get; set; }
 
-        public Offer NextOffer { get; set; }
 
-        public Shipment Shipment { get; set; }
     }
 }

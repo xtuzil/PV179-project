@@ -177,7 +177,6 @@ namespace CactusDAL
                 Id = 1,
                 Path = "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a",
                 ThumbnailPath = "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a",
-                UploaderId = user.Id,
                 CactusId = cactus.Id
             };
 
@@ -186,7 +185,6 @@ namespace CactusDAL
                 Id = 2,
                 Path = "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a",
                 ThumbnailPath = "https://images.unsplash.com/photo-1459411552884-841db9b3cc2a",
-                UploaderId = user3.Id,
                 CactusId = cactus2.Id
             };
 
@@ -206,25 +204,18 @@ namespace CactusDAL
             modelBuilder.Entity<CactusPhoto>().HasData(cactusPhoto, cactusPhoto2);
             modelBuilder.Entity<Comment>().HasData(comment);
 
-            var like = new Like
-            {
-                Id = 1,
-                UserId = 1,
-                PhotoId = 1,
-            };
 
             var offerRejected = new Offer
             {
                 Id = 1,
                 SenderId = user2.Id,
                 ReceiverId = user3.Id,
-                Response = OfferResponse.Declined
+                Response = OfferStatus.Declined
             };
 
-            modelBuilder.Entity<Like>().HasData(like);
             modelBuilder.Entity<Offer>().HasData(offerRejected);
-            modelBuilder.Entity<CactusOffered>().HasData(new CactusOffered { CactusId = cactus2.Id, OfferId = offerRejected.Id });
-            modelBuilder.Entity<CactusRequested>().HasData(new CactusRequested { CactusId = cactus.Id, OfferId = offerRejected.Id });
+            modelBuilder.Entity<CactusOffer>().HasData(new CactusOffer { CactusId = cactus2.Id, OfferId = offerRejected.Id });
+            modelBuilder.Entity<CactusOffer>().HasData(new CactusOffer { CactusId = cactus.Id, OfferId = offerRejected.Id });
 
             var offerAccepted = new Offer
             {
@@ -232,42 +223,21 @@ namespace CactusDAL
                 PreviousOfferId = offerRejected.Id,
                 SenderId = user3.Id,
                 ReceiverId = user2.Id,
-                Response = OfferResponse.Accepted,
+                Response = OfferStatus.Accepted,
                 OfferedMoney = 50
             };
 
             modelBuilder.Entity<Offer>().HasData(offerAccepted);
-            modelBuilder.Entity<CactusRequested>().HasData(new CactusRequested { CactusId = cactus2.Id, OfferId = offerAccepted.Id });
+            modelBuilder.Entity<CactusOffer>().HasData(new CactusOffer { CactusId = cactus2.Id, OfferId = offerAccepted.Id });
 
-            var shipment = new Shipment
-            {
-                OfferId = offerAccepted.Id,
-                Status = ShipmentStatus.Delivered,
-                TrackingCode = "LT1660944412375",
-                DateShipped = new System.DateTime(2021, 9, 25),
-                DateConfirmed = new System.DateTime(2021, 9, 28)
-            };
-
-            modelBuilder.Entity<Shipment>().HasData(shipment);
 
             var moneyTransfer = new Transfer
             {
                 Id = 1,
-                FromId = user3.Id,
-                ToId = user2.Id,
-                Amount = 50
-            };
-
-            var cactusTransfer = new Transfer
-            {
-                Id = 2,
-                FromId = user2.Id,
-                ToId = user3.Id,
-                CactusId = cactus2.Id
+                OfferId = offerAccepted.Id,
             };
 
             modelBuilder.Entity<Transfer>().HasData(moneyTransfer);
-            modelBuilder.Entity<Transfer>().HasData(cactusTransfer);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CactusDAL.Models
 {
-    public class Species : BaseEntity
+    public class Species : DatedEntity
     {
         public string Name { get; set; }
         public string LatinName { get; set; }
@@ -22,7 +22,6 @@ namespace CactusDAL.Models
 
         public IEnumerable<Cactus> Instances { get; set; }
 
-        public DateTime SuggestionDate { get; set; }
         public DateTime ConfirmationDate { get; set; }
 
         public int SuggestedById { get; set; }
@@ -33,6 +32,8 @@ namespace CactusDAL.Models
         [ForeignKey(nameof(ConfirmedById))]
         public User ConfirmedBy { get; set; }
 
+        // @ optional feature
         public IEnumerable<User> WishlistedBy { get; set; }
+        public bool Approved { get; set; }
     }
 }

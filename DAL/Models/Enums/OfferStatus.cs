@@ -1,10 +1,10 @@
 ﻿namespace CactusDAL.Models
 {
-    public enum OfferResponse
+    public enum OfferStatus
     {
         Accepted,
         Declined,
         Counteroffer,
-        //Expired
+        Transfered
     }
 }

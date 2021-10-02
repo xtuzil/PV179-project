@@ -36,8 +36,7 @@ namespace CactusDAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Offer>()
-                .HasOne(o => o.PreviousOffer)
-                .WithOne(o => o.NextOffer);
+                .HasOne(o => o.PreviousOffer);
 
             modelBuilder.Entity<Offer>()
                 .HasOne(o => o.Sender)
@@ -48,70 +47,24 @@ namespace CactusDAL
                 .WithMany(u => u.OffersReceived);
 
             modelBuilder.Entity<Report>()
-                .HasOne(r => r.Author)
-                .WithMany(u => u.ReportsSent);
+                .HasOne(r => r.Author);
 
             modelBuilder.Entity<Report>()
-                .HasOne(r => r.Target)
-                .WithMany(u => u.ReportsReceived);
+                .HasOne(r => r.Target);
 
             modelBuilder.Entity<Species>()
-                .HasOne(s => s.SuggestedBy)
-                .WithMany(u => u.SpeciesSuggested);
+                .HasOne(s => s.SuggestedBy);
 
             modelBuilder.Entity<Species>()
-                .HasOne(s => s.ConfirmedBy)
-                .WithMany(u => u.SpeciesConfirmed);
+                .HasOne(s => s.ConfirmedBy);
 
             modelBuilder.Entity<Review>()
-                .HasOne(r => r.Author)
-                .WithMany(u => u.ReviewsSent);
+                .HasOne(r => r.Author);
 
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.User)
                 .WithMany(u => u.ReviewsReceived);
 
-            modelBuilder.Entity<Transfer>()
-                .HasOne(t => t.From)
-                .WithMany(u => u.TransfersFrom);
-
-            modelBuilder.Entity<Transfer>()
-                .HasOne(t => t.To)
-                .WithMany(u => u.TransfersTo);
-
-            modelBuilder.Entity<Cactus>()
-                .HasMany(c => c.OfferedIn)
-                .WithMany(o => o.OfferedCactuses)
-                .UsingEntity<CactusOffered>(
-                    j => j
-                        .HasOne(co => co.Offer)
-                        .WithMany(o => o.CactusOffers)
-                        .HasForeignKey(co => co.OfferId),
-                    j => j
-                        .HasOne(co => co.Cactus)
-                        .WithMany(c => c.CactusOffers)
-                        .HasForeignKey(co => co.CactusId),
-                    j =>
-                    {
-                        j.HasKey(co => new { co.CactusId, co.OfferId });
-                    });
-
-            modelBuilder.Entity<Cactus>()
-                .HasMany(c => c.RequestedIn)
-                .WithMany(o => o.RequestedCactuses)
-                .UsingEntity<CactusRequested>(
-                    j => j
-                        .HasOne(co => co.Offer)
-                        .WithMany(o => o.CactusRequests)
-                        .HasForeignKey(co => co.OfferId),
-                    j => j
-                        .HasOne(co => co.Cactus)
-                        .WithMany(c => c.CactusRequests)
-                        .HasForeignKey(co => co.CactusId),
-                    j =>
-                    {
-                        j.HasKey(co => new { co.CactusId, co.OfferId });
-                    });
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {

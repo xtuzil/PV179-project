@@ -16,5 +16,9 @@ namespace CactusDAL.Models
 
         [ForeignKey(nameof(AuthorId))]
         public virtual User Author { get; set; }
+
+        public int TransferId { get; set; }
+        [ForeignKey(nameof(TransferId))]
+        public Review Transfer { get; set; }
     }
 }
