@@ -234,14 +234,34 @@ namespace CactusDAL
             modelBuilder.Entity<Offer>().HasData(offerAccepted);
             modelBuilder.Entity<CactusOffer>().HasData(new CactusOffer { Id = 3, CactusId = cactus2.Id, OfferId = offerAccepted.Id });
 
-
             var moneyTransfer = new Transfer
             {
                 Id = 1,
                 OfferId = offerAccepted.Id,
+                ReceiverReviewId = 1,
+                SenderReviewId = 2,
             };
 
             modelBuilder.Entity<Transfer>().HasData(moneyTransfer);
+
+            var receiveReview = new Review
+            {
+                Id = 1,
+                AuthorId = 1,
+                UserId = 2,
+                TransferId = 1,
+            };
+
+            var sendReview = new Review
+            {
+                Id = 2,
+                AuthorId = 2,
+                UserId = 1,
+                TransferId = 1,
+            };
+
+            modelBuilder.Entity<Review>().HasData(receiveReview, sendReview);
+
         }
     }
 }

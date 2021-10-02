@@ -12,6 +12,12 @@ namespace CactusDAL
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Species> Species { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Transfer> Transfers { get; set; }
+        public DbSet<Photo> Photos { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Report> Reports { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<PostalAddress> PostalAddresses { get; set; }
 
         private string connectionString = "Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database=CactusesManager;Trusted_Connection=True;";
 
@@ -55,9 +61,19 @@ namespace CactusDAL
                 .HasMany(s => s.WishlistedBy)
                 .WithMany(u => u.Wishlist);
 
+            modelBuilder.Entity<Transfer>()
+                .HasOne(t => t.SenderReview)
+                .WithOne()
+                .HasForeignKey<Transfer>(t => t.SenderReviewId);
 
+            modelBuilder.Entity<Transfer>()
+                .HasOne(t => t.ReceiverReview)
+                .WithOne()
+                .HasForeignKey<Transfer>(t => t.ReceiverReviewId);
 
-
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Transfer)
+                .WithOne(t => t.SenderReview);
 
             modelBuilder.Entity<Report>()
                 .HasOne(r => r.Author);
