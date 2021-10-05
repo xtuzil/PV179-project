@@ -1,4 +1,8 @@
 # PV179-project
+## Tým:
+- Kis Lázár Bence
+- Xuan Linh Phamová
+- Matěj Tužil
 
 **Aplikace pro pěstitele kaktusů. Aplikace se bude skládat ze dvou hlavních částí – správy vlastní sbírky kaktusů a obchodování s kaktusy.**
 
