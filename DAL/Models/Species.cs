@@ -24,14 +24,6 @@ namespace CactusDAL.Models
 
         public DateTime ConfirmationDate { get; set; }
 
-        public int SuggestedById { get; set; }
-        [ForeignKey(nameof(SuggestedById))]
-        public User SuggestedBy { get; set; }
-
-        public int ConfirmedById { get; set; }
-        [ForeignKey(nameof(ConfirmedById))]
-        public User ConfirmedBy { get; set; }
-
         // @ optional feature
         public IEnumerable<User> WishlistedBy { get; set; }
         public bool Approved { get; set; }

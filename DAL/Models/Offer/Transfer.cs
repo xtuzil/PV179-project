@@ -17,7 +17,7 @@ namespace CactusDAL.Models
         [ForeignKey(nameof(ReceiverReviewId))]
         public Review ReceiverReview { get; set; }
 
-        public bool SenderReceivedAprovedDelivery { get; set; }
+        public bool SenderAprovedDelivery { get; set; }
         public bool ReceiverAprovedDelivery { get; set; }
 
         public DateTime TransferedTime;

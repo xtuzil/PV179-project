@@ -143,8 +143,7 @@ namespace CactusDAL
                 Name = "Golden Barrel",
                 LatinName = "Echinocactus grusonii",
                 GenusId = genus.Id,
-                SuggestedById = user.Id,
-                ConfirmedById = admin.Id
+                Approved = true
             };
 
             var species2 = new Species
@@ -153,8 +152,7 @@ namespace CactusDAL
                 Name = "Silver Ball",
                 LatinName = "Parodia scopa",
                 GenusId = genus2.Id,
-                SuggestedById = user3.Id,
-                ConfirmedById = admin.Id
+                Approved = true
             };
 
             var cactus = new Cactus
@@ -250,6 +248,8 @@ namespace CactusDAL
                 AuthorId = 1,
                 UserId = 2,
                 TransferId = 1,
+                Score = 5,
+                Text = "Everything ok"
             };
 
             var sendReview = new Review
@@ -258,6 +258,8 @@ namespace CactusDAL
                 AuthorId = 2,
                 UserId = 1,
                 TransferId = 1,
+                Score = 2,
+                Text = "Cactuses are in bad condition"
             };
 
             modelBuilder.Entity<Review>().HasData(receiveReview, sendReview);

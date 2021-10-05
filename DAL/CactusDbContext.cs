@@ -7,17 +7,25 @@ namespace CactusDAL
 {
     public class CactusDbContext : DbContext
     {
-        public DbSet<Cactus> Cactuses { get; set; }
+       
         public DbSet<Genus> Genuses { get; set; }
-        public DbSet<Offer> Offers { get; set; }
         public DbSet<Species> Species { get; set; }
+        public DbSet<Cactus> Cactuses { get; set; }
+        public DbSet<CactusPhoto> CactusPhotos { get; set; }
+
         public DbSet<User> Users { get; set; }
+        public DbSet<ProfilePhoto> ProfilePhotos { get; set; }
+        public DbSet<PostalAddress> PostalAddresses { get; set; }
+
+
+        public DbSet<Offer> Offers { get; set; }
+        public DbSet<CactusOffer> CactusOffers { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
-        public DbSet<Photo> Photos { get; set; }
+        
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        public DbSet<PostalAddress> PostalAddresses { get; set; }
+        
 
         private string connectionString = "Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database=CactusesManager;Trusted_Connection=True;";
 
@@ -59,7 +67,8 @@ namespace CactusDAL
 
             modelBuilder.Entity<Species>()
                 .HasMany(s => s.WishlistedBy)
-                .WithMany(u => u.Wishlist);
+                .WithMany(u => u.Wishlist)
+                .UsingEntity(join => join.ToTable("Wishlists"));
 
             modelBuilder.Entity<Transfer>()
                 .HasOne(t => t.SenderReview)
@@ -81,18 +90,13 @@ namespace CactusDAL
             modelBuilder.Entity<Report>()
                 .HasOne(r => r.Target);
 
-            modelBuilder.Entity<Species>()
-                .HasOne(s => s.SuggestedBy);
-
-            modelBuilder.Entity<Species>()
-                .HasOne(s => s.ConfirmedBy);
-
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Author);
 
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.User)
                 .WithMany(u => u.ReviewsReceived);
+
 
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

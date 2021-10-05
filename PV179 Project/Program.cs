@@ -16,18 +16,18 @@ namespace PV179_Project
                 db.Cactuses.Add(new CactusDAL.Models.Cactus { Species = db.Species.First(), Owner = db.Users.First(), ForSale = false });
                 db.SaveChanges();
 
-                /*var offer = db.Offers
+                var offer = db.Offers
                     .Include(o => o.PreviousOffer)
-                    .Include(o => o.OfferedCactuses)
-                    .Include(o => o.RequestedCactuses)
-                    .ThenInclude(c => c.Transfers)
+                    .Include(o => o.CactusOffers)
+                    .Include(o => o.CactusRequests)
                     .Where(o => o.Id == 2)
                     .First();
 
+
                 System.Console.WriteLine(offer.PreviousOffer.Response);
-                System.Console.WriteLine(offer.OfferedCactuses.ToList().Count);
-                System.Console.WriteLine(offer.RequestedCactuses.ToList().Count);
-                System.Console.WriteLine(offer.RequestedCactuses.First().Transfers.First().Cactus.CreationDate); */
+                System.Console.WriteLine(offer.CactusOffers.First().Amount);
+                //System.Console.WriteLine(offer.Comments.ToList().Count);
+                //System.Console.WriteLine(offer.RequestedCactuses.First().Transfers.First().Cactus.CreationDate); 
 
                 //System.Console.WriteLine(db.Users.Include(u => u.TransfersTo).Where(u => u.Id == 3).First().TransfersTo.First());
             }
