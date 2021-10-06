@@ -1,4 +1,5 @@
 ﻿using CactusDAL.Models;
+using Data_Access_Layer.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace CactusDAL
 
         public DbSet<User> Users { get; set; }
         public DbSet<ProfilePhoto> ProfilePhotos { get; set; }
+        public DbSet<Wishlist> Wishlists { get; set; }
         public DbSet<PostalAddress> PostalAddresses { get; set; }
 
 
@@ -41,7 +43,9 @@ namespace CactusDAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(connectionString)
+            optionsBuilder
+                .UseLazyLoadingProxies()
+                .UseSqlServer(connectionString)
                 .EnableDetailedErrors()
                 .EnableSensitiveDataLogging();
             base.OnConfiguring(optionsBuilder);
@@ -53,36 +57,56 @@ namespace CactusDAL
                 .HasOne(o => o.PreviousOffer);
 
             modelBuilder.Entity<Offer>()
-                .HasOne(o => o.Sender)
+                .HasOne(o => o.Author)
                 .WithMany(u => u.OffersSent);
 
             modelBuilder.Entity<Offer>()
-                .HasOne(o => o.Receiver)
+                .HasOne(o => o.Recipient)
                 .WithMany(u => u.OffersReceived);
 
             modelBuilder.Entity<Offer>()
+               .HasMany(o => o.CactusOffers)
+               .WithOne(co => co.Offer)
+               .HasForeignKey(co => co.OfferId);
+
+
+            // Todo: not neccessary
+            modelBuilder.Entity<Offer>()
+                .HasMany(o => o.Comments)
+                .WithOne(c => c.Offer)
+                .HasForeignKey(c => c.OfferId);
+
+
+           /* modelBuilder.Entity<Offer>()
+              .HasMany(o => o.CactusRequests)
+              .WithOne(co => co.Offer)
+              .HasForeignKey(cr => cr.OfferId);*/
+
+      
+
+
+
+            /*modelBuilder.Entity<Offer>()
                 .HasMany(o => o.CactusOffers)
-                .WithOne(cactusOffer => cactusOffer.Offer);
+                .WithOne(cactusOffer => cactusOffer.Offer);*/
 
-
-            modelBuilder.Entity<Species>()
-                .HasMany(s => s.WishlistedBy)
-                .WithMany(u => u.Wishlist)
-                .UsingEntity(join => join.ToTable("Wishlists"));
+            /*modelBuilder.Entity<Offer>()
+                .HasMany(o => o.CactusRequests)
+                .WithOne(cactusRequest => cactusRequest.Offer);*/
 
             modelBuilder.Entity<Transfer>()
-                .HasOne(t => t.SenderReview)
+                .HasOne(t => t.AuthorReview)
                 .WithOne()
-                .HasForeignKey<Transfer>(t => t.SenderReviewId);
+                .HasForeignKey<Transfer>(t => t.AuthorReviewId);
 
             modelBuilder.Entity<Transfer>()
-                .HasOne(t => t.ReceiverReview)
+                .HasOne(t => t.RecipientReview)
                 .WithOne()
-                .HasForeignKey<Transfer>(t => t.ReceiverReviewId);
+                .HasForeignKey<Transfer>(t => t.RecipientReviewId);
 
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Transfer)
-                .WithOne(t => t.SenderReview);
+                .WithOne(t => t.AuthorReview);
 
             modelBuilder.Entity<Report>()
                 .HasOne(r => r.Author);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data_Access_Layer.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,17 +16,20 @@ namespace CactusDAL.Models
         public virtual Genus Genus { get; set; }
 
 
-        // TODO: characteristics of the species
+        // OPTIONAL TODO: characteristics of the species
         // e.g. description, origin, shape, size, spike length,
         // type of flower (if it has flower at all), use (edible, healing…)
 
-
-        public IEnumerable<Cactus> Instances { get; set; }
-
+        // Proposing
+        public bool Approved { get; set; }
         public DateTime ConfirmationDate { get; set; }
 
+
+        // ----- not neccesarry -----
+        public virtual IEnumerable<Cactus> Instances { get; set; }
+
         // @ optional feature
-        public IEnumerable<User> WishlistedBy { get; set; }
-        public bool Approved { get; set; }
+        public virtual IEnumerable<Wishlist> Wishlist{ get; set; }
+        
     }
 }

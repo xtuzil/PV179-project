@@ -7,6 +7,6 @@ namespace CactusDAL.Models
         public int CactusId { get; set; }
 
         [ForeignKey(nameof(CactusId))]
-        public Cactus Cactus { get; set; }
+        public virtual Cactus Cactus { get; set; }
     }
 }

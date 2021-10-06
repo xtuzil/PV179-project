@@ -9,16 +9,16 @@ namespace CactusDAL.Models
         public int OwnerId { get; set; }
 
         [ForeignKey(nameof(OwnerId))]
-        public User Owner { get; set; }
+        public virtual User Owner { get; set; }
 
         public int SpeciesId { get; set; }
 
         [ForeignKey(nameof(SpeciesId))]
-        public Species Species { get; set; }
+        public virtual Species Species { get; set; }
 
-        public IEnumerable<CactusPhoto> Photos { get; set; }
+        public virtual IEnumerable<CactusPhoto> Photos { get; set; }
 
-        public IEnumerable<Transfer> Transfers { get; set; }
+        public virtual IEnumerable<Transfer> Transfers { get; set; }
 
         public bool ForSale { get; set; }
 

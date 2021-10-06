@@ -6,11 +6,11 @@ namespace CactusDAL.Models
     {
         public int TargetId { get; set; }
         [ForeignKey(nameof(TargetId))]
-        public User Target { get; set; }
+        public virtual User Target { get; set; }
 
         public int AuthorId { get; set; }
         [ForeignKey(nameof(AuthorId))]
-        public User Author { get; set; }
+        public virtual User Author { get; set; }
 
         public string Description;
     }

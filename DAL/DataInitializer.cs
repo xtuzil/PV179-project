@@ -1,5 +1,6 @@
 ﻿using CactusDAL.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace CactusDAL
 {
@@ -160,6 +161,7 @@ namespace CactusDAL
                 Id = 1,
                 SpeciesId = species.Id,
                 OwnerId = user.Id,
+                Amount = 100
 
             };
 
@@ -167,7 +169,8 @@ namespace CactusDAL
             {
                 Id = 2,
                 SpeciesId = species2.Id,
-                OwnerId = user3.Id
+                OwnerId = user3.Id,
+                Amount = 50
             };
 
             var cactusPhoto = new CactusPhoto
@@ -198,12 +201,14 @@ namespace CactusDAL
             var offerRejected = new Offer
             {
                 Id = 1,
-                SenderId = user2.Id,
-                ReceiverId = user3.Id,
-                Response = OfferStatus.Declined
+                AuthorId = user2.Id,
+                RecipientId = user3.Id,
+                Response = OfferStatus.Declined,
             };
 
             modelBuilder.Entity<Offer>().HasData(offerRejected);
+
+            // TODO add CactusOffer to CactusOffers and CactusRequests
             modelBuilder.Entity<CactusOffer>().HasData(new CactusOffer { Id = 1, CactusId = cactus2.Id, OfferId = offerRejected.Id });
             modelBuilder.Entity<CactusOffer>().HasData(new CactusOffer { Id = 2, CactusId = cactus.Id, OfferId = offerRejected.Id });
 
@@ -223,8 +228,8 @@ namespace CactusDAL
             {
                 Id = 2,
                 PreviousOfferId = offerRejected.Id,
-                SenderId = user3.Id,
-                ReceiverId = user2.Id,
+                AuthorId = user3.Id,
+                RecipientId = user2.Id,
                 Response = OfferStatus.Accepted,
                 OfferedMoney = 50
             };
@@ -236,8 +241,8 @@ namespace CactusDAL
             {
                 Id = 1,
                 OfferId = offerAccepted.Id,
-                ReceiverReviewId = 1,
-                SenderReviewId = 2,
+                RecipientReviewId = 1,
+                AuthorReviewId = 2,
             };
 
             modelBuilder.Entity<Transfer>().HasData(moneyTransfer);

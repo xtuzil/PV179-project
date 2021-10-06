@@ -20,6 +20,6 @@ namespace CactusDAL.Models
         public int TransferId { get; set; }
 
         [ForeignKey(nameof(TransferId))]
-        public Transfer Transfer { get; set; }
+        public virtual Transfer Transfer { get; set; }
     }
 }

@@ -7,18 +7,18 @@ namespace CactusDAL.Models
     {
         public int OfferId { get; set; }
         [ForeignKey(nameof(OfferId))]
-        public Offer Offer { get; set; }
+        public virtual Offer Offer { get; set; }
 
-        public int SenderReviewId { get; set; }
-        [ForeignKey(nameof(SenderReviewId))]
-        public Review SenderReview { get; set; }
+        public int AuthorReviewId { get; set; }
+        [ForeignKey(nameof(AuthorReviewId))]
+        public virtual Review AuthorReview { get; set; }
 
-        public int ReceiverReviewId { get; set; }
-        [ForeignKey(nameof(ReceiverReviewId))]
-        public Review ReceiverReview { get; set; }
+        public int RecipientReviewId { get; set; }
+        [ForeignKey(nameof(RecipientReviewId))]
+        public virtual Review RecipientReview { get; set; }
 
-        public bool SenderAprovedDelivery { get; set; }
-        public bool ReceiverAprovedDelivery { get; set; }
+        public bool AuthorAprovedDelivery { get; set; }
+        public bool RecipientAprovedDelivery { get; set; }
 
         public DateTime TransferedTime;
 

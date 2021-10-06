@@ -6,6 +6,6 @@ namespace CactusDAL.Models
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public IEnumerable<Species> Species { get; set; }
+        public virtual IEnumerable<Species> Species { get; set; }
     }
 }

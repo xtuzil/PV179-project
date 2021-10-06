@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data_Access_Layer.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,10 +12,10 @@ namespace CactusDAL.Models
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public ProfilePhoto ProfilePhoto { get; set; }
-        public IEnumerable<CactusPhoto> UploadedCactusPhotos { get; set; }
+        public virtual ProfilePhoto ProfilePhoto { get; set; }
+        public virtual IEnumerable<CactusPhoto> UploadedCactusPhotos { get; set; }
 
-        public IEnumerable<Comment> Comments { get; set; }
+        public virtual IEnumerable<Comment> Comments { get; set; }
 
         public Role Role { get; set; }
         public bool Banned { get; set; }
@@ -25,17 +26,17 @@ namespace CactusDAL.Models
 
         public int AddressId { get; set; }
         [ForeignKey(nameof(AddressId))]
-        public PostalAddress Address { get; set; }
+        public virtual PostalAddress Address { get; set; }
 
-        public IEnumerable<Cactus> Cactuses { get; set; }
-        public IEnumerable<Species> Wishlist { get; set; }
+        public virtual IEnumerable<Cactus> Cactuses { get; set; }
+        public virtual IEnumerable<Wishlist> Wishlist { get; set; }
 
-        public IEnumerable<Offer> OffersSent { get; set; }
-        public IEnumerable<Offer> OffersReceived { get; set; }
+        public virtual IEnumerable<Offer> OffersSent { get; set; }
+        public virtual IEnumerable<Offer> OffersReceived { get; set; }
 
-        public IEnumerable<Review> ReviewsReceived { get; set; }
+        public virtual IEnumerable<Review> ReviewsReceived { get; set; }
 
-        public IEnumerable<Transfer> TransfersFrom { get; set; }
-        public IEnumerable<Transfer> TransfersTo { get; set; }
+        public virtual IEnumerable<Transfer> TransfersFrom { get; set; }
+        public virtual IEnumerable<Transfer> TransfersTo { get; set; }
     }
 }

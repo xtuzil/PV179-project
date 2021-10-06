@@ -16,6 +16,9 @@ namespace PV179_Project
                 db.Cactuses.Add(new CactusDAL.Models.Cactus { Species = db.Species.First(), Owner = db.Users.First(), ForSale = false });
                 db.SaveChanges();
 
+                var offer1 = db.Offers.Include(o => o.Comments).Where(o => o.Id == 1).First();
+                System.Console.WriteLine("Comment:", offer1.Comments.First().Text);
+
                 var offer = db.Offers
                     .Include(o => o.PreviousOffer)
                     .Include(o => o.CactusOffers)
@@ -24,8 +27,8 @@ namespace PV179_Project
                     .First();
 
 
-                System.Console.WriteLine(offer.PreviousOffer.Response);
-                System.Console.WriteLine(offer.CactusOffers.First().Amount);
+                //System.Console.WriteLine(offer.PreviousOffer.Response);
+                //System.Console.WriteLine(offer.CactusOffers.First().Amount);
                 //System.Console.WriteLine(offer.Comments.ToList().Count);
                 //System.Console.WriteLine(offer.RequestedCactuses.First().Transfers.First().Cactus.CreationDate); 
 
