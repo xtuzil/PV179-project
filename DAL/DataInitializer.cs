@@ -206,12 +206,26 @@ namespace CactusDAL
                 Response = OfferStatus.Declined,
             };
 
-            modelBuilder.Entity<Offer>().HasData(offerRejected);
+            var offerAccepted = new Offer
+            {
+                Id = 2,
+                PreviousOfferId = offerRejected.Id,
+                AuthorId = user3.Id,
+                RecipientId = user2.Id,
+                Response = OfferStatus.Accepted,
+                OfferedMoney = 50
+            };
+            var offers = new List<Offer> { offerRejected, offerAccepted };
+
+            modelBuilder.Entity<Offer>().HasData(offers);
+
+            var cactusOfferOfRejected1 = new CactusOffer { Id = 1, CactusId = cactus2.Id, OfferedId = offerRejected.Id, RequestedId = offerRejected.Id };
+            var cactusOfferOfRejected2 = new CactusOffer { Id = 2, CactusId = cactus.Id, OfferedId = offerRejected.Id, RequestedId = offerRejected.Id };
+            var cactusOfferOfAccepted1 = new CactusOffer { Id = 3, CactusId = cactus2.Id, OfferedId = offerAccepted.Id, RequestedId = offerAccepted.Id };
+            var cactusOffers = new List<CactusOffer> { cactusOfferOfRejected1, cactusOfferOfRejected2, cactusOfferOfAccepted1 };
 
             // TODO add CactusOffer to CactusOffers and CactusRequests
-            modelBuilder.Entity<CactusOffer>().HasData(new CactusOffer { Id = 1, CactusId = cactus2.Id, OfferId = offerRejected.Id });
-            modelBuilder.Entity<CactusOffer>().HasData(new CactusOffer { Id = 2, CactusId = cactus.Id, OfferId = offerRejected.Id });
-
+            modelBuilder.Entity<CactusOffer>().HasData(cactusOffers);
 
             var comment = new Comment
             {
@@ -223,19 +237,6 @@ namespace CactusDAL
 
 
             modelBuilder.Entity<Comment>().HasData(comment);
-
-            var offerAccepted = new Offer
-            {
-                Id = 2,
-                PreviousOfferId = offerRejected.Id,
-                AuthorId = user3.Id,
-                RecipientId = user2.Id,
-                Response = OfferStatus.Accepted,
-                OfferedMoney = 50
-            };
-
-            modelBuilder.Entity<Offer>().HasData(offerAccepted);
-            modelBuilder.Entity<CactusOffer>().HasData(new CactusOffer { Id = 3, CactusId = cactus2.Id, OfferId = offerAccepted.Id });
 
             var moneyTransfer = new Transfer
             {
