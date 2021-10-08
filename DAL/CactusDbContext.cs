@@ -72,13 +72,11 @@ namespace CactusDAL
 
             modelBuilder.Entity<Offer>()
                 .HasMany(o => o.CactusOffers)
-                .WithOne(co => co.Offered)
-                .HasForeignKey(co => co.OfferedId);
+                .WithOne(co => co.Offer);
 
             modelBuilder.Entity<Offer>()
                 .HasMany(o => o.CactusRequests)
-                .WithOne(co => co.Requested)
-                .HasForeignKey(co => co.RequestedId);
+                .WithOne(co => co.Offer);
 
             modelBuilder.Entity<Transfer>()
                 .HasOne(t => t.AuthorReview)

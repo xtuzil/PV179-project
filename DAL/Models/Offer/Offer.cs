@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data_Access_Layer.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,7 +18,7 @@ namespace CactusDAL.Models
         public virtual IEnumerable<CactusOffer> CactusOffers { get; set; }
         public double? OfferedMoney { get; set; }
 
-        public virtual IEnumerable<CactusOffer> CactusRequests { get; set; }
+        public virtual IEnumerable<CactusRequest> CactusRequests { get; set; }
         public double? RequestedMoney { get; set; }
 
         public OfferStatus Response { get; set; }

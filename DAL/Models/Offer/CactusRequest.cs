@@ -1,8 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using CactusDAL.Models;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CactusDAL.Models
+namespace Data_Access_Layer.Models
 {
-    public class CactusOffer : BaseEntity
+    public class CactusRequest : BaseEntity
     {
         public int CactusId { get; set; }
         [ForeignKey(nameof(CactusId))]

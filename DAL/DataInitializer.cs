@@ -219,9 +219,9 @@ namespace CactusDAL
 
             modelBuilder.Entity<Offer>().HasData(offers);
 
-            var cactusOfferOfRejected1 = new CactusOffer { Id = 1, CactusId = cactus2.Id, OfferedId = offerRejected.Id, RequestedId = offerRejected.Id };
-            var cactusOfferOfRejected2 = new CactusOffer { Id = 2, CactusId = cactus.Id, OfferedId = offerRejected.Id, RequestedId = offerRejected.Id };
-            var cactusOfferOfAccepted1 = new CactusOffer { Id = 3, CactusId = cactus2.Id, OfferedId = offerAccepted.Id, RequestedId = offerAccepted.Id };
+            var cactusOfferOfRejected1 = new CactusOffer { Id = 1, CactusId = cactus2.Id, OfferId = offerRejected.Id };
+            var cactusOfferOfRejected2 = new CactusOffer { Id = 2, CactusId = cactus.Id, OfferId = offerRejected.Id };
+            var cactusOfferOfAccepted1 = new CactusOffer { Id = 3, CactusId = cactus2.Id, OfferId = offerAccepted.Id };
             var cactusOffers = new List<CactusOffer> { cactusOfferOfRejected1, cactusOfferOfRejected2, cactusOfferOfAccepted1 };
 
             // TODO add CactusOffer to CactusOffers and CactusRequests
