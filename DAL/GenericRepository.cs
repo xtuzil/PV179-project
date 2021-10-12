@@ -1,13 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace CactusDAL
 {
-    public class GenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         internal CactusDbContext context;
         internal DbSet<TEntity> dbSet;
@@ -18,45 +13,45 @@ namespace CactusDAL
             this.dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(
-            Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "")
-        {
-            IQueryable<TEntity> query = dbSet;
+        //public virtual IEnumerable<TEntity> Get(
+        //    Expression<Func<TEntity, bool>> filter = null,
+        //    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        //    string includeProperties = "")
+        //{
+        //    IQueryable<TEntity> query = dbSet;
 
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
+        //    if (filter != null)
+        //    {
+        //        query = query.Where(filter);
+        //    }
 
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
+        //    foreach (var includeProperty in includeProperties.Split
+        //        (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+        //    {
+        //        query = query.Include(includeProperty);
+        //    }
 
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
-            }
-            else
-            {
-                return query.ToList();
-            }
-        }
+        //    if (orderBy != null)
+        //    {
+        //        return orderBy(query).ToList();
+        //    }
+        //    else
+        //    {
+        //        return query.ToList();
+        //    }
+        //}
 
-        public virtual TEntity GetByID(object id)
+        public virtual TEntity GetById(int id)
         {
             return dbSet.Find(id);
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual void Create(TEntity entity)
         {
             dbSet.Add(entity);
         }
 
-        public virtual void Delete(object id)
+        public virtual void Delete(int id)
         {
             TEntity entityToDelete = dbSet.Find(id);
             Delete(entityToDelete);
