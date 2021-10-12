@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using CactusDAL.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using CactusDAL;
-using CactusDAL.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RazorPages.Pages.Cactuses
 {
@@ -19,7 +15,7 @@ namespace RazorPages.Pages.Cactuses
             _context = context;
         }
 
-        public IList<Cactus> Cactus { get;set; }
+        public IList<Cactus> Cactus { get; set; }
 
         public async Task OnGetAsync()
         {

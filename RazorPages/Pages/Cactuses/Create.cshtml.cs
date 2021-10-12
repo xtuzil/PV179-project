@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CactusDAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using CactusDAL;
-using CactusDAL.Models;
+using System.Threading.Tasks;
 
 namespace RazorPages.Pages.Cactuses
 {
@@ -21,8 +17,8 @@ namespace RazorPages.Pages.Cactuses
 
         public IActionResult OnGet()
         {
-        ViewData["OwnerId"] = new SelectList(_context.Users, "Id", "Id");
-        ViewData["SpeciesId"] = new SelectList(_context.Species, "Id", "Id");
+            ViewData["OwnerId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["SpeciesId"] = new SelectList(_context.Species, "Id", "Id");
             return Page();
         }
 

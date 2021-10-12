@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <RootNamespace>Data_Access_Layer</RootNamespace>
+    <RootNamespace>CactusDAL</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

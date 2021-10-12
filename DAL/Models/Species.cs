@@ -1,5 +1,4 @@
-﻿using Data_Access_Layer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -29,7 +28,7 @@ namespace CactusDAL.Models
         public virtual IEnumerable<Cactus> Instances { get; set; }
 
         // @ optional feature
-        public virtual IEnumerable<Wishlist> Wishlist{ get; set; }
-        
+        public virtual IEnumerable<Wishlist> Wishlist { get; set; }
+
     }
 }

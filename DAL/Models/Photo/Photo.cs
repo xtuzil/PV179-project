@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CactusDAL.Models
+﻿namespace CactusDAL.Models
 {
     public class Photo : DatedEntity
     {

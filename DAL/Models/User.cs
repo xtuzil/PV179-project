@@ -1,6 +1,4 @@
-﻿using Data_Access_Layer.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CactusDAL.Models

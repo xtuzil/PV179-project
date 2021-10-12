@@ -1,5 +1,4 @@
 ﻿using CactusDAL.Models;
-using Data_Access_Layer.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -8,7 +7,7 @@ namespace CactusDAL
 {
     public class CactusDbContext : DbContext
     {
-       
+
         public DbSet<Genus> Genuses { get; set; }
         public DbSet<Species> Species { get; set; }
         public DbSet<Cactus> Cactuses { get; set; }
@@ -23,11 +22,11 @@ namespace CactusDAL
         public DbSet<Offer> Offers { get; set; }
         public DbSet<CactusOffer> CactusOffers { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
-        
+
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        
+
 
         private string connectionString = "Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database=CactusesManager;Trusted_Connection=True;";
 
