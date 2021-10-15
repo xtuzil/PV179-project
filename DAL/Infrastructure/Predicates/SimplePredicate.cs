@@ -7,5 +7,10 @@ namespace CactusDAL.Predicates
         public string TargetPropertyName { get; set; }
         public object ComparedValue { get; set; }
         public ValueComparingOperator ValueComparingOperator { get; set; }
+
+        public override string ToString()
+        {
+            return $"{TargetPropertyName} {ValueComparingOperator.GetString()} {ComparedValue}";
+        }
     }
 }

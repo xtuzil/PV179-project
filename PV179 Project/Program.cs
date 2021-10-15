@@ -26,6 +26,9 @@ namespace PV179_Project
                     .Where(o => o.Id == 2)
                     .First();
 
+                var offer = db.Offers.Where(o => o.Id == 2).First();
+                var offer = db.Offers.UseFilter();
+
 
                 //System.Console.WriteLine(offer.PreviousOffer.Response);
                 //System.Console.WriteLine(offer.CactusOffers.First().Amount);
