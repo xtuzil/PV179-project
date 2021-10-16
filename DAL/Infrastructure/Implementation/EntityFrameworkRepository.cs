@@ -1,4 +1,4 @@
-﻿using CactusDAL.Query;
+using CactusDAL.Query;
 using CactusDAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -41,6 +41,11 @@ namespace CactusDAL
         public virtual async Task<TEntity> GetAsync(int id)
         {
             return await _dbSet.FindAsync(id);
+        }
+
+        public IEnumerable<TEntity> GetAll()
+        {
+            return _dbSet.ToList();
         }
 
         public virtual async Task<TEntity> GetAsync(int id, int[] includes)

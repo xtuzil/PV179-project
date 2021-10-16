@@ -1,4 +1,6 @@
 ﻿using CactusDAL;
+using CactusDAL.Models;
+using CactusDAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -26,8 +28,17 @@ namespace PV179_Project
                     .Where(o => o.Id == 2)
                     .First();
 
-                var offer = db.Offers.Where(o => o.Id == 2).Order().First();
-                var offer = db.Offers.;
+                //offer = db.Offers.Where(o => o.Id == 2).First();
+                //offer = db.Offers.UseFilter();
+
+
+                //using (var uowp = new EntityFrameworkUnitOfWorkProvider(() => new CactusDbContext()))
+                //{
+                //    uowp.Create();
+                //    IUnitOfWork uow = uowp.GetUnitOfWorkInstance();
+                //    uow.Users.Create(new User { FirstName = "Jack", LastName = "Smith", Email = "example@example.com", Password = "password", AddressId = 1, AccountBalance = 50 });
+                //    uow.Commit();
+                //}
 
 
                 //System.Console.WriteLine(offer.PreviousOffer.Response);

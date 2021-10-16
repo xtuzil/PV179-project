@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace CactusDAL.UnitOfWork
 {
-    public abstract class UnitOfWorkProviderBase : IUnitOfWorkProvider
+    public abstract class UnitOfWorkProviderBase : IUnitOfWorkProvider, IDisposable
     {
-        protected AsyncLocal<IUnitOfWork> _unitOfWorkLocalInstance { get; set; }
+        protected AsyncLocal<IUnitOfWork> _unitOfWorkLocalInstance { get; set; } = new AsyncLocal<IUnitOfWork>();
 
         public abstract void Create();
 
