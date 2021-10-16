@@ -31,34 +31,35 @@ namespace CactusDAL.Query
 
         public override async Task<QueryResult<TEntity>> ExecuteAsync()
         {
+            IQueryable<TEntity> result = _queryable;
+            IList<TEntity> resultList;
+            using (context)
+            {
+                if (Predicate != null)
+                {
+                    result = UseFilterCriteria(result);
+                }
+
+                if (DesiredPage != 0)
+                {
+                    result = result.Skip(DesiredPage).Take(PageSize);
+                }
+
+                if (SortAccordingTo != null)
+                {
+                    result = UseSortCriteria<object>(result);
+                }
+                resultList = await result.ToListAsync();
+            }
+
             QueryResult<TEntity> queryResult = new QueryResult<TEntity>();
-            queryResult.TotalItemsCount = _queryable.Count();
+            queryResult.TotalItemsCount = resultList.Count();
             queryResult.RequestedPageNumber = DesiredPage;
             queryResult.PageSize = PageSize;
             queryResult.PagingEnabled = DesiredPage == 0 ? false : true;
-            queryResult.Items = new List<TEntity>(_queryable);
+            queryResult.Items = new List<TEntity>(resultList);
 
             return queryResult;
-        }
-
-        public override EntityFrameworkQuery<TEntity> Where(IPredicate rootPredicate)
-        {
-            base.Where(rootPredicate);
-
-            IUnitOfWork unitOfWork = _provider.GetUnitOfWorkInstance();
-            unitOfWork.RegisterAction(() => UseFilterCriteria(_queryable));
-
-            return this;
-        }
-
-        public override EntityFrameworkQuery<TEntity> SortBy<TKey>(string sortAccordingTo, bool ascendingOrder)
-        {
-            base.SortBy<TKey>(sortAccordingTo, ascendingOrder);
-
-            IUnitOfWork unitOfWork = _provider.GetUnitOfWorkInstance();
-            unitOfWork.RegisterAction(() => UseSortCriteria<TKey>(_queryable));
-
-            return this;
         }
 
         private IQueryable<TEntity> UseSortCriteria<TKey>(IQueryable<TEntity> queryable)
