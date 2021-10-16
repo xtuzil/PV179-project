@@ -1,7 +1,9 @@
+using CactusDAL.Predicates;
 using CactusDAL.Query;
 using CactusDAL.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CactusDAL
@@ -10,7 +12,7 @@ namespace CactusDAL
     {
         protected DbContext _context;
         internal DbSet<TEntity> _dbSet;
-        private IUnitOfWorkProvider _provider;
+        private EntityFrameworkUnitOfWorkProvider _provider;
 
         public EntityFrameworkRepository(DbContext context)
         {
@@ -18,22 +20,33 @@ namespace CactusDAL
             _dbSet = context.Set<TEntity>();
         }
 
-        public virtual IEnumerable<TEntity> Get(IQuery<TEntity> query)
+        public virtual Task<QueryResult<TEntity>> Get(
+            IPredicate? predicate,
+            string? sortAccordingTo,
+            bool? useAscendingOrder,
+            int? pageSize,
+            int? desiredPage)
         {
-            if (filter != null)
+            IQuery<TEntity> query = new EntityFrameworkQuery<TEntity>(_provider, _dbSet);
+
+            if (predicate != null)
             {
-                query = query.Where(filter);
+                query = query.Where(predicate);
+            }
+            
+            if (sortAccordingTo != null && useAscendingOrder != null)
+            {
+                query = query.SortBy<object>(sortAccordingTo, (bool)useAscendingOrder);
             }
 
-            foreach (var includeProperty in includeProperties.Split
-                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            if (desiredPage != null)
             {
-                query = query.Include(includeProperty);
-            }
+                if (pageSize != null)
+                {
+                    query = query.Page((int)desiredPage, (int)pageSize);
+                }
 
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
+                query = query.Page((int)desiredPage);
             }
             return query.ExecuteAsync();
         }

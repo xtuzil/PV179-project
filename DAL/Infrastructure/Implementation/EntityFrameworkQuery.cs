@@ -4,6 +4,7 @@ using CactusDAL.UnitOfWork;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,51 +14,54 @@ using System.Threading.Tasks;
 
 namespace CactusDAL.Query
 {
-    public class EntityFrameworkQuery<TEntity, TKey> : QueryBase<TEntity> where TEntity : class
+    public class EntityFrameworkQuery<TEntity> : QueryBase<TEntity> where TEntity : class
     {
         protected DbContext context;
         private string LambdaParameterName { get; set; }
         private ParameterExpression parameterExpression { get; set; }
+        private IQueryable<TEntity> _queryable { get; set; }
 
-        public EntityFrameworkQuery(EntityFrameworkUnitOfWorkProvider provider) : base(provider)
+        public EntityFrameworkQuery(EntityFrameworkUnitOfWorkProvider provider, IQueryable<TEntity> queryable) : base(provider)
         {
             context = ((EntityFrameworkUnitOfWork) provider.GetUnitOfWorkInstance())._context;
             LambdaParameterName = typeof(TEntity).GetType().Name;
             parameterExpression = Expression.Parameter(typeof(TEntity), LambdaParameterName);
+            _queryable = queryable;
         }
 
-        public override Task<QueryResult<TEntity>> ExecuteAsync()
+        public override async Task<QueryResult<TEntity>> ExecuteAsync()
         {
-            throw new NotImplementedException();
+            QueryResult<TEntity> queryResult = new QueryResult<TEntity>();
+            queryResult.TotalItemsCount = _queryable.Count();
+            queryResult.RequestedPageNumber = DesiredPage;
+            queryResult.PageSize = PageSize;
+            queryResult.PagingEnabled = DesiredPage == 0 ? false : true;
+            queryResult.Items = new List<TEntity>(_queryable);
+
+            return queryResult;
         }
 
-        public override IQuery<TEntity> Where(IPredicate rootPredicate)
+        public override EntityFrameworkQuery<TEntity> Where(IPredicate rootPredicate)
         {
             base.Where(rootPredicate);
 
             IUnitOfWork unitOfWork = _provider.GetUnitOfWorkInstance();
-            unitOfWork.RegisterAction(() => UseFilterCriteria(this));
+            unitOfWork.RegisterAction(() => UseFilterCriteria(_queryable));
 
             return this;
         }
 
-        public override IQuery<TEntity> SortBy(string sortAccordingTo, bool ascendingOrder)
+        public override EntityFrameworkQuery<TEntity> SortBy<TKey>(string sortAccordingTo, bool ascendingOrder)
         {
-            base.SortBy(sortAccordingTo, ascendingOrder);
+            base.SortBy<TKey>(sortAccordingTo, ascendingOrder);
 
             IUnitOfWork unitOfWork = _provider.GetUnitOfWorkInstance();
-            unitOfWork.RegisterAction(() => UseSortCriteria(this));
+            unitOfWork.RegisterAction(() => UseSortCriteria<TKey>(_queryable));
+
+            return this;
         }
 
-        public override IQuery<TEntity> Page(int pageToFetch, int pageSize)
-        {
-            base.Page(pageToFetch, pageSize);
-
-            IUnitOfWork unitOfWork = _provider.GetUnitOfWorkInstance();
-            unitOfWork.RegisterAction(() => query);
-        }
-
-        private IQueryable<TEntity> UseSortCriteria(IQueryable<TEntity> queryable)
+        private IQueryable<TEntity> UseSortCriteria<TKey>(IQueryable<TEntity> queryable)
         {
             Expression<Func<TEntity, TKey>> sortExpression =
                 Expression.Lambda<Func<TEntity, TKey>>(
@@ -65,11 +69,10 @@ namespace CactusDAL.Query
                     parameterExpression
                 );
 
-
             return UseSortCriteriaCore(sortExpression, queryable);
         } 
 
-        private IQueryable<TEntity> UseSortCriteriaCore(Expression<Func<TEntity, TKey>> sortExpression, IQueryable<TEntity> queryable)
+        private IQueryable<TEntity> UseSortCriteriaCore<TKey>(Expression<Func<TEntity, TKey>> sortExpression, IQueryable<TEntity> queryable)
         {
             if (UseAscendingOrder)
             {

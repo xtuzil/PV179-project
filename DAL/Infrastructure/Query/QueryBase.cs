@@ -15,7 +15,7 @@ namespace CactusDAL.Query
         public bool UseAscendingOrder { get; set; }
         public IPredicate Predicate { get; set; }
         protected IUnitOfWorkProvider _provider { get; set; }
-        private int _defaultPageSize = 20;
+        private const int _defaultPageSize = 20;
 
         public QueryBase(IUnitOfWorkProvider provider)
         {
@@ -30,7 +30,7 @@ namespace CactusDAL.Query
             return this;
         }
 
-        public virtual IQuery<TEntity> SortBy(string sortAccordingTo, bool ascendingOrder)
+        public virtual IQuery<TEntity> SortBy<TKey>(string sortAccordingTo, bool ascendingOrder)
         {
             SortAccordingTo = sortAccordingTo;
             UseAscendingOrder = ascendingOrder;
@@ -38,7 +38,7 @@ namespace CactusDAL.Query
             return this;
         }
 
-        public virtual IQuery<TEntity> Page(int pageToFetch, int pageSize)
+        public virtual IQuery<TEntity> Page(int pageToFetch, int pageSize = _defaultPageSize)
         {
             PageSize = pageSize;
             DesiredPage = pageToFetch;
