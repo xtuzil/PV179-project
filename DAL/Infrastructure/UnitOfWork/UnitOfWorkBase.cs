@@ -16,7 +16,7 @@ namespace CactusDAL.UnitOfWork
                 action();
             }
             CommitCore();
-            _afterCommitActions = new List<Action>();
+            _afterCommitActions.Clear();
         }
 
         public void RegisterAction(Action action)

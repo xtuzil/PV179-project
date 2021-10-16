@@ -26,8 +26,8 @@ namespace PV179_Project
                     .Where(o => o.Id == 2)
                     .First();
 
-                var offer = db.Offers.Where(o => o.Id == 2).First();
-                var offer = db.Offers.UseFilter();
+                var offer = db.Offers.Where(o => o.Id == 2).Order().First();
+                var offer = db.Offers.;
 
 
                 //System.Console.WriteLine(offer.PreviousOffer.Response);

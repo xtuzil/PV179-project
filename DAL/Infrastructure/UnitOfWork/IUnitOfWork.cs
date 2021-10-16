@@ -10,6 +10,5 @@ namespace CactusDAL.UnitOfWork
     {
         void Commit();
         void RegisterAction(Action action);
-        void Dispose();
     }
 }

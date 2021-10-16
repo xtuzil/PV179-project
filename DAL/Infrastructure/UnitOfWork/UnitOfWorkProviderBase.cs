@@ -20,7 +20,7 @@ namespace CactusDAL.UnitOfWork
         }
 
         public void Dispose() {
-            _unitOfWorkLocalInstance.Value.Dispose();
+            _unitOfWorkLocalInstance.Value = null;
         }
     }
 }
