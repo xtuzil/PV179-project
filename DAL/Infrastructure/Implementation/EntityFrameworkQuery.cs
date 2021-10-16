@@ -23,7 +23,7 @@ namespace CactusDAL.Query
 
         public EntityFrameworkQuery(EntityFrameworkUnitOfWorkProvider provider, IQueryable<TEntity> queryable) : base(provider)
         {
-            context = ((EntityFrameworkUnitOfWork) provider.GetUnitOfWorkInstance())._context;
+            context = ((EntityFrameworkUnitOfWork) provider.GetUnitOfWorkInstance()).Context;
             LambdaParameterName = typeof(TEntity).GetType().Name;
             parameterExpression = Expression.Parameter(typeof(TEntity), LambdaParameterName);
             _queryable = queryable;

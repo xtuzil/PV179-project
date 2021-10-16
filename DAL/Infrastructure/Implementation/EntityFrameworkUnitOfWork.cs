@@ -7,7 +7,7 @@ namespace CactusDAL
 {
     public class EntityFrameworkUnitOfWork : UnitOfWorkBase
     {
-        public DbContext _context { get; set; }
+        public DbContext Context { get; set; }
 
         public override EntityFrameworkRepository<PostalAddress> Addresses { get; }
         public override EntityFrameworkRepository<Cactus> Cactuses { get; }
@@ -25,25 +25,25 @@ namespace CactusDAL
 
         public EntityFrameworkUnitOfWork(DbContext dbContext)
         {
-            _context = dbContext;
-            Addresses = new EntityFrameworkRepository<PostalAddress>(_context);
-            Cactuses = new EntityFrameworkRepository<Cactus>(_context);
-            CactusOffers = new EntityFrameworkRepository<CactusOffer>(_context);
-            CactusRequests = new EntityFrameworkRepository<CactusRequest>(_context);
-            Comments = new EntityFrameworkRepository<Comment>(_context);
-            Genuses = new EntityFrameworkRepository<Genus>(_context);
-            Offers = new EntityFrameworkRepository<Offer>(_context);
-            Reviews = new EntityFrameworkRepository<Review>(_context);
-            Reports = new EntityFrameworkRepository<Report>(_context);
-            Species = new EntityFrameworkRepository<Species>(_context);
-            Transfers = new EntityFrameworkRepository<Transfer>(_context);
-            Users = new EntityFrameworkRepository<User>(_context);
-            WishlistItems = new EntityFrameworkRepository<Wishlist>(_context);
+            Context = dbContext;
+            Addresses = new EntityFrameworkRepository<PostalAddress>(Context);
+            Cactuses = new EntityFrameworkRepository<Cactus>(Context);
+            CactusOffers = new EntityFrameworkRepository<CactusOffer>(Context);
+            CactusRequests = new EntityFrameworkRepository<CactusRequest>(Context);
+            Comments = new EntityFrameworkRepository<Comment>(Context);
+            Genuses = new EntityFrameworkRepository<Genus>(Context);
+            Offers = new EntityFrameworkRepository<Offer>(Context);
+            Reviews = new EntityFrameworkRepository<Review>(Context);
+            Reports = new EntityFrameworkRepository<Report>(Context);
+            Species = new EntityFrameworkRepository<Species>(Context);
+            Transfers = new EntityFrameworkRepository<Transfer>(Context);
+            Users = new EntityFrameworkRepository<User>(Context);
+            WishlistItems = new EntityFrameworkRepository<Wishlist>(Context);
         }
 
         protected override void CommitCore()
         {
-            _context.SaveChanges();
+            Context.SaveChanges();
         }
 
         private bool disposed = false;
@@ -54,7 +54,7 @@ namespace CactusDAL
             {
                 if (disposing)
                 {
-                    _context.Dispose();
+                    Context.Dispose();
                 }
             }
             this.disposed = true;
