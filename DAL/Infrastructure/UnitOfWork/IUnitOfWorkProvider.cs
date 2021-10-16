@@ -9,7 +9,7 @@ namespace CactusDAL.UnitOfWork
 {
     public interface IUnitOfWorkProvider
     {
-        IUnitOfWork Create();
+        void Create();
         IUnitOfWork GetUnitOfWorkInstance();
     }
 }

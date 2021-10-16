@@ -12,11 +12,10 @@ namespace CactusDAL
         internal DbSet<TEntity> _dbSet;
         private IUnitOfWorkProvider _provider;
 
-        public EntityFrameworkRepository(DbContext context, IUnitOfWorkProvider provider)
+        public EntityFrameworkRepository(DbContext context)
         {
             _context = context;
             _dbSet = context.Set<TEntity>();
-            _provider = provider;
         }
 
         public virtual IEnumerable<TEntity> Get(IQuery<TEntity> query)

@@ -12,11 +12,15 @@ namespace CactusDAL.UnitOfWork
     {
         protected AsyncLocal<IUnitOfWork> _unitOfWorkLocalInstance { get; set; }
 
-        public abstract IUnitOfWork Create();
+        public abstract void Create();
+
         public IUnitOfWork GetUnitOfWorkInstance()
         {
-            _unitOfWorkLocalInstance.Value = Create();
+            return _unitOfWorkLocalInstance.Value;
         }
-        public void Dispose() { }
+
+        public void Dispose() {
+            _unitOfWorkLocalInstance.Value.Dispose();
+        }
     }
 }

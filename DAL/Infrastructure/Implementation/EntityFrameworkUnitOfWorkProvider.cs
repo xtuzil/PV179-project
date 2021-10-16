@@ -17,9 +17,9 @@ namespace CactusDAL
             _dbContextFactory = dbContextFactory;
         }
 
-        public override IUnitOfWork Create()
+        public override void Create()
         {
-            return new EntityFrameworkUnitOfWork(_dbContextFactory());
+            _unitOfWorkLocalInstance.Value = new EntityFrameworkUnitOfWork(_dbContextFactory());
         }
     }
 }
