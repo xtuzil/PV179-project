@@ -20,37 +20,6 @@ namespace CactusDAL
             _dbSet = context.Set<TEntity>();
         }
 
-        public virtual Task<QueryResult<TEntity>> Get(
-            IPredicate? predicate,
-            string? sortAccordingTo,
-            bool? useAscendingOrder,
-            int? pageSize,
-            int? desiredPage)
-        {
-            IQuery<TEntity> query = new EntityFrameworkQuery<TEntity>(_provider, _dbSet);
-
-            if (predicate != null)
-            {
-                query = query.Where(predicate);
-            }
-            
-            if (sortAccordingTo != null && useAscendingOrder != null)
-            {
-                query = query.SortBy<object>(sortAccordingTo, (bool)useAscendingOrder);
-            }
-
-            if (desiredPage != null)
-            {
-                if (pageSize != null)
-                {
-                    query = query.Page((int)desiredPage, (int)pageSize);
-                }
-
-                query = query.Page((int)desiredPage);
-            }
-            return query.ExecuteAsync();
-        }
-
         public virtual async Task<TEntity> GetAsync(int id)
         {
             return await _dbSet.FindAsync(id);
