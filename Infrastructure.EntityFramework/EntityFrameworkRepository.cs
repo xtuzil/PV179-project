@@ -1,4 +1,3 @@
-using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,64 +5,59 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.EntityFramework
 {
+    using TDbContext = DbContext;
+
     public class EntityFrameworkRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
-        protected DbContext _context;
-        internal DbSet<TEntity> _dbSet;
-        private EntityFrameworkUnitOfWorkProvider _provider;
+        private readonly EntityFrameworkUnitOfWorkProvider unitOfWorkProvider;
 
-        public EntityFrameworkRepository(DbContext context)
+        protected virtual TDbContext Context
         {
-            _context = context;
-            _dbSet = context.Set<TEntity>();
+            get
+            {
+                return ((EntityFrameworkUnitOfWork)unitOfWorkProvider.GetUnitOfWorkInstance()).Context;
+            }
+        }
+
+        public EntityFrameworkRepository(EntityFrameworkUnitOfWorkProvider unitOfWorkProvider)
+        {
+            this.unitOfWorkProvider = unitOfWorkProvider;
         }
 
         public virtual async Task<TEntity> GetAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            return await Context.Set<TEntity>().FindAsync(id);
         }
 
         public IEnumerable<TEntity> GetAll()
         {
-            return _dbSet.ToList();
+            return Context.Set<TEntity>().ToList();
         }
 
         public virtual async Task<TEntity> GetAsync(int id, int[] includes)
         {
-            return await _dbSet.FindAsync(id);
+            return await Context.Set<TEntity>().FindAsync(id);
         }
 
         public virtual void Create(TEntity entity)
         {
-            IUnitOfWork unitOfWork = _provider.GetUnitOfWorkInstance();
-            unitOfWork.RegisterAction(() => _dbSet.Add(entity));
+            Context.Set<TEntity>().Add(entity);
         }
 
         public virtual void Delete(int id)
         {
-            IUnitOfWork unitOfWork = _provider.GetUnitOfWorkInstance();
-            TEntity entityToDelete = _dbSet.Find(id);
-            unitOfWork.RegisterAction(() => Delete(entityToDelete));
+            Delete(Context.Set<TEntity>().Find(id));
         }
 
         public virtual void Delete(TEntity entityToDelete)
         {
-            IUnitOfWork unitOfWork = _provider.GetUnitOfWorkInstance();
-            if (_context.Entry(entityToDelete).State == EntityState.Detached)
-            {
-                unitOfWork.RegisterAction(() => _dbSet.Attach(entityToDelete));
-            }
-            unitOfWork.RegisterAction(() => _dbSet.Remove(entityToDelete));
+            Context.Set<TEntity>().Remove(entityToDelete);
         }
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            IUnitOfWork unitOfWork = _provider.GetUnitOfWorkInstance();
-            unitOfWork.RegisterAction(() =>
-            {
-                _dbSet.Attach(entityToUpdate);
-                _context.Entry(entityToUpdate).State = EntityState.Modified;
-            });
+            Context.Set<TEntity>().Attach(entityToUpdate);
+            Context.Entry(entityToUpdate).State = EntityState.Modified;
         }
     }
 }

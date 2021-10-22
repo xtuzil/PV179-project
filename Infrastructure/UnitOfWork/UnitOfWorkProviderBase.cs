@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Threading;
 
 namespace Infrastructure.UnitOfWork
 {
     public abstract class UnitOfWorkProviderBase : IUnitOfWorkProvider, IDisposable
     {
-        protected AsyncLocal<IUnitOfWork> _unitOfWorkLocalInstance { get; set; } = new AsyncLocal<IUnitOfWork>();
+        protected IUnitOfWork unitOfWork { get; set; }
 
-        public abstract void Create();
+        public abstract IUnitOfWork Create();
 
         public IUnitOfWork GetUnitOfWorkInstance()
         {
-            return _unitOfWorkLocalInstance.Value;
+            return unitOfWork;
         }
 
         public void Dispose()
         {
-            _unitOfWorkLocalInstance.Value = null;
+            unitOfWork.Dispose();
         }
     }
 }

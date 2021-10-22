@@ -6,16 +6,17 @@ namespace Infrastructure.EntityFramework
 {
     public class EntityFrameworkUnitOfWorkProvider : UnitOfWorkProviderBase
     {
-        private Func<DbContext> _dbContextFactory { get; set; }
+        private Func<DbContext> dbContextFactory { get; set; }
 
         public EntityFrameworkUnitOfWorkProvider(Func<DbContext> dbContextFactory)
         {
-            _dbContextFactory = dbContextFactory;
+            this.dbContextFactory = dbContextFactory;
         }
 
-        public override void Create()
+        public override IUnitOfWork Create()
         {
-            _unitOfWorkLocalInstance.Value = new EntityFrameworkUnitOfWork(_dbContextFactory());
+            unitOfWork = new EntityFrameworkUnitOfWork(dbContextFactory);
+            return unitOfWork;
         }
     }
 }

@@ -1,4 +1,4 @@
-using CactusDAL;
+﻿using CactusDAL;
 using CactusDAL.Models;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +39,14 @@ namespace PV179_Project
                 //    uow.Users.Create(new User { FirstName = "Jack", LastName = "Smith", Email = "example@example.com", Password = "password", AddressId = 1, AccountBalance = 50 });
                 //    uow.Commit();
                 //}
+
+                var uowp = new EntityFrameworkUnitOfWorkProvider(() => new CactusDbContext());
+                using (var uow = uowp.Create())
+                {
+                    var users = new EntityFrameworkRepository<User>(uowp);
+                    users.Create(new User { FirstName = "Jack", LastName = "Smith", Email = "example@example.com", Password = "password", AddressId = 1, AccountBalance = 50 });
+                    uow.Commit();
+                }
 
 
                 //System.Console.WriteLine(offer.PreviousOffer.Response);

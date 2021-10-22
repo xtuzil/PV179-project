@@ -2,7 +2,7 @@
 {
     public interface IUnitOfWorkProvider
     {
-        void Create();
+        IUnitOfWork Create();
         IUnitOfWork GetUnitOfWorkInstance();
     }
 }
