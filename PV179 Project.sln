@@ -9,9 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CactusDAL", "DAL\CactusDAL.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorPages", "RazorPages\RazorPages.csproj", "{C4F864F8-818E-40F7-A144-B2F9524DF56C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{FC1A445D-D181-48C1-9EA8-6D6A8C3C9EAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{FC1A445D-D181-48C1-9EA8-6D6A8C3C9EAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.EntityFramework", "Infrastructure.EntityFramework\Infrastructure.EntityFramework.csproj", "{6B1D97B9-E013-459E-8303-82BB03142E9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.EntityFramework", "Infrastructure.EntityFramework\Infrastructure.EntityFramework.csproj", "{6B1D97B9-E013-459E-8303-82BB03142E9E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FC1A445D-D181-48C1-9EA8-6D6A8C3C9EAC} = {FC1A445D-D181-48C1-9EA8-6D6A8C3C9EAC}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

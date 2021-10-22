@@ -1,11 +1,8 @@
-﻿using CactusDAL.Predicates;
-using CactusDAL.UnitOfWork;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
+﻿using Infrastructure.Predicates;
+using Infrastructure.UnitOfWork;
 using System.Threading.Tasks;
 
-namespace CactusDAL.Query
+namespace Infrastructure.Query
 {
     public abstract class QueryBase<TEntity> : IQuery<TEntity> where TEntity : class
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CactusDAL.Query
+namespace Infrastructure.Query
 {
     public class QueryResult<TEntity> where TEntity : class
     {

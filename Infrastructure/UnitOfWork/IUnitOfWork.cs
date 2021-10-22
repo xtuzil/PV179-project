@@ -1,11 +1,6 @@
-﻿using CactusDAL.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace CactusDAL.UnitOfWork
+namespace Infrastructure.UnitOfWork
 {
     public interface IUnitOfWork
     {

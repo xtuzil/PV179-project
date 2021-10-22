@@ -1,18 +1,14 @@
-﻿using CactusDAL.Infrastructure;
-using CactusDAL.Predicates;
-using CactusDAL.UnitOfWork;
-using Microsoft.Data.SqlClient;
+﻿using Infrastructure.Predicates;
+using Infrastructure.Predicates.Operators;
+using Infrastructure.Query;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace CactusDAL.Query
+namespace Infrastructure.EntityFramework
 {
     public class EntityFrameworkQuery<TEntity> : QueryBase<TEntity> where TEntity : class
     {
@@ -23,7 +19,7 @@ namespace CactusDAL.Query
 
         public EntityFrameworkQuery(EntityFrameworkUnitOfWorkProvider provider) : base(provider)
         {
-            context = ((EntityFrameworkUnitOfWork) provider.GetUnitOfWorkInstance()).Context;
+            context = ((EntityFrameworkUnitOfWork)provider.GetUnitOfWorkInstance()).Context;
             LambdaParameterName = typeof(TEntity).GetType().Name;
             parameterExpression = Expression.Parameter(typeof(TEntity), LambdaParameterName);
             _dbSet = context.Set<TEntity>();
@@ -71,7 +67,7 @@ namespace CactusDAL.Query
                 );
 
             return UseSortCriteriaCore(sortExpression, queryable);
-        } 
+        }
 
         private IQueryable<TEntity> UseSortCriteriaCore<TKey>(Expression<Func<TEntity, TKey>> sortExpression, IQueryable<TEntity> queryable)
         {
@@ -83,7 +79,8 @@ namespace CactusDAL.Query
             return queryable.OrderByDescending(sortExpression);
         }
 
-        private IQueryable<TEntity> UseFilterCriteria(IQueryable<TEntity> queryable) {
+        private IQueryable<TEntity> UseFilterCriteria(IQueryable<TEntity> queryable)
+        {
             return queryable.Where(
                 Expression.Lambda<Func<TEntity, bool>>(
                     BuildBinaryExpression(Predicate),
@@ -92,22 +89,23 @@ namespace CactusDAL.Query
             );
         }
 
-        private Expression CombineBinaryExpressions(CompositePredicate compositePredicate) {
+        private Expression CombineBinaryExpressions(CompositePredicate compositePredicate)
+        {
             List<IPredicate> predicates = compositePredicate.Predicates;
 
             Expression leftExpression = BuildBinaryExpression(predicates[0]);
             Expression rightExpression = BuildBinaryExpression(predicates[1]);
 
-            BinaryExpression result = compositePredicate.LogicalOperator == Predicates.Operators.LogicalOperator.AND
+            BinaryExpression result = compositePredicate.LogicalOperator == LogicalOperator.AND
                 ? Expression.And(leftExpression, rightExpression)
                 : Expression.Or(leftExpression, rightExpression);
 
-            if(predicates.Count > 2)
+            if (predicates.Count > 2)
             {
-                for(int i = 2; i < predicates.Count; i++)
+                for (int i = 2; i < predicates.Count; i++)
                 {
                     Expression inner = BuildBinaryExpression(predicates[i]);
-                    result = compositePredicate.LogicalOperator == Predicates.Operators.LogicalOperator.AND
+                    result = compositePredicate.LogicalOperator == LogicalOperator.AND
                         ? Expression.AndAlso(result, inner)
                         : Expression.OrElse(result, inner);
                 }

@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace CactusDAL
+namespace Infrastructure
 {
     public interface IRepository<TEntity> where TEntity : class
     {

@@ -1,9 +1,8 @@
-using CactusDAL.Models;
-using CactusDAL.UnitOfWork;
+using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace CactusDAL
+namespace Infrastructure.EntityFramework
 {
     public class EntityFrameworkUnitOfWork : UnitOfWorkBase
     {
@@ -50,14 +49,14 @@ namespace CactusDAL
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     Context.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
 
         public override void Dispose()

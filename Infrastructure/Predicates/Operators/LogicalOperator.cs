@@ -1,4 +1,4 @@
-﻿namespace CactusDAL.Predicates.Operators
+﻿namespace Infrastructure.Predicates.Operators
 {
     public enum LogicalOperator
     {

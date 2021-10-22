@@ -1,7 +1,7 @@
-﻿using CactusDAL.Predicates;
+﻿using Infrastructure.Predicates;
 using System.Threading.Tasks;
 
-namespace CactusDAL.Query
+namespace Infrastructure.Query
 {
     public interface IQuery<TEntity> where TEntity : class
     {

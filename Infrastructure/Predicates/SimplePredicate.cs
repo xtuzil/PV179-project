@@ -1,6 +1,6 @@
-﻿using CactusDAL.Predicates.Operators;
+﻿using Infrastructure.Predicates.Operators;
 
-namespace CactusDAL.Predicates
+namespace Infrastructure.Predicates
 {
     public class SimplePredicate : IPredicate
     {

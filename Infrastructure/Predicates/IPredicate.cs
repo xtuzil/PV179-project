@@ -1,4 +1,4 @@
-﻿namespace CactusDAL.Predicates
+﻿namespace Infrastructure.Predicates
 {
     public interface IPredicate
     {

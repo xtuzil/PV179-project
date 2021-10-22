@@ -1,7 +1,7 @@
-﻿using CactusDAL.Predicates.Operators;
+﻿using Infrastructure.Predicates.Operators;
 using System.Collections.Generic;
 
-namespace CactusDAL.Predicates
+namespace Infrastructure.Predicates
 {
     public class CompositePredicate : IPredicate
     {

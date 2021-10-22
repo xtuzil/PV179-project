@@ -1,12 +1,10 @@
-using CactusDAL.Predicates;
-using CactusDAL.Query;
-using CactusDAL.UnitOfWork;
+using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CactusDAL
+namespace Infrastructure.EntityFramework
 {
     public class EntityFrameworkRepository<TEntity> : IRepository<TEntity> where TEntity : class
     {
@@ -32,7 +30,7 @@ namespace CactusDAL
 
         public virtual async Task<TEntity> GetAsync(int id, int[] includes)
         {
-            return await _dbSet.FindAsync(id); 
+            return await _dbSet.FindAsync(id);
         }
 
         public virtual void Create(TEntity entity)

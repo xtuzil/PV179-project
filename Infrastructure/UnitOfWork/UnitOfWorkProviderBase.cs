@@ -1,12 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Threading;
-using System.Threading.Tasks;
 
-namespace CactusDAL.UnitOfWork
+namespace Infrastructure.UnitOfWork
 {
     public abstract class UnitOfWorkProviderBase : IUnitOfWorkProvider, IDisposable
     {
@@ -19,7 +14,8 @@ namespace CactusDAL.UnitOfWork
             return _unitOfWorkLocalInstance.Value;
         }
 
-        public void Dispose() {
+        public void Dispose()
+        {
             _unitOfWorkLocalInstance.Value = null;
         }
     }
