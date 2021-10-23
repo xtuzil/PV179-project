@@ -10,6 +10,7 @@ namespace Infrastructure
     {
         private static IDictionary<ValueComparingOperator, Func<MemberExpression, ConstantExpression, Expression>> Expressions = new Dictionary<ValueComparingOperator, Func<MemberExpression, ConstantExpression, Expression>>
         {
+            [ValueComparingOperator.Equal] = (memberExpression, constantExpression) => Expression.Equal(memberExpression, constantExpression),
             [ValueComparingOperator.GreaterThan] = (memberExpression, constantExpression) => Expression.GreaterThan(memberExpression, constantExpression),
             [ValueComparingOperator.GreaterThanOrEqual] = (memberExpression, constantExpression) => Expression.GreaterThanOrEqual(memberExpression, constantExpression),
             [ValueComparingOperator.LessThan] = (memberExpression, constantExpression) => Expression.LessThan(memberExpression, constantExpression),
@@ -21,14 +22,15 @@ namespace Infrastructure
         public static Expression GetExpression(this SimplePredicate simplePredicate, ParameterExpression parameterExpression)
         {
             MemberExpression memberExpression = Expression.Property(parameterExpression, simplePredicate.TargetPropertyName);
-            ConstantExpression constantExpression = Expression.Constant(simplePredicate.ComparedValue, GetMemberType(simplePredicate, memberExpression));
+            Type type = GetMemberType(simplePredicate, memberExpression);
+            ConstantExpression constantExpression = Expression.Constant(simplePredicate.ComparedValue, type);
 
             return TransformToExpression(simplePredicate.ValueComparingOperator, memberExpression, constantExpression);
         }
 
         private static Type GetMemberType(SimplePredicate simplePredicate, MemberExpression memberExpression)
         {
-            return memberExpression.GetType();
+            return memberExpression.Type;
         }
 
         public static Expression TransformToExpression(ValueComparingOperator comparingOperator, MemberExpression memberExpression, ConstantExpression constantExpression)
