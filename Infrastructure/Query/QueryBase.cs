@@ -27,7 +27,7 @@ namespace Infrastructure.Query
             return this;
         }
 
-        public virtual IQuery<TEntity> SortBy<TKey>(string sortAccordingTo, bool ascendingOrder)
+        public virtual IQuery<TEntity> SortBy(string sortAccordingTo, bool ascendingOrder)
         {
             SortAccordingTo = sortAccordingTo;
             UseAscendingOrder = ascendingOrder;

@@ -1,14 +1,19 @@
-﻿using CactusDAL;
+﻿using BL.Facades;
+using CactusDAL;
 using CactusDAL.Models;
 using Infrastructure.EntityFramework;
+using Infrastructure.Predicates;
+using Infrastructure.Predicates.Operators;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PV179_Project
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             using (var db = new CactusDbContext("Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database=CactusesManager;Trusted_Connection=True;"))
             {
@@ -47,6 +52,27 @@ namespace PV179_Project
                     users.Create(new User { FirstName = "Jack", LastName = "Smith", Email = "example@example.com", Password = "password", AddressId = 1, AccountBalance = 50 });
                     uow.Commit();
                 }
+
+                using (var uow = uowp.Create())
+                {
+                    var usersQuery = new EntityFrameworkQuery<User>(uowp);
+                    IPredicate predicate = new SimplePredicate(nameof(User.FirstName), "Jack", ValueComparingOperator.Equal);
+                    usersQuery.Where(predicate);
+                    var result = await usersQuery.ExecuteAsync();
+
+                    Console.WriteLine("Result: " + result.Items.First().LastName);
+                }
+
+
+                var myFacade = new CactusFacade();
+
+                var usersWithNameJack = await myFacade.GetAllUserWithNameAsync("Aston");
+
+                foreach (var user in usersWithNameJack)
+                {
+                    Console.WriteLine($"Mr. {user.LastName} has firstname Aston");
+                }
+
 
 
                 //System.Console.WriteLine(offer.PreviousOffer.Response);
