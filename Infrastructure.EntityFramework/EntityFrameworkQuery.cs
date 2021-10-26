@@ -48,7 +48,7 @@ namespace Infrastructure.EntityFramework
                 resultList = await result.ToListAsync();
             }
 
-            QueryResult<TEntity> queryResult = new QueryResult<TEntity>();
+            var queryResult = new QueryResult<TEntity>();
             queryResult.TotalItemsCount = resultList.Count();
             queryResult.RequestedPageNumber = DesiredPage;
             queryResult.PageSize = PageSize;
