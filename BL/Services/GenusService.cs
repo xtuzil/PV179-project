@@ -14,27 +14,26 @@ using System.Threading.Tasks;
 
 namespace BL.Services
 {
-    public class UserService
+    public class GenusService
     {
         private IMapper mapper;
-        private QueryObject<UserInfoDto, User> queryObject;
+        private QueryObject<SpeciesDto, Species> queryObject;
         private IUnitOfWorkProvider provider;
 
-        public UserService(IUnitOfWorkProvider provider)
+
+        public GenusService(IUnitOfWorkProvider provider)
         {
             mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
             this.provider = provider;
         }
-        public async Task<IEnumerable<UserInfoDto>> GetUsersWithNameAsync(string name)
+        public IEnumerable<GenusDto> GetAllGenuses()
         {
-            queryObject = new QueryObject<UserInfoDto, User>(mapper, provider);
-            IPredicate predicate = new SimplePredicate(nameof(User.FirstName), name, ValueComparingOperator.Equal);
-            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
+            var genusRepositary = new EntityFrameworkRepository<Genus>((EntityFrameworkUnitOfWorkProvider)provider);
+            var genuses = genusRepositary.GetAll();
+            return mapper.Map<IEnumerable<GenusDto>>(genuses);
         }
 
-        
 
-        
-
+     
     }
 }

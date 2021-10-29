@@ -1,4 +1,7 @@
-﻿using BL.Facades;
+﻿using AutoMapper;
+using BL.Config;
+using BL.DTOs;
+using BL.Facades;
 using CactusDAL;
 using CactusDAL.Models;
 using Infrastructure.EntityFramework;
@@ -63,16 +66,39 @@ namespace PV179_Project
                     Console.WriteLine("Result: " + result.Items.First().LastName);
                 }
 
+                Genus genus;
+                using (var uow = uowp.Create())
+                {
+                    var genuses = new EntityFrameworkRepository<Genus>(uowp);
+                    genus = await genuses.GetAsync(1);
+                }
+                var mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
+                GenusDto genusdto =  mapper.Map<GenusDto>(genus);
 
-                var myFacade = new CactusFacade();
+                var myFacade = new UserCollectionFacade();
 
-                var usersWithNameJack = await myFacade.GetAllUserWithNameAsync("Aston");
+                var usersWithName = await myFacade.GetAllUserWithNameAsync("Aston");
 
-                foreach (var user in usersWithNameJack)
+                foreach (var user in usersWithName)
                 {
                     Console.WriteLine($"Mr. {user.LastName} has firstname Aston");
                 }
 
+                var approvedSpecies = await myFacade.GetAllApprovedSpeciesWithGenus(genusdto);
+
+                Console.WriteLine($"Approved species for genus {genus.Name} count: {approvedSpecies.Count}");
+
+                foreach (var species in approvedSpecies)
+                {
+                    Console.WriteLine($" {species.Name} is approved species for genus {genus.Name}");
+                }
+
+                var allGenuses = myFacade.GetAllGenuses();
+                Console.WriteLine($"All genuses:");
+                foreach (var genusS in allGenuses)
+                {
+                    Console.WriteLine($" {genusS.Name} with id {genusS.Id}");
+                }
 
 
                 //System.Console.WriteLine(offer.PreviousOffer.Response);
