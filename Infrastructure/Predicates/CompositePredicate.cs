@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Predicates.Operators;
+using Infrastructure.Predicates.Operators.Extensions;
 using System.Collections.Generic;
 
 namespace Infrastructure.Predicates
@@ -7,6 +8,12 @@ namespace Infrastructure.Predicates
     {
         public List<IPredicate> Predicates { get; set; }
         public LogicalOperator LogicalOperator { get; set; }
+
+        public CompositePredicate(List<IPredicate> Predicates, LogicalOperator LogicalOperator)
+        {
+            this.Predicates = Predicates;
+            this.LogicalOperator = LogicalOperator;
+        }
 
         public override string ToString()
         {
