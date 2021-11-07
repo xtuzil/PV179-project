@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Predicates;
 using Infrastructure.Predicates.Operators;
 using Infrastructure.Query;
+using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Infrastructure.EntityFramework
         private string LambdaParameterName { get; set; }
         private ParameterExpression parameterExpression { get; set; }
 
-        public EntityFrameworkQuery(EntityFrameworkUnitOfWorkProvider provider) : base(provider)
+        public EntityFrameworkQuery(IUnitOfWorkProvider provider) : base(provider)
         {
             context = ((EntityFrameworkUnitOfWork)provider.GetUnitOfWorkInstance()).Context;
             LambdaParameterName = typeof(TEntity).GetType().Name;

@@ -2,6 +2,7 @@
 using BL.Services;
 using CactusDAL;
 using Infrastructure.EntityFramework;
+using Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,19 +11,22 @@ using System.Threading.Tasks;
 
 namespace BL.Facades
 {
-    public class CactusFacade
+    public class UserFacade
     {
-        private UserService userService;
+        private UserService _userService;
+        private IUnitOfWorkProvider _unitOfWorkProvider;
+
+        public UserFacade(IUnitOfWorkProvider unitOfWorkProvider, UserService userService)
+        {
+            _userService = userService;
+            _unitOfWorkProvider = unitOfWorkProvider;
+        }
 
         public async Task<List<UserInfoDto>> GetAllUserWithNameAsync(string name)
         {
-            var uowp = new EntityFrameworkUnitOfWorkProvider(() => new CactusDbContext());
-
-            using (var uow = uowp.Create())
+            using (var uow = _unitOfWorkProvider.Create())
             {
-                userService = new UserService(uowp);
-                return (List<UserInfoDto>) await userService.GetUsersWithNameAsync(name);
-
+                return (List<UserInfoDto>) await _userService.GetUsersWithNameAsync(name);
             }
         }
     }

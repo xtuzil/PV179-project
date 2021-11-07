@@ -1,3 +1,4 @@
+using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,9 @@ namespace Infrastructure.EntityFramework
             }
         }
 
-        public EntityFrameworkRepository(EntityFrameworkUnitOfWorkProvider unitOfWorkProvider)
+        public EntityFrameworkRepository(IUnitOfWorkProvider unitOfWorkProvider)
         {
-            this.unitOfWorkProvider = unitOfWorkProvider;
+            this.unitOfWorkProvider = (EntityFrameworkUnitOfWorkProvider) unitOfWorkProvider;
         }
 
         public virtual async Task<TEntity> GetAsync(int id)
