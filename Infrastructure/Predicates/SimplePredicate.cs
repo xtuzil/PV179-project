@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Predicates.Operators;
+using Infrastructure.Predicates.Operators.Extensions;
 
 namespace Infrastructure.Predicates
 {

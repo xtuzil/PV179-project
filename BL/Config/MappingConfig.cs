@@ -16,6 +16,9 @@ namespace BL.Config
         {
             config.CreateMap<User, UserInfoDto>().ReverseMap();
             config.CreateMap<QueryResult<User>, QueryResultDto<UserInfoDto>>().ReverseMap();
+            config.CreateMap<Genus, GenusDto>().ReverseMap();
+            config.CreateMap<Species, SpeciesDto>().ReverseMap();
+            config.CreateMap<QueryResult<Species>, QueryResultDto<SpeciesDto>>().ReverseMap();
         }
     }
 }

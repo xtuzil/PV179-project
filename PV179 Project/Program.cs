@@ -1,4 +1,7 @@
-﻿using BL.Facades;
+using AutoMapper;
+using BL.Config;
+using BL.DTOs;
+using BL.Facades;
 using BL.Services;
 using CactusDAL;
 using CactusDAL.Models;
@@ -21,7 +24,15 @@ namespace PV179_Project
             var services = new ServiceCollection();
             services.AddScoped<IUnitOfWorkProvider>(serviceProvier => new EntityFrameworkUnitOfWorkProvider(() => new CactusDbContext()));
             services.AddSingleton(serviceProvider => new UserService(serviceProvider.GetRequiredService<IUnitOfWorkProvider>()));
+            services.AddSingleton(serviceProvider => new SpeciesService(serviceProvider.GetRequiredService<IUnitOfWorkProvider>()));
+            services.AddSingleton(serviceProvider => new GenusService(serviceProvider.GetRequiredService<IUnitOfWorkProvider>()));
             services.AddSingleton(serviceProvider => new UserFacade(serviceProvider.GetRequiredService<IUnitOfWorkProvider>(), serviceProvider.GetRequiredService<UserService>()));
+            services.AddSingleton(serviceProvider => new UserCollectionFacade(
+                serviceProvider.GetRequiredService<IUnitOfWorkProvider>(),
+                serviceProvider.GetRequiredService<UserService>(),
+                serviceProvider.GetRequiredService<SpeciesService>(),
+                serviceProvider.GetRequiredService<GenusService>())
+            );
 
             var provider = services.BuildServiceProvider();
 
@@ -43,14 +54,38 @@ namespace PV179_Project
                 Console.WriteLine("Result: " + result.Items.First().LastName);
             }
 
-            var userFacade = provider.GetService<UserFacade>();
-            var userService = provider.GetService<UserService>();
+            Genus genus;
+            using (var uow = uowp.Create())
+            {
+                var genuses = new EntityFrameworkRepository<Genus>(uowp);
+                genus = await genuses.GetAsync(1);
+            }
+            var mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
+            GenusDto genusdto =  mapper.Map<GenusDto>(genus);
 
-            var usersWithNameAston = await userFacade.GetAllUserWithNameAsync("Aston");
+            var myFacade = provider.GetService<UserCollectionFacade>();
 
-            foreach (var user in usersWithNameAston)
+            var usersWithName = await myFacade.GetAllUserWithNameAsync("Aston");
+
+            foreach (var user in usersWithName)
             {
                 Console.WriteLine($"Mr. {user.LastName} has firstname Aston");
+            }
+
+            var approvedSpecies = await myFacade.GetAllApprovedSpeciesWithGenus(genusdto);
+
+            Console.WriteLine($"Approved species for genus {genus.Name} count: {approvedSpecies.Count}");
+
+            foreach (var species in approvedSpecies)
+            {
+                Console.WriteLine($" {species.Name} is approved species for genus {genus.Name}");
+            }
+
+            var allGenuses = myFacade.GetAllGenuses();
+            Console.WriteLine($"All genuses:");
+            foreach (var genusS in allGenuses)
+            {
+                Console.WriteLine($" {genusS.Name} with id {genusS.Id}");
             }
 
             //System.Console.WriteLine(offer.PreviousOffer.Response);
