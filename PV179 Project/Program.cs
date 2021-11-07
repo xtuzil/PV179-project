@@ -37,9 +37,10 @@ namespace PV179_Project
             var provider = services.BuildServiceProvider();
 
             var uowp = provider.GetService<IUnitOfWorkProvider>();
+            var users = new EntityFrameworkRepository<User>(uowp);
+
             using (var uow = uowp.Create())
             {
-                var users = new EntityFrameworkRepository<User>(uowp);
                 users.Create(new User { FirstName = "Jack", LastName = "Smith", Email = "example@example.com", Password = "password", AddressId = 1, AccountBalance = 50 });
                 uow.Commit();
             }
@@ -55,9 +56,10 @@ namespace PV179_Project
             }
 
             Genus genus;
+            var genuses = new EntityFrameworkRepository<Genus>(uowp);
+
             using (var uow = uowp.Create())
             {
-                var genuses = new EntityFrameworkRepository<Genus>(uowp);
                 genus = await genuses.GetAsync(1);
             }
             var mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
