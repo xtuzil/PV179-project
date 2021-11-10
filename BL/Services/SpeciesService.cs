@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BL.Services
 {
-    public class SpeciesService
+    public class SpeciesService : ISpeciesService
     {
         private IMapper mapper;
         private QueryObject<SpeciesDto, Species> queryObject;

@@ -14,10 +14,9 @@ using System.Threading.Tasks;
 
 namespace BL.Services
 {
-    public class GenusService
+    public class GenusService : IGenusService
     {
         private IMapper mapper;
-        private QueryObject<SpeciesDto, Species> queryObject;
         private IUnitOfWorkProvider provider;
 
         public GenusService(IUnitOfWorkProvider provider)
@@ -32,5 +31,12 @@ namespace BL.Services
             var genuses = genusRepositary.GetAll();
             return mapper.Map<IEnumerable<GenusDto>>(genuses);
         }
+
+        /*public GenusDto GetGenusById()
+        {
+            var genusRepositary = new EntityFrameworkRepository<Genus>((EntityFrameworkUnitOfWorkProvider)provider);
+            var genuses = genusRepositary.GetAll();
+            return mapper.Map<IEnumerable<GenusDto>>(genuses);
+        }*/
     }
 }

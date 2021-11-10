@@ -11,30 +11,22 @@ using System.Threading.Tasks;
 
 namespace BL.Facades
 {
-    public class UserCollectionFacade
+    public class UserCollectionFacade : IUserCollectionFacade
     {
-        private IUnitOfWorkProvider uowp;
-        private UserService _userService;
-        private SpeciesService _speciesService;
-        private GenusService _genusService;
+        private readonly IUnitOfWorkProvider uowp;
+        private readonly ISpeciesService _speciesService;
+        private readonly IGenusService _genusService;
+        private readonly ICactusService _cactusService;
 
         public UserCollectionFacade(IUnitOfWorkProvider unitOfWorkProvider,
-            UserService userService,
-            SpeciesService speciesService,
-            GenusService genusService)
+            ISpeciesService speciesService,
+            IGenusService genusService,
+            ICactusService cactusService)
         {
             uowp = unitOfWorkProvider;
-            _userService = userService;
             _speciesService = speciesService;
             _genusService = genusService;
-        }
-
-        public async Task<List<UserInfoDto>> GetAllUserWithNameAsync(string name)
-        {
-            using (var uow = uowp.Create())
-            {
-                return (List<UserInfoDto>) await _userService.GetUsersWithNameAsync(name);
-            }
+            _cactusService = cactusService;
         }
 
         public async Task<List<SpeciesDto>> GetAllApprovedSpeciesWithGenus(GenusDto genus)
@@ -52,6 +44,61 @@ namespace BL.Facades
                 return (List<GenusDto>) _genusService.GetAllGenuses();
             }
         }
+
+        public async Task<List<CactusDto>> GetAllUserCactuses(UserInfoDto user)
+        {
+            using (var uow = uowp.Create())
+            {
+                return (List<CactusDto>)await _cactusService.GetAllUserCactuses(user);
+            }
+        }
+
+        public async Task<List<CactusDto>> GetUserCactusesForSale(UserInfoDto user)
+        {
+            using (var uow = uowp.Create())
+            {
+                return (List<CactusDto>)await _cactusService.GetUserCactusesForSale(user);
+            }
+        }
+
+        public void AddCactusForSale(CactusDto cactus)
+        {
+            using (var uow = uowp.Create())
+            {
+                cactus.ForSale = true;
+                _cactusService.UpdateCactusInformation(cactus);
+                uow.Commit();
+            }
+        }
+        public void AddCactusToCollection(CactusDto cactus)
+        {
+            using (var uow = uowp.Create())
+            {
+                _cactusService.AddCactus(cactus);
+                uow.Commit();
+            }
+        }
+
+        public void UpdateCactusInformation(CactusDto cactus)
+        {
+            using (var uow = uowp.Create())
+            {
+                _cactusService.UpdateCactusInformation(cactus);
+                uow.Commit();
+            }
+        }
+
+        public void RemoveCactus(CactusDto cactus)
+        {
+            using (var uow = uowp.Create())
+            {
+                _cactusService.RemoveCactus(cactus);
+                uow.Commit();
+            }
+        }
+
+
+
 
     }
 }

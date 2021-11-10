@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BL.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private IMapper mapper;
         private QueryObject<UserInfoDto, User> queryObject;

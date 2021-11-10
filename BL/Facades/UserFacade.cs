@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace BL.Facades
 {
-    public class UserFacade
+    public class UserFacade : IUserFacade
     {
-        private UserService _userService;
+        private IUserService _userService;
         private IUnitOfWorkProvider _unitOfWorkProvider;
 
-        public UserFacade(IUnitOfWorkProvider unitOfWorkProvider, UserService userService)
+        public UserFacade(IUnitOfWorkProvider unitOfWorkProvider, IUserService userService)
         {
             _userService = userService;
             _unitOfWorkProvider = unitOfWorkProvider;

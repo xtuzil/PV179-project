@@ -3,6 +3,7 @@ using BL.Config;
 using BL.DTOs;
 using BL.Facades;
 using BL.Services;
+using BL;
 using CactusDAL;
 using CactusDAL.Models;
 using Infrastructure.EntityFramework;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
 
 namespace PV179_Project
 {
@@ -21,6 +23,60 @@ namespace PV179_Project
     {
         static async Task Main(string[] args)
         {
+            var container = AutofacBLConfig.Configure();
+
+            //this will be called from presentation layer
+            var facade = container.Resolve<IUserCollectionFacade>();
+
+            var allGenuses = facade.GetAllGenuses();
+            Console.WriteLine($"All genuses:");
+            foreach (var genusS in allGenuses)
+            {
+                Console.WriteLine($" {genusS.Name} with id {genusS.Id}");
+            }
+
+            var userFacade = container.Resolve<IUserFacade>();
+
+            var usersWithName = await userFacade.GetAllUserWithNameAsync("Grace");
+            foreach (var user in usersWithName)
+            {
+                Console.WriteLine($"Mr. {user.LastName} has firstname Grace and has these cactuses:");
+                var cactuses = await facade.GetAllUserCactuses(user);
+                foreach (var cactus in cactuses)
+                {
+                    Console.WriteLine($"  - Cactus with ID: {cactus.Id},  species ID: {cactus.SpeciesId}");
+                }
+                    
+
+            }
+
+            
+
+
+            /*Genus genus;
+            var genuses = new EntityFrameworkRepository<Genus>(uowp);
+
+            using (var uow = uowp.Create())
+            {
+                genus = await genuses.GetAsync(1);
+            }
+            var mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
+            GenusDto genusdto = mapper.Map<GenusDto>(genus);
+
+          
+
+            var approvedSpecies = await facade.GetAllApprovedSpeciesWithGenus(genusdto);
+
+            Console.WriteLine($"Approved species for genus {genus.Name} count: {approvedSpecies.Count}");
+
+            foreach (var species in approvedSpecies)
+            {
+                Console.WriteLine($" {species.Name} is approved species for genus {genus.Name}");
+            }*/
+
+
+
+            /*
             var services = new ServiceCollection();
             services.AddScoped<IUnitOfWorkProvider>(serviceProvier => new EntityFrameworkUnitOfWorkProvider(() => new CactusDbContext()));
             services.AddSingleton(serviceProvider => new UserService(serviceProvider.GetRequiredService<IUnitOfWorkProvider>()));
@@ -88,7 +144,7 @@ namespace PV179_Project
             foreach (var genusS in allGenuses)
             {
                 Console.WriteLine($" {genusS.Name} with id {genusS.Id}");
-            }
+            } */
 
             //System.Console.WriteLine(offer.PreviousOffer.Response);
             //System.Console.WriteLine(offer.CactusOffers.First().Amount);
@@ -96,7 +152,7 @@ namespace PV179_Project
             //System.Console.WriteLine(offer.RequestedCactuses.First().Transfers.First().Cactus.CreationDate); 
 
             //System.Console.WriteLine(db.Users.Include(u => u.TransfersTo).Where(u => u.Id == 3).First().TransfersTo.First());
-            
+
         }
     }
 }
