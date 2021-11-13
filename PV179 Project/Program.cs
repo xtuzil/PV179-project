@@ -44,7 +44,7 @@ namespace PV179_Project
                 var cactuses = await facade.GetAllUserCactuses(user);
                 foreach (var cactus in cactuses)
                 {
-                    Console.WriteLine($"  - Cactus with ID: {cactus.Id},  species ID: {cactus.SpeciesId}");
+                    Console.WriteLine($"  - Cactus with ID: {cactus.Id},  species ID: {cactus.Species.Name}");
                 }
                     
 
