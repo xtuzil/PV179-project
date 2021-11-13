@@ -4,14 +4,18 @@
 
 #### Přidání kaktusu
 - [X] getAllGenuses()
-- [X] getAllSpecieses()
+- [X] getAllApprovedSpeciesesWithGenus()
+- [X] addCactusToCollection()
+- [] *addCactusPhoto()* ???
 
 #### Zobrazení sbírky
 - [X] getUserCactusesForSale()
 - [X] getAllUserCactuses()
 - [X] putCactusForSale()
+- [X] updateCactusInformation()
+- [X] removeCactus()
 
-## Vyhledávání kaktusů, filtery atd. ???
+## *Vyhledávání kaktusů, filtery atd. ???*
 - [ ] getCactusesLike()
 - [ ] getCactusesOlderThan() … filter age, size, druh
 - [ ] getCactusesWithSpescies()
@@ -19,22 +23,28 @@
 
 
 ## Profil
-- [ ] getUserOffers()
-- [ ] getUserRequests()
 - [ ] getUserInfo()
 - [ ] getUserReviews()
 - [ ] getReviewsOnUser()
-- [ ] updatePersonalInfo()
-- [ ] uploadPhoto() ???
+- [ ] updateUserInfo()
+- [ ] *uploadPhoto()* ???
+- [ ] *changePhoto()* ???
+
+#### Obchodování
+- [ ] getUserOffers()
+- [ ] getUserRequests()
 
 
-## Comments ???
+## *Comments* ???
 - [ ] getOfferComments()
+- [ ] createCommentOnOffer()
+- [ ] updateComment()
+- [ ] removeComment()
 
 
 ## Transfers
 - [ ] getUserTransfersFromDate()
-- [ ] getTrasnferReviews()
+- [ ] getTransferReviews()
 - [ ] processTransfer()
 
 ## Offers
@@ -42,13 +52,14 @@
 - [ ] createCounterOffer()
 - [ ] AcceptOffer()
 - [ ] RejectOffer()
-- [ ] addCommentToOffer()
-
 
 ## Admin functions
 
 #### Reports
 - [ ] getAllReports()
 - [ ] blockUser()
+- [ ] getAllPendingRequestForNewSpecies() - not approved species
+- [ ] approveSpecies()
+- [ ] rejectRequestForNewSpecies()
 
 
