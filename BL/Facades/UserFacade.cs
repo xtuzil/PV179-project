@@ -29,5 +29,35 @@ namespace BL.Facades
                 return (List<UserInfoDto>) await _userService.GetUsersWithNameAsync(name);
             }
         }
+
+        public Task<List<ReviewDto>> GetReviewsOnUser(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<UserInfoDto>> GetUserInfo(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<CactusOfferDto>> GetUserOffers(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<CactusRequestDto>> GetUserRequests(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<ReviewDto>> GetUserReviews(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateUserInfo(UserUpdateDto user)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
