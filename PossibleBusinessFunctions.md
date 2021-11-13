@@ -7,9 +7,9 @@
 - [X] getAllSpecieses()
 
 #### Zobrazení sbírky
-- [ ] getUserCactusesForSale()
-- [ ] getAllUserCactuses()
-- [ ] putCactusForSale()
+- [X] getUserCactusesForSale()
+- [X] getAllUserCactuses()
+- [X] putCactusForSale()
 
 ## Vyhledávání kaktusů, filtery atd. ???
 - [ ] getCactusesLike()
