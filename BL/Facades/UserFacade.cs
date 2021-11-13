@@ -50,12 +50,12 @@ namespace BL.Facades
             throw new NotImplementedException();
         }
 
-        public Task<List<CactusOfferDto>> GetUserOffers(int userId)
+        public Task<List<OfferDto>> GetUserOffers(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<CactusRequestDto>> GetUserRequests(int userId)
+        public Task<List<OfferDto>> GetUserRequests(int userId)
         {
             throw new NotImplementedException();
         }
