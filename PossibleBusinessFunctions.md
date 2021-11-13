@@ -3,8 +3,8 @@
 ## Správa vlastní sbírky
 
 #### Přidání kaktusu
-- [ ] getAllGenuses()
-- [ ] getAllSpecieses()
+- [X] getAllGenuses()
+- [X] getAllSpecieses()
 
 #### Zobrazení sbírky
 - [ ] getUserCactusesForSale()
