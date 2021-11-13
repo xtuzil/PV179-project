@@ -14,12 +14,17 @@ namespace BL.Facades
     public class UserFacade : IUserFacade
     {
         private IUserService _userService;
+        private IReviewService _reviewService;
+        //private IOfferService _offerService;
         private IUnitOfWorkProvider _unitOfWorkProvider;
 
-        public UserFacade(IUnitOfWorkProvider unitOfWorkProvider, IUserService userService)
+        public UserFacade(IUnitOfWorkProvider unitOfWorkProvider, IUserService userService, IReviewService reviewService)
         {
             _userService = userService;
+            _reviewService = reviewService;
+            //_offerService = offerService;
             _unitOfWorkProvider = unitOfWorkProvider;
+            
         }
 
         public async Task<List<UserInfoDto>> GetAllUserWithNameAsync(string name)
@@ -32,30 +37,42 @@ namespace BL.Facades
 
         public Task<List<ReviewDto>> GetUserReviews(int userId)
         {
+
+            // do we need this?
             throw new NotImplementedException();
+
         }
 
-        public Task<List<ReviewDto>> GetReviewsOnUser(int userId)
+        public async Task<List<ReviewDto>> GetReviewsOnUser(int userId)
         {
-            throw new NotImplementedException();
+            using (var uow = _unitOfWorkProvider.Create())
+            {
+                return (List<ReviewDto>)await _reviewService.GetReviewsOnUser(userId);
+            }
         }
 
-        public Task<List<UserInfoDto>> GetUserInfo(int userId)
+        public async Task<UserInfoDto> GetUserInfo(int userId)
         {
-            throw new NotImplementedException();
+            using (var uow = _unitOfWorkProvider.Create())
+            {
+                return await _userService.GetUserInfo(userId);
+            }
         }
 
         public void UpdateUserInfo(UserUpdateDto user)
         {
-            throw new NotImplementedException();
+            using (var uow = _unitOfWorkProvider.Create())
+            {
+               _userService.UpdateUserInfo(user);
+            }
         }
 
-        public Task<List<CactusOfferDto>> GetUserOffers(int userId)
+        public Task<List<OfferDto>> GetUserOffers(int userId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<CactusRequestDto>> GetUserRequests(int userId)
+        public Task<List<OfferDto>> GetUserReceivedOffers(int userId)
         {
             throw new NotImplementedException();
         }

@@ -33,15 +33,23 @@ namespace BL.Services
             this.repository = repository;
             this.queryObject = queryObject;
         }
+
+        public async Task<UserInfoDto> GetUserInfo(int userId)
+        {
+            return mapper.Map<UserInfoDto>(await repository.GetAsync(userId));
+
+        }
+
         public async Task<IEnumerable<UserInfoDto>> GetUsersWithNameAsync(string name)
         {
             IPredicate predicate = new SimplePredicate(nameof(User.FirstName), name, ValueComparingOperator.Equal);
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
 
-        
-
-        
-
+        public void UpdateUserInfo(UserUpdateDto userDto)
+        {
+            var user = mapper.Map<User>(userDto);
+            repository.Update(user);
+        }
     }
 }
