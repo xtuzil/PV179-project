@@ -19,10 +19,10 @@ namespace BL
 
         private IQuery<TEntity> query;
 
-        public QueryObject(IMapper mapper, IUnitOfWorkProvider provider)
+        public QueryObject(IMapper mapper, IUnitOfWorkProvider provider, IQuery<TEntity> query)
         {
             this.mapper = mapper;
-            query = new EntityFrameworkQuery<TEntity>((EntityFrameworkUnitOfWorkProvider)provider);
+            this.query = query;
         }
 
         public async Task<QueryResultDto<TDto>> ExecuteQueryAsync(FilterDto filter)

@@ -2,6 +2,7 @@
 using BL.Config;
 using BL.DTOs;
 using CactusDAL.Models;
+using Infrastructure;
 using Infrastructure.EntityFramework;
 using Infrastructure.Predicates;
 using Infrastructure.Predicates.Operators;
@@ -18,17 +19,18 @@ namespace BL.Services
     {
         private IMapper mapper;
         private IUnitOfWorkProvider provider;
+        private IRepository<Genus> repository;
 
-        public GenusService(IUnitOfWorkProvider provider)
+        public GenusService(IUnitOfWorkProvider provider, IMapper mapper, IRepository<Genus> repository)
         {
-            mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
+            this.mapper = mapper;
             this.provider = provider;
+            this.repository = repository;
         }
 
         public IEnumerable<GenusDto> GetAllGenuses()
         {
-            var genusRepositary = new EntityFrameworkRepository<Genus>((EntityFrameworkUnitOfWorkProvider)provider);
-            var genuses = genusRepositary.GetAll();
+            var genuses = repository.GetAll();
             return mapper.Map<IEnumerable<GenusDto>>(genuses);
         }
 

@@ -20,7 +20,7 @@ namespace Infrastructure.EntityFramework
 
         public EntityFrameworkQuery(IUnitOfWorkProvider provider) : base(provider)
         {
-            context = ((EntityFrameworkUnitOfWork)provider.GetUnitOfWorkInstance()).Context;
+            context = ((EntityFrameworkUnitOfWork)provider.Create()).Context;
             LambdaParameterName = typeof(TEntity).GetType().Name;
             parameterExpression = Expression.Parameter(typeof(TEntity), LambdaParameterName);
             _query = context.Set<TEntity>();

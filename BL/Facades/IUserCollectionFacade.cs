@@ -19,7 +19,7 @@ namespace BL.Facades
 
         public void AddCactusForSale(CactusDto cactus);
 
-        public void AddCactusToCollection(CactusDto cactus);
+        public void AddCactusToCollection(CactusCreateDto cactus);
 
         public void UpdateCactusInformation(CactusDto cactus);
 

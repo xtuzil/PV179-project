@@ -2,6 +2,7 @@
 using BL.Config;
 using BL.DTOs;
 using CactusDAL.Models;
+using Infrastructure;
 using Infrastructure.EntityFramework;
 using Infrastructure.Predicates;
 using Infrastructure.Predicates.Operators;
@@ -19,15 +20,21 @@ namespace BL.Services
         private IMapper mapper;
         private QueryObject<UserInfoDto, User> queryObject;
         private IUnitOfWorkProvider provider;
+        private IRepository<User> repository;
 
-        public UserService(IUnitOfWorkProvider provider)
+        public UserService(IUnitOfWorkProvider provider,
+            IMapper mapper,
+            IRepository<User> repository,
+            QueryObject<UserInfoDto, User> queryObject
+        )
         {
-            mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
+            this.mapper = mapper;
             this.provider = provider;
+            this.repository = repository;
+            this.queryObject = queryObject;
         }
         public async Task<IEnumerable<UserInfoDto>> GetUsersWithNameAsync(string name)
         {
-            queryObject = new QueryObject<UserInfoDto, User>(mapper, provider);
             IPredicate predicate = new SimplePredicate(nameof(User.FirstName), name, ValueComparingOperator.Equal);
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }

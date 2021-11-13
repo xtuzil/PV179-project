@@ -70,7 +70,7 @@ namespace BL.Facades
                 uow.Commit();
             }
         }
-        public void AddCactusToCollection(CactusDto cactus)
+        public void AddCactusToCollection(CactusCreateDto cactus)
         {
             using (var uow = uowp.Create())
             {

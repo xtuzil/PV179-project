@@ -20,6 +20,7 @@ namespace BL.Config
             config.CreateMap<Species, SpeciesDto>().ReverseMap();
             config.CreateMap<QueryResult<Species>, QueryResultDto<SpeciesDto>>().ReverseMap();
             config.CreateMap<Cactus, CactusDto>().ReverseMap();
+            config.CreateMap<Cactus, CactusCreateDto>().ReverseMap();
             config.CreateMap<QueryResult<Cactus>, QueryResultDto<CactusDto>>().ReverseMap();
         }
     }
