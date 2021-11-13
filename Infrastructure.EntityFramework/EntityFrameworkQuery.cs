@@ -30,24 +30,21 @@ namespace Infrastructure.EntityFramework
         {
             IQueryable<TEntity> result = _query;
             IList<TEntity> resultList;
-            using (context)
+            if (Predicate != null)
             {
-                if (Predicate != null)
-                {
-                    result = UseFilterCriteria(result);
-                }
-
-                if (DesiredPage != 0)
-                {
-                    result = result.Skip(DesiredPage).Take(PageSize);
-                }
-
-                if (SortAccordingTo != null)
-                {
-                    result = UseSortCriteria<object>(result);
-                }
-                resultList = await result.ToListAsync();
+                result = UseFilterCriteria(result);
             }
+
+            if (DesiredPage != 0)
+            {
+                result = result.Skip(DesiredPage).Take(PageSize);
+            }
+
+            if (SortAccordingTo != null)
+            {
+                result = UseSortCriteria<object>(result);
+            }
+            resultList = await result.ToListAsync();
 
             var queryResult = new QueryResult<TEntity>();
             queryResult.TotalItemsCount = resultList.Count();
