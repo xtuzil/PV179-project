@@ -22,6 +22,12 @@ namespace BL.Config
             config.CreateMap<Cactus, CactusDto>().ReverseMap();
             config.CreateMap<Cactus, CactusCreateDto>().ReverseMap();
             config.CreateMap<QueryResult<Cactus>, QueryResultDto<CactusDto>>().ReverseMap();
-        }
+            config.CreateMap<Offer, OfferCreateDto>().ReverseMap();
+            config.CreateMap<Offer, OfferDto>().ReverseMap();
+            config.CreateMap<Report, ReportDto>().ReverseMap();
+            config.CreateMap<Review, ReviewDto>().ReverseMap();
+            config.CreateMap<Transfer, TransferDto>().ReverseMap();
+            config.CreateMap<User, UserUpdateDto>().ReverseMap();
+        }                                                                                   
     }
 }

@@ -14,8 +14,8 @@ namespace BL.Facades
         public Task<List<ReviewDto>> GetUserReviews(int userId);
         public Task<List<ReviewDto>> GetReviewsOnUser(int userId);
         public void UpdateUserInfo(UserUpdateDto user);
-        public Task<List<CactusOfferDto>> GetUserOffers(int userId);
-        public Task<List<CactusRequestDto>> GetUserReceivedOffers(int userId);
+        public Task<List<OfferDto>> GetUserOffers(int userId);
+        public Task<List<OfferDto>>  GetUserReceivedOffers(int userId);
         public Task<List<TransferDto>> GetUserTransfers(int userId);
     }
 }
