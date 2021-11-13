@@ -16,6 +16,6 @@ namespace BL.Facades
         public void UpdateUserInfo(UserUpdateDto user);
         public Task<List<CactusOfferDto>> GetUserOffers(int userId);
         public Task<List<CactusRequestDto>> GetUserRequests(int userId);
-
+        public Task<List<TransferDto>> GetUserTransfers(int userId);
     }
 }

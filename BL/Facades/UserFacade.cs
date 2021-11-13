@@ -30,12 +30,22 @@ namespace BL.Facades
             }
         }
 
+        public Task<List<ReviewDto>> GetUserReviews(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<List<ReviewDto>> GetReviewsOnUser(int userId)
         {
             throw new NotImplementedException();
         }
 
         public Task<List<UserInfoDto>> GetUserInfo(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateUserInfo(UserUpdateDto user)
         {
             throw new NotImplementedException();
         }
@@ -50,12 +60,7 @@ namespace BL.Facades
             throw new NotImplementedException();
         }
 
-        public Task<List<ReviewDto>> GetUserReviews(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateUserInfo(UserUpdateDto user)
+        public Task<List<TransferDto>> GetUserTransfers(int userId)
         {
             throw new NotImplementedException();
         }
