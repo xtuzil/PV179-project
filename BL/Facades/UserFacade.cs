@@ -15,7 +15,7 @@ namespace BL.Facades
     {
         private IUserService _userService;
         private IReviewService _reviewService;
-        //private IOfferService _offerService;
+        private IOfferService _offerService;
         private IUnitOfWorkProvider _unitOfWorkProvider;
 
         public UserFacade(IUnitOfWorkProvider unitOfWorkProvider, IUserService userService, IReviewService reviewService)
@@ -67,14 +67,20 @@ namespace BL.Facades
             }
         }
 
-        public Task<List<OfferDto>> GetUserOffers(int userId)
+        public async Task<List<OfferDto>> GetUserOffers(int userId)
         {
-            throw new NotImplementedException();
+            using (var uow = _unitOfWorkProvider.Create())
+            {
+                return (List<OfferDto>) await _offerService.GetAuthoredOffersForUser(userId);
+            }
         }
 
-        public Task<List<OfferDto>> GetUserReceivedOffers(int userId)
+        public async Task<List<OfferDto>> GetUserReceivedOffers(int userId)
         {
-            throw new NotImplementedException();
+            using (var uow = _unitOfWorkProvider.Create())
+            {
+                return (List<OfferDto>) await _offerService.GetReceivedOffersForUser(userId);
+            }
         }
 
         public Task<List<TransferDto>> GetUserTransfers(int userId)
