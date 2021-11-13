@@ -23,16 +23,16 @@
 
 
 ## Profil
-- [ ] getUserInfo()
-- [ ] getUserReviews()
-- [ ] getReviewsOnUser()
-- [ ] updateUserInfo()
+- [X] getUserInfo()
+- [X] getUserReviews()
+- [X] getReviewsOnUser()
+- [X] updateUserInfo()
 - [ ] *uploadPhoto()* ???
 - [ ] *changePhoto()* ???
 
 #### Obchodování
 - [ ] getUserOffers()
-- [ ] getUserRequests()
+- [ ] GetUserReceivedOffers()
 
 
 ## *Comments* ???
