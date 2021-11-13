@@ -12,6 +12,6 @@ namespace BL.Facades
         public Task<List<CactusDto>> GetCactusesLike(string name);
         public Task<List<CactusDto>> GetCactusesOlderThan(int age);
         public Task<List<CactusDto>> GetCactusesWithSpescies(int speciesId);
-        public Task<List<CactusDto>> GetCatusesWithGenus(int genusId);
+        public Task<List<CactusDto>> GetCactusesWithGenus(int genusId);
     }
 }
