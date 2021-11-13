@@ -8,7 +8,7 @@ namespace BL.DTOs
 {
     public class TransferDto
     {
-        public int OfferId { get; set; }
+        public int Id { get; set; }
         public OfferDto Offer { get; set; }
 
         public ReviewDto AuthorReview { get; set; }
@@ -19,5 +19,6 @@ namespace BL.DTOs
         public bool RecipientAprovedDelivery { get; set; }
 
         public DateTime TransferedTime;
+        public DateTime CreationDate { get; set; }
     }
 }

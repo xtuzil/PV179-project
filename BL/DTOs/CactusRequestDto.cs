@@ -8,6 +8,7 @@ namespace BL.DTOs
 {
     public class CactusRequestDto
     {
+        public int Id { get; set; }
         public CactusDto Cactus { get; set; }
         public int Amount { get; set; }
 

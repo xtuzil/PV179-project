@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BL.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,16 +7,9 @@ using System.Threading.Tasks;
 
 namespace BL.DTOs
 {
-    public enum OfferStatus
-    {
-        Accepted,
-        Declined,
-        Counteroffer,
-        Transfered
-    }
-
     public class OfferDto
     {
+        public int Id { get; set; }
         public UserInfoDto Author { get; set; }
 
         public UserInfoDto Recipient { get; set; }
@@ -26,5 +20,6 @@ namespace BL.DTOs
         public DateTime ResponseDate { get; set; }
 
         public OfferDto PreviousOffer { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }
