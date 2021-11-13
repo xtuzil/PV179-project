@@ -10,9 +10,9 @@ namespace BL.DTOs
     public class CactusDto
     {
         public int Id { get; set; }
-        public int OwnerId { get; set; }
+        public UserInfoDto Owner { get; set; }
 
-        public int SpeciesId { get; set; }
+        public SpeciesDto Species { get; set; }
 
         public bool ForSale { get; set; }
 
