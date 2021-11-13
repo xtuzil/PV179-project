@@ -6,7 +6,7 @@
 - [X] getAllGenuses()
 - [X] getAllApprovedSpeciesesWithGenus()
 - [X] addCactusToCollection()
-- [] *addCactusPhoto()* ???
+- [ ] *addCactusPhoto()* ???
 
 #### Zobrazení sbírky
 - [X] getUserCactusesForSale()
