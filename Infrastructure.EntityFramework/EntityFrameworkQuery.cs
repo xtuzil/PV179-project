@@ -14,7 +14,7 @@ namespace Infrastructure.EntityFramework
     public class EntityFrameworkQuery<TEntity> : QueryBase<TEntity> where TEntity : class
     {
         protected DbContext context;
-        internal DbSet<TEntity> _dbSet;
+        internal IQueryable<TEntity> _query;
         private string LambdaParameterName { get; set; }
         private ParameterExpression parameterExpression { get; set; }
 
@@ -23,12 +23,12 @@ namespace Infrastructure.EntityFramework
             context = ((EntityFrameworkUnitOfWork)provider.GetUnitOfWorkInstance()).Context;
             LambdaParameterName = typeof(TEntity).GetType().Name;
             parameterExpression = Expression.Parameter(typeof(TEntity), LambdaParameterName);
-            _dbSet = context.Set<TEntity>();
+            _query = context.Set<TEntity>();
         }
 
         public override async Task<QueryResult<TEntity>> ExecuteAsync()
         {
-            IQueryable<TEntity> result = _dbSet;
+            IQueryable<TEntity> result = _query;
             IList<TEntity> resultList;
             using (context)
             {
