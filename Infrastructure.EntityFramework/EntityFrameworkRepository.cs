@@ -1,14 +1,16 @@
 using Infrastructure.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Infrastructure.EntityFramework
 {
     using TDbContext = DbContext;
 
-    public class EntityFrameworkRepository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class EntityFrameworkRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity<int>
     {
         private readonly EntityFrameworkUnitOfWorkProvider unitOfWorkProvider;
 
@@ -35,9 +37,15 @@ namespace Infrastructure.EntityFramework
             return Context.Set<TEntity>().ToList();
         }
 
-        public virtual async Task<TEntity> GetAsync(int id, int[] includes)
+        public virtual async Task<TEntity> GetAsync(int id, params Expression<Func<TEntity, object>>[] includes)
         {
-            return await Context.Set<TEntity>().FindAsync(id);
+            IQueryable<TEntity> result = Context.Set<TEntity>();
+            foreach (var include in includes)
+            {
+                result = result.Include(include);
+            }
+
+            return await result.Where(r => r.Id == id).FirstOrDefaultAsync();
         }
 
         public virtual void Create(TEntity entity)

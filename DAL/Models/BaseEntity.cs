@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Infrastructure;
+using System.ComponentModel.DataAnnotations;
 
 namespace CactusDAL.Models
 {
-    public class BaseEntity
+    public class BaseEntity : IEntity<int>
     {
         [Key]
         public int Id { get; set; }
