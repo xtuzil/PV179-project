@@ -40,6 +40,30 @@ namespace BL.Services
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
 
+        public async Task<IEnumerable<CactusDto>> GetCactusesOlderThan(int age)
+        {
+            var maxSowingDate = DateTime.Today.AddYears(-age);
+            IPredicate predicate = new SimplePredicate(nameof(Cactus.SowingDate), maxSowingDate, ValueComparingOperator.LessThanOrEqual);
+            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
+        }
+
+        public async Task<IEnumerable<CactusDto>> GetCactusesWithSpecies(int speciesId)
+        {
+            IPredicate predicate = new SimplePredicate(nameof(Cactus.SpeciesId), speciesId, ValueComparingOperator.Equal);
+            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
+        }
+
+        public async Task<IEnumerable<CactusDto>> GetCactusesWithSpecies(IEnumerable<SpeciesDto> speciesList)
+        {
+            var speciesPredicates = new List<IPredicate>();
+            foreach (SpeciesDto species in speciesList)
+            {
+                speciesPredicates.Add(new SimplePredicate(nameof(Cactus.SpeciesId), species.Id, ValueComparingOperator.Equal));
+            }
+            IPredicate predicate = new CompositePredicate(speciesPredicates, LogicalOperator.OR);
+            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
+        }
+
         public async Task<IEnumerable<CactusDto>> GetAllUserCactuses(UserInfoDto userInfoDto)
         {
             var user = mapper.Map<User>(userInfoDto);

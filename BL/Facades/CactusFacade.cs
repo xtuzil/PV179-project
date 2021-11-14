@@ -13,12 +13,17 @@ namespace BL.Facades
     {
         private IUnitOfWorkProvider unitOfWorkProvider;
         private ICactusService cactusService;
+        private IGenusService genusService;
+        private ISpeciesService speciesService;
 
         public CactusFacade(IUnitOfWorkProvider unitOfWorkProvider,
-            ICactusService cactusService)
+            ICactusService cactusService, IGenusService genusService,
+            ISpeciesService speciesService)
         {
             this.unitOfWorkProvider = unitOfWorkProvider;
             this.cactusService = cactusService;
+            this.genusService = genusService;
+            this.speciesService = speciesService;
         }
 
         public async Task<List<CactusDto>> GetCactusesLike(string name)
@@ -29,19 +34,30 @@ namespace BL.Facades
             }
         }
 
-        public Task<List<CactusDto>> GetCactusesOlderThan(int age)
+        public async Task<List<CactusDto>> GetCactusesOlderThan(int age)
         {
-            throw new NotImplementedException();
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                return (List<CactusDto>)await cactusService.GetCactusesOlderThan(age);
+            }
         }
 
-        public Task<List<CactusDto>> GetCactusesWithGenus(int genusId)
+        public async Task<List<CactusDto>> GetCactusesWithGenus(int genusId)
         {
-            throw new NotImplementedException();
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                var genus = await genusService.GetGenusById(genusId);
+                var species = await speciesService.getAllApprovedSpeciesWithGenus(genus);
+                return (List<CactusDto>)await cactusService.GetCactusesWithSpecies(species);
+            }
         }
 
-        public Task<List<CactusDto>> GetCactusesWithSpescies(int speciesId)
+        public async Task<List<CactusDto>> GetCactusesWithSpecies(int speciesId)
         {
-            throw new NotImplementedException();
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                return (List<CactusDto>)await cactusService.GetCactusesWithSpecies(speciesId);
+            }
         }
     }
 }

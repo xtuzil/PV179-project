@@ -16,16 +16,17 @@ namespace BL.Facades
         private IUserService _userService;
         private IReviewService _reviewService;
         private IOfferService _offerService;
+        private ITransferService _transferService;
         private IUnitOfWorkProvider _unitOfWorkProvider;
 
-        public UserFacade(IUnitOfWorkProvider unitOfWorkProvider, IUserService userService, IReviewService reviewService, IOfferService offerService
-            )
+        public UserFacade(IUnitOfWorkProvider unitOfWorkProvider, IUserService userService,
+            IReviewService reviewService, IOfferService offerService, ITransferService transferService)
         {
             _userService = userService;
             _reviewService = reviewService;
             _offerService = offerService;
+            _transferService = transferService;
             _unitOfWorkProvider = unitOfWorkProvider;
-            
         }
 
         public async Task<List<UserInfoDto>> GetAllUserWithNameAsync(string name)
@@ -84,9 +85,12 @@ namespace BL.Facades
             }
         }
 
-        public Task<List<TransferDto>> GetUserTransfers(int userId)
+        public async Task<List<TransferDto>> GetUserTransfers(int userId)
         {
-            throw new NotImplementedException();
+            using (var uow = _unitOfWorkProvider.Create())
+            {
+                return (List<TransferDto>)await _transferService.GetTransfersOfUser(userId);
+            }
         }
     }
 }

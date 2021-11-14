@@ -34,11 +34,10 @@ namespace BL.Services
             return mapper.Map<IEnumerable<GenusDto>>(genuses);
         }
 
-        /*public GenusDto GetGenusById()
+        public async Task<GenusDto> GetGenusById(int id)
         {
-            var genusRepositary = new EntityFrameworkRepository<Genus>((EntityFrameworkUnitOfWorkProvider)provider);
-            var genuses = genusRepositary.GetAll();
-            return mapper.Map<IEnumerable<GenusDto>>(genuses);
-        }*/
+            var genus = await repository.GetAsync(id);
+            return mapper.Map<GenusDto>(genus);
+        }
     }
 }
