@@ -10,5 +10,6 @@ namespace BL.Services
     public interface IReviewService
     {
         public Task<IEnumerable<ReviewDto>> GetReviewsOnUser(int usedId);
+        public Task<IEnumerable<ReviewDto>> GetReviewsOfTransfer(int transferId);
     }
 }

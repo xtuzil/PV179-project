@@ -33,6 +33,13 @@ namespace BL.Services
             this.repository = repository;
             this.queryObject = queryObject;
         }
+
+        public async Task<IEnumerable<CactusDto>> GetCactusesLike(string name)
+        {
+            IPredicate predicate = new SimplePredicate(nameof(Cactus.Name), name, ValueComparingOperator.StringContains);
+            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
+        }
+
         public async Task<IEnumerable<CactusDto>> GetAllUserCactuses(UserInfoDto userInfoDto)
         {
             var user = mapper.Map<User>(userInfoDto);
@@ -68,6 +75,15 @@ namespace BL.Services
         {
             var cactus = mapper.Map<Cactus>(cactusDto);
             repository.Delete(cactus);
+        }
+
+        public async Task<CactusDto> TransferCactus(int userId, int cactusId)
+        {
+            var cactus = await repository.GetAsync(cactusId);
+            cactus.OwnerId = userId;
+            repository.Update(cactus);
+
+            return mapper.Map<CactusDto>(cactus);
         }
     }
 }

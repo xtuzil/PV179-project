@@ -25,6 +25,18 @@ namespace BL.Services
             this.queryObject = queryObject;
         }
 
+        public async Task<OfferDto> GetOffer(int offerId)
+        {
+            var offer = await repository.GetAsync(offerId,
+                offer => offer.Author,
+                offer => offer.Recipient,
+                offer => offer.CactusOffers,
+                offer => offer.CactusRequests
+            );
+
+            return mapper.Map<OfferDto>(offer);
+        }
+
         public async Task<OfferDto> AcceptOffer(int offerId)
         {
             var offer = await repository.GetAsync(offerId);
@@ -37,6 +49,15 @@ namespace BL.Services
         public OfferDto CreateOffer(OfferCreateDto offerDto)
         {
             var offer = mapper.Map<Offer>(offerDto);
+            repository.Create(offer);
+
+            return mapper.Map<OfferDto>(offer);
+        }
+
+        public OfferDto CreateCounterOffer(OfferCreateDto offerDto, int previousOffer)
+        {
+            var offer = mapper.Map<Offer>(offerDto);
+            offer.PreviousOfferId = previousOffer;
             repository.Create(offer);
 
             return mapper.Map<OfferDto>(offer);

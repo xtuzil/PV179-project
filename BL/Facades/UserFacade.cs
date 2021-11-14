@@ -18,11 +18,12 @@ namespace BL.Facades
         private IOfferService _offerService;
         private IUnitOfWorkProvider _unitOfWorkProvider;
 
-        public UserFacade(IUnitOfWorkProvider unitOfWorkProvider, IUserService userService, IReviewService reviewService)
+        public UserFacade(IUnitOfWorkProvider unitOfWorkProvider, IUserService userService, IReviewService reviewService, IOfferService offerService
+            )
         {
             _userService = userService;
             _reviewService = reviewService;
-            //_offerService = offerService;
+            _offerService = offerService;
             _unitOfWorkProvider = unitOfWorkProvider;
             
         }

@@ -32,6 +32,12 @@ namespace BL.Services
             this.queryObject = queryObject;
         }
 
+        public async Task<IEnumerable<ReviewDto>> GetReviewsOfTransfer(int transferId)
+        {
+            IPredicate predicate = new SimplePredicate(nameof(Review.TransferId), transferId, ValueComparingOperator.Equal);
+            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
+        }
+
         public async Task<IEnumerable<ReviewDto>> GetReviewsOnUser(int usedId)
         {
             IPredicate predicate = new SimplePredicate(nameof(Review.UserId), usedId, ValueComparingOperator.Equal);

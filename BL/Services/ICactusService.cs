@@ -9,6 +9,7 @@ namespace BL.Services
 {
     public interface ICactusService
     {
+        public Task<IEnumerable<CactusDto>> GetCactusesLike(string name);
         public Task<IEnumerable<CactusDto>> GetAllUserCactuses(UserInfoDto userInfoDto);
         public Task<IEnumerable<CactusDto>> GetUserCactusesForSale(UserInfoDto userInfoDto);
 
