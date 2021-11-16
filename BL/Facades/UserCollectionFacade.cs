@@ -33,7 +33,7 @@ namespace BL.Facades
         {
             using (var uow = uowp.Create())
             {
-                return (List<SpeciesDto>) await _speciesService.getAllApprovedSpeciesWithGenus(genus);
+                return (List<SpeciesDto>) await _speciesService.getAllApprovedSpeciesWithGenus(genus.Id);
             }
         }
 

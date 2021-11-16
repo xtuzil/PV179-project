@@ -36,11 +36,10 @@ namespace BL.Services
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
 
-        public async Task<IEnumerable<SpeciesDto>> getAllApprovedSpeciesWithGenus(GenusDto genusdto)
+        public async Task<IEnumerable<SpeciesDto>> getAllApprovedSpeciesWithGenus(int genusId)
         {
-            var genus = mapper.Map<Genus>(genusdto);
             IPredicate approvedPredicate = new SimplePredicate(nameof(Species.Approved), true, ValueComparingOperator.Equal);
-            IPredicate genusPredicate = new SimplePredicate(nameof(Species.Genus), genus, ValueComparingOperator.Equal);
+            IPredicate genusPredicate = new SimplePredicate(nameof(Species.GenusId), genusId, ValueComparingOperator.Equal);
             IPredicate predicate = new CompositePredicate(new List<IPredicate> { approvedPredicate, genusPredicate }, LogicalOperator.AND);
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }

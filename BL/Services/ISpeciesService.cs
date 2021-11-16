@@ -11,6 +11,6 @@ namespace BL.Services
     {
         public Task<IEnumerable<SpeciesDto>> GetAllAprovedSpecies();
 
-        public Task<IEnumerable<SpeciesDto>> getAllApprovedSpeciesWithGenus(GenusDto genusdto);
+        public Task<IEnumerable<SpeciesDto>> getAllApprovedSpeciesWithGenus(int genusdId);
     }
 }
