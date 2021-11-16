@@ -23,13 +23,13 @@ namespace BL.Facades
             this.speciesService = speciesService;
         }
 
-        public async Task<List<CactusDto>> GetCactusesLike(string name)
-        {
-            using (var uow = unitOfWorkProvider.Create())
-            {
-                return (List<CactusDto>)await cactusService.GetCactusesLike(name);
-            }
-        }
+        //public async Task<List<CactusDto>> GetCactusesLike(string name)
+        //{
+        //    using (var uow = unitOfWorkProvider.Create())
+        //    {
+        //        return (List<CactusDto>) await cactusService.GetCactusesLike(name);
+        //    }
+        //}
 
         public async Task<List<CactusDto>> GetCactusesOlderThan(int age)
         {

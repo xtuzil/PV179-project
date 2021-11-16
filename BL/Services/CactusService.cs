@@ -30,11 +30,11 @@ namespace BL.Services
             this.queryObject = queryObject;
         }
 
-        public async Task<IEnumerable<CactusDto>> GetCactusesLike(string name)
-        {
-            IPredicate predicate = new SimplePredicate(nameof(Cactus.Name), name, ValueComparingOperator.StringContains);
-            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
-        }
+        //public async Task<IEnumerable<CactusDto>> GetCactusesLike(string name)
+        //{
+        //    IPredicate predicate = new SimplePredicate(nameof(Cactus.Name), name, ValueComparingOperator.StringContains);
+        //    return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
+        //}
 
         public async Task<IEnumerable<CactusDto>> GetCactusesOlderThan(int age)
         {
