@@ -2,12 +2,7 @@
 using BL.DTOs;
 using CactusDAL.Models;
 using Infrastructure.Query;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
- 
+
 namespace BL.Config
 {
     public class MappingConfig
@@ -28,6 +23,6 @@ namespace BL.Config
             config.CreateMap<Review, ReviewDto>().ReverseMap();
             config.CreateMap<Transfer, TransferDto>().ReverseMap();
             config.CreateMap<User, UserUpdateDto>().ReverseMap();
-        }                                                                                   
+        }
     }
 }

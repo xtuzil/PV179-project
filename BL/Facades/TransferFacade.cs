@@ -2,10 +2,7 @@
 using BL.DTOs;
 using BL.Services;
 using Infrastructure.UnitOfWork;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BL.Facades
@@ -39,7 +36,7 @@ namespace BL.Facades
         {
             using (var uow = uowp.Create())
             {
-                return (List<ReviewDto>) await reviewService.GetReviewsOfTransfer(transferId);
+                return (List<ReviewDto>)await reviewService.GetReviewsOfTransfer(transferId);
             }
         }
 

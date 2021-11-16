@@ -1,14 +1,7 @@
 ﻿using AutoMapper;
 using BL.DTOs;
-using CactusDAL.Models;
-using Infrastructure.EntityFramework;
-using Infrastructure.Predicates;
 using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BL

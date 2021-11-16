@@ -1,10 +1,7 @@
 ﻿using BL.DTOs;
 using BL.Services;
 using Infrastructure.UnitOfWork;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BL.Facades
@@ -30,7 +27,7 @@ namespace BL.Facades
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                return (List<CactusDto>) await cactusService.GetCactusesLike(name);
+                return (List<CactusDto>)await cactusService.GetCactusesLike(name);
             }
         }
 

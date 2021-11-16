@@ -1,16 +1,12 @@
 ﻿using AutoMapper;
-using BL.Config;
 using BL.DTOs;
 using CactusDAL.Models;
 using Infrastructure;
-using Infrastructure.EntityFramework;
 using Infrastructure.Predicates;
 using Infrastructure.Predicates.Operators;
 using Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BL.Services
@@ -78,7 +74,7 @@ namespace BL.Services
             IPredicate userPredicate = new SimplePredicate(nameof(Cactus.Owner), user, ValueComparingOperator.Equal);
             IPredicate forSalePredicate = new SimplePredicate(nameof(Cactus.ForSale), true, ValueComparingOperator.Equal);
             IPredicate predicate = new CompositePredicate(new List<IPredicate> { userPredicate, forSalePredicate }, LogicalOperator.AND);
-            
+
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
 

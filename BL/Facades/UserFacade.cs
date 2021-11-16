@@ -1,12 +1,8 @@
 ﻿using BL.DTOs;
 using BL.Services;
-using CactusDAL;
-using Infrastructure.EntityFramework;
 using Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BL.Facades
@@ -33,7 +29,7 @@ namespace BL.Facades
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
-                return (List<UserInfoDto>) await _userService.GetUsersWithNameAsync(name);
+                return (List<UserInfoDto>)await _userService.GetUsersWithNameAsync(name);
             }
         }
 
@@ -65,7 +61,7 @@ namespace BL.Facades
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
-               _userService.UpdateUserInfo(user);
+                _userService.UpdateUserInfo(user);
             }
         }
 
@@ -73,7 +69,7 @@ namespace BL.Facades
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
-                return (List<OfferDto>) await _offerService.GetAuthoredOffersForUser(userId);
+                return (List<OfferDto>)await _offerService.GetAuthoredOffersForUser(userId);
             }
         }
 
@@ -81,7 +77,7 @@ namespace BL.Facades
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
-                return (List<OfferDto>) await _offerService.GetReceivedOffersForUser(userId);
+                return (List<OfferDto>)await _offerService.GetReceivedOffersForUser(userId);
             }
         }
 

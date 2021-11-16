@@ -1,13 +1,10 @@
 ﻿using Autofac;
-using Module = Autofac.Module;
-using System.Linq;
-using System.Reflection;
-using Infrastructure;
 using AutoMapper;
 using BL.Config;
-using Infrastructure.UnitOfWork;
-using CactusDAL;
 using Infrastructure.EntityFramework;
+using System.Linq;
+using System.Reflection;
+using Module = Autofac.Module;
 
 namespace BL
 {

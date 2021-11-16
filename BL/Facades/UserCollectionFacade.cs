@@ -1,12 +1,7 @@
 ﻿using BL.DTOs;
 using BL.Services;
-using CactusDAL;
-using Infrastructure.EntityFramework;
 using Infrastructure.UnitOfWork;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BL.Facades
@@ -33,7 +28,7 @@ namespace BL.Facades
         {
             using (var uow = uowp.Create())
             {
-                return (List<SpeciesDto>) await _speciesService.getAllApprovedSpeciesWithGenus(genus.Id);
+                return (List<SpeciesDto>)await _speciesService.getAllApprovedSpeciesWithGenus(genus.Id);
             }
         }
 
@@ -41,7 +36,7 @@ namespace BL.Facades
         {
             using (var uow = uowp.Create())
             {
-                return (List<GenusDto>) _genusService.GetAllGenuses();
+                return (List<GenusDto>)_genusService.GetAllGenuses();
             }
         }
 
