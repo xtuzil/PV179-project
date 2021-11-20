@@ -2,6 +2,7 @@
 using BL.DTOs;
 using BL.Services;
 using Infrastructure.UnitOfWork;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ namespace BL.Facades
         private IMapper mapper;
         private ITransferService transferService;
         private IReviewService reviewService;
+        private IUserService userService;
         private ICactusService cactusService;
         private IOfferService offerService;
         private IUnitOfWorkProvider uowp;
@@ -21,7 +23,8 @@ namespace BL.Facades
             IReviewService reviewService,
             ICactusService cactusService,
             IOfferService offerService,
-            IUnitOfWorkProvider unitOfWorkProvider
+            IUserService userService,
+        IUnitOfWorkProvider unitOfWorkProvider
         )
         {
             this.mapper = mapper;
@@ -29,6 +32,7 @@ namespace BL.Facades
             this.reviewService = reviewService;
             this.cactusService = cactusService;
             this.offerService = offerService;
+            this.userService = userService;
             uowp = unitOfWorkProvider;
         }
 
@@ -42,6 +46,30 @@ namespace BL.Facades
 
         public async void ProcessTransfer(int transferId)
         {
+            var transfer = await transferService.GetTransfer(transferId);
+
+            // add offered money from each user
+            await userService.AddUserMoneyAsync(transfer.Offer.Author.Id, (double)transfer.Offer.RequestedMoney);
+            await userService.AddUserMoneyAsync(transfer.Offer.Recipient.Id, (double)transfer.Offer.OfferedMoney);
+
+
+            // add offer cactuses to each user
+            foreach (var cactusOffer in transfer.Offer.OfferedCactuses)
+            {
+                cactusOffer.Cactus.Owner = transfer.Offer.Recipient;
+                cactusService.UpdateCactusInformation(cactusOffer.Cactus);
+            }
+
+            foreach (var cactusRequest in transfer.Offer.RequestedCactuses)
+            {
+                cactusRequest.Cactus.Owner = transfer.Offer.Author;
+                cactusService.UpdateCactusInformation(cactusRequest.Cactus);
+            }
+
+            // set process transfer time
+            transfer.TransferedTime = DateTime.UtcNow;
+            transferService.UpdateTransfer(transfer);
+
 
         }
     }

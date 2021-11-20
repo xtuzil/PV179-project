@@ -9,11 +9,11 @@ namespace CactusDAL.Models
         [ForeignKey(nameof(OfferId))]
         public virtual Offer Offer { get; set; }
 
-        public int AuthorReviewId { get; set; }
+        public int? AuthorReviewId { get; set; }
         [ForeignKey(nameof(AuthorReviewId))]
         public virtual Review AuthorReview { get; set; }
 
-        public int RecipientReviewId { get; set; }
+        public int? RecipientReviewId { get; set; }
         [ForeignKey(nameof(RecipientReviewId))]
         public virtual Review RecipientReview { get; set; }
 

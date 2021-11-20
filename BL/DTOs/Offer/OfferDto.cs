@@ -1,4 +1,5 @@
-﻿using BL.Enums;
+﻿using BL.DTOs.Offer;
+using BL.Enums;
 using System;
 using System.Collections.Generic;
 
@@ -6,6 +7,7 @@ namespace BL.DTOs
 {
     public class OfferDto
     {
+
         public int Id { get; set; }
         public UserInfoDto Author { get; set; }
 
@@ -19,7 +21,7 @@ namespace BL.DTOs
         public OfferDto PreviousOffer { get; set; }
         public DateTime CreationDate { get; set; }
 
-        public List<CactusDto> OfferedCactuses { get; set; }
-        public List<CactusDto> RequestedCactuses { get; set; }
+        public List<CactusOfferDto> OfferedCactuses { get; set; }
+        public List<CactusOfferDto> RequestedCactuses { get; set; }
     }
 }

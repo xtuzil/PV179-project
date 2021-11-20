@@ -1,4 +1,5 @@
 ﻿using BL.DTOs;
+using BL.DTOs.User;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,5 +15,8 @@ namespace BL.Facades
         public Task<List<OfferDto>> GetUserOffers(int userId);
         public Task<List<OfferDto>> GetUserReceivedOffers(int userId);
         public Task<List<TransferDto>> GetUserTransfers(int userId);
+
+        public void CreateUser(UserCreateDto user);
+
     }
 }

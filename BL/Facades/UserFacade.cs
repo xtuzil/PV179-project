@@ -1,4 +1,5 @@
 ﻿using BL.DTOs;
+using BL.DTOs.User;
 using BL.Services;
 using Infrastructure.UnitOfWork;
 using System;
@@ -57,6 +58,16 @@ namespace BL.Facades
             }
         }
 
+        public void CreateUser(UserCreateDto user)
+        {
+            using (var uow = _unitOfWorkProvider.Create())
+            {
+                _userService.CreateUser(user);
+                uow.Commit();
+
+            }
+        }
+
         public void UpdateUserInfo(UserUpdateDto user)
         {
             using (var uow = _unitOfWorkProvider.Create())
@@ -88,5 +99,6 @@ namespace BL.Facades
                 return (List<TransferDto>)await _transferService.GetTransfersOfUser(userId);
             }
         }
+
     }
 }

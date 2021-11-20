@@ -6,7 +6,7 @@ namespace CactusDAL.Models
 {
     public class Cactus : DatedEntity
     {
-        public int OwnerId { get; set; }
+        public int? OwnerId { get; set; }
 
         [ForeignKey(nameof(OwnerId))]
         public virtual User Owner { get; set; }

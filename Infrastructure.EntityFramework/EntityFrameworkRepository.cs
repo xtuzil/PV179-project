@@ -48,9 +48,10 @@ namespace Infrastructure.EntityFramework
             return await result.Where(r => r.Id == id).FirstOrDefaultAsync();
         }
 
-        public virtual void Create(TEntity entity)
+        public virtual int Create(TEntity entity)
         {
             Context.Set<TEntity>().Add(entity);
+            return entity.Id;
         }
 
         public virtual void Delete(int id)

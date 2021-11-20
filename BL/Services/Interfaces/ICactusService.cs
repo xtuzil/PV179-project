@@ -13,9 +13,13 @@ namespace BL.Services
         public Task<IEnumerable<CactusDto>> GetAllUserCactuses(UserInfoDto userInfoDto);
         public Task<IEnumerable<CactusDto>> GetUserCactusesForSale(UserInfoDto userInfoDto);
 
+        public Task<CactusDto> GetCactus(int cactusId);
+
         public void AddCactus(CactusCreateDto cactusDto);
         public void UpdateCactusInformation(CactusDto cactusDto);
 
         public void RemoveCactus(CactusDto cactusDto);
+        public void RemoveCactusFromUser(CactusDto cactusDto);
+        public CactusDto CreateNewCactusInstanceForTransfer(CactusDto cactusDto, int amount);
     }
 }

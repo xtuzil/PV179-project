@@ -33,5 +33,20 @@ namespace BL.Services
         {
             throw new NotImplementedException();
         }
+
+        public void CreateTransfer(int offerId)
+        {
+            var transfer = new Transfer
+            {
+                OfferId = offerId
+            };
+            repository.Create(transfer);
+        }
+
+        public void UpdateTransfer(TransferDto transferDto)
+        {
+            var transfer = mapper.Map<Transfer>(transferDto);
+            repository.Update(transfer);
+        }
     }
 }

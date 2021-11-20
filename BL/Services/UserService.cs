@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BL.DTOs;
+using BL.DTOs.User;
 using CactusDAL.Models;
 using Infrastructure;
 using Infrastructure.Predicates;
@@ -32,7 +33,6 @@ namespace BL.Services
         public async Task<UserInfoDto> GetUserInfo(int userId)
         {
             return mapper.Map<UserInfoDto>(await repository.GetAsync(userId));
-
         }
 
         public async Task<IEnumerable<UserInfoDto>> GetUsersWithNameAsync(string name)
@@ -44,6 +44,26 @@ namespace BL.Services
         public void UpdateUserInfo(UserUpdateDto userDto)
         {
             var user = mapper.Map<User>(userDto);
+            repository.Update(user);
+        }
+
+        public void CreateUser(UserCreateDto userDto)
+        {
+            var user = mapper.Map<User>(userDto);
+            repository.Create(user);
+        }
+
+        public async Task RemoveUserMoneyAsync(int userId, double amount)
+        {
+            var user = await repository.GetAsync(userId);
+            user.AccountBalance -= amount;
+            repository.Update(user);
+        }
+
+        public async Task AddUserMoneyAsync(int userId, double amount)
+        {
+            var user = await repository.GetAsync(userId);
+            user.AccountBalance += amount;
             repository.Update(user);
         }
     }

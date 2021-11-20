@@ -39,6 +39,15 @@ namespace BL.Facades
             }
         }
 
+        public async Task<CactusDto> GetCactus(int cactusId)
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                return await cactusService.GetCactus(cactusId);
+            }
+        }
+
+
         public async Task<List<CactusDto>> GetCactusesWithGenus(int genusId)
         {
             using (var uow = unitOfWorkProvider.Create())
