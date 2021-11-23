@@ -45,9 +45,9 @@ namespace BL.Facades
                 await _userService.RemoveUserMoneyAsync(offer.Recipient.Id, (double)offer.RequestedMoney);
 
                
-
+                /* @Fuyune uncomment this part of method to get error
                 // remove offer cactuses from each user
-                /*foreach (var cactusOffer in offer.OfferedCactuses)
+                foreach (var cactusOffer in offer.OfferedCactuses)
                 {
                     if (cactusOffer.Cactus.Amount - cactusOffer.Amount <= 0)
                     {
@@ -82,13 +82,13 @@ namespace BL.Facades
                         cactusRequest.Cactus = _cactusService.CreateNewCactusInstanceForTransfer(cactusRequest.Cactus, cactusRequest.Amount);
                     }
 
-                }*/
+                }
 
                 // create Transfer object in db
                 _transferService.CreateTransfer(offer.Id);
 
                 uow.Commit();
-
+                */
             }
         }
 
