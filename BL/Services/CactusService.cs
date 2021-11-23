@@ -96,6 +96,14 @@ namespace BL.Services
             repository.Update(cactus);
         }
 
+        public async Task UpdateCactusAmountAsync(int cactusId, int amount)
+        {
+            
+            var cactus = await repository.GetAsync(cactusId);
+            cactus.Amount += amount;
+            repository.Update(cactus);
+        }
+
         public void RemoveCactus(CactusDto cactusDto)
         {
             var cactus = mapper.Map<Cactus>(cactusDto);
@@ -113,8 +121,8 @@ namespace BL.Services
         {
             var cactusCreateDto = mapper.Map<CactusCreateDto>(cactusDto);
             var cactus = mapper.Map<Cactus>(cactusCreateDto);
-            cactus.Owner = null;
-            cactus.Amount -= amount;
+            cactus.OwnerId = null;
+            cactus.Amount = amount;
             repository.Create(cactus);
             return mapper.Map<CactusDto>(cactus);
         }

@@ -45,7 +45,7 @@ namespace BL.Facades
                 await _userService.RemoveUserMoneyAsync(offer.Recipient.Id, (double)offer.RequestedMoney);
 
                
-                /* @Fuyune uncomment this part of method to get error
+                // @Fuyune uncomment this part of method to get error
                 // remove offer cactuses from each user
                 foreach (var cactusOffer in offer.OfferedCactuses)
                 {
@@ -55,9 +55,8 @@ namespace BL.Facades
                     } 
                     else
                     {
-                        // remove amount of sender from user
-                        cactusOffer.Cactus.Amount -= cactusOffer.Amount;
-                        _cactusService.UpdateCactusInformation(cactusOffer.Cactus);
+                        // remove amount of cactuses from user
+                        await _cactusService.UpdateCactusAmountAsync(cactusOffer.Cactus.Id, -cactusOffer.Amount);
 
                         // create new instance of cactus for transfer
                         cactusOffer.Cactus = _cactusService.CreateNewCactusInstanceForTransfer(cactusOffer.Cactus, cactusOffer.Amount);
@@ -74,9 +73,8 @@ namespace BL.Facades
                     }
                     else
                     {
-                        // remove amount of sender from user
-                        cactusRequest.Cactus.Amount -= cactusRequest.Amount;
-                        _cactusService.UpdateCactusInformation(cactusRequest.Cactus);
+                        // remove amount of cactuses from user
+                        await _cactusService.UpdateCactusAmountAsync(cactusRequest.Cactus.Id, -cactusRequest.Amount);
 
                         // create new instance of cactus for transfer
                         cactusRequest.Cactus = _cactusService.CreateNewCactusInstanceForTransfer(cactusRequest.Cactus, cactusRequest.Amount);
@@ -88,7 +86,7 @@ namespace BL.Facades
                 _transferService.CreateTransfer(offer.Id);
 
                 uow.Commit();
-                */
+                
             }
         }
 

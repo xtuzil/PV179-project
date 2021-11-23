@@ -18,6 +18,8 @@ namespace BL.Services
         public void AddCactus(CactusCreateDto cactusDto);
         public void UpdateCactusInformation(CactusDto cactusDto);
 
+        public Task UpdateCactusAmountAsync(int cactusId, int amount);
+
         public void RemoveCactus(CactusDto cactusDto);
         public void RemoveCactusFromUser(CactusDto cactusDto);
         public CactusDto CreateNewCactusInstanceForTransfer(CactusDto cactusDto, int amount);
