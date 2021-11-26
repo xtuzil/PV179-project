@@ -22,7 +22,7 @@ namespace CactusDAL.Models
 
         public string PhoneNumber { get; set; }
 
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
         [ForeignKey(nameof(AddressId))]
         public virtual PostalAddress Address { get; set; }
 

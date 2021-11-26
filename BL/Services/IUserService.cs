@@ -8,8 +8,14 @@ namespace BL.Services
     {
         public Task<IEnumerable<UserInfoDto>> GetUsersWithNameAsync(string name);
 
+        public Task<UserInfoDto> GetUserWithEmail(string email);
+
         public Task<UserInfoDto> GetUserInfo(int userId);
 
         public void UpdateUserInfo(UserUpdateDto user);
+        
+        public Task<UserInfoDto> AuthorizeUserAsync(UserLoginDto login);
+
+        public Task RegisterUser(UserCreateDto user);
     }
 }

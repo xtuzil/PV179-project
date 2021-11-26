@@ -88,5 +88,33 @@ namespace BL.Facades
                 return (List<TransferDto>)await _transferService.GetTransfersOfUser(userId);
             }
         }
+
+        public async Task<UserInfoDto> LoginAsync(UserLoginDto userLogin)
+        {
+            var user = await _userService.AuthorizeUserAsync(userLogin);
+            if (user != null)
+            {
+                return user;
+            }
+            throw new UnauthorizedAccessException();
+        }
+
+        public async Task RegisterUserAsync(UserCreateDto user)
+        {
+            using (var uow = _unitOfWorkProvider.Create())
+            {
+                await _userService.RegisterUser(user);
+                uow.Commit();
+            }
+        }
+
+        public async Task CheckEmailNotInUse(string email)
+        {
+            var user = await _userService.GetUserWithEmail(email);
+            if (user != null)
+            {
+                throw new InvalidOperationException("User with this email already exists.");
+            }
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _facade.GetAllUserCactuses(new UserInfoDto { Id = 1 }));
+            return View(await _facade.GetAllUserCactuses(new UserInfoDto { Id = int.Parse(User.Identity.Name) }));
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -51,7 +51,7 @@ namespace MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                cactus.OwnerId = 1;
+                cactus.OwnerId = int.Parse(User.Identity.Name);
                 _facade.AddCactusToCollection(cactus);
                 return RedirectToAction(nameof(Index));
             }
@@ -90,7 +90,7 @@ namespace MVC.Controllers
 
             if (ModelState.IsValid)
             {
-                cactus.Owner = new UserInfoDto { Id = 1 };
+                cactus.Owner = new UserInfoDto { Id = int.Parse(User.Identity.Name) };
                 _facade.UpdateCactusInformation(cactus);
                 return RedirectToAction(nameof(Details), new { id = cactus.Id });
             }

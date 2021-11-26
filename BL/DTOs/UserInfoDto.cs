@@ -1,4 +1,6 @@
 ﻿
+using CactusDAL.Models;
+
 namespace BL.DTOs
 {
     public class UserInfoDto
@@ -11,7 +13,6 @@ namespace BL.DTOs
         public bool Banned { get; set; }
         public double AccountBalance { get; set; }
         public string PhoneNumber { get; set; }
-
-
+        public Role Role { get; set; }
     }
 }

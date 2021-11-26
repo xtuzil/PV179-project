@@ -14,5 +14,9 @@ namespace BL.Facades
         public Task<List<OfferDto>> GetUserOffers(int userId);
         public Task<List<OfferDto>> GetUserReceivedOffers(int userId);
         public Task<List<TransferDto>> GetUserTransfers(int userId);
+
+        public Task<UserInfoDto> LoginAsync(UserLoginDto userLogin);
+        public Task RegisterUserAsync(UserCreateDto user);
+        public Task CheckEmailNotInUse(string email);
     }
 }
