@@ -78,6 +78,11 @@ namespace BL.Services
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
 
+        public async Task<CactusDto> GetCactus(int cactusId)
+        {
+            return mapper.Map<CactusDto>(await repository.GetAsync(cactusId));
+        }
+
         public void AddCactus(CactusCreateDto cactusDto)
         {
             var cactus = mapper.Map<Cactus>(cactusDto);
@@ -91,10 +96,43 @@ namespace BL.Services
             repository.Update(cactus);
         }
 
+        public async Task UpdateCactusAmountAsync(int cactusId, int amount)
+        {
+            
+            var cactus = await repository.GetAsync(cactusId);
+            cactus.Amount += amount;
+            repository.Update(cactus);
+        }
+
+        public async Task UpdateCactusOwnerAsync(int cactusId, int userId)
+        {
+
+            var cactus = await repository.GetAsync(cactusId);
+            cactus.OwnerId = userId;
+            repository.Update(cactus);
+        }
+
         public void RemoveCactus(CactusDto cactusDto)
         {
             var cactus = mapper.Map<Cactus>(cactusDto);
             repository.Delete(cactus);
+        }
+
+        public void RemoveCactusFromUser(CactusDto cactusDto)
+        {
+            var cactus = mapper.Map<Cactus>(cactusDto);
+            cactus.OwnerId = null;
+            repository.Update(cactus);
+        }
+
+        public Cactus CreateNewCactusInstanceForTransfer(CactusDto cactusDto, int amount)
+        {
+            var cactusCreateDto = mapper.Map<CactusCreateDto>(cactusDto);
+            var cactus = mapper.Map<Cactus>(cactusCreateDto);
+            cactus.OwnerId = null;
+            cactus.Amount = amount;
+            repository.Create(cactus);
+            return cactus;
         }
 
         public async Task<CactusDto> TransferCactus(int userId, int cactusId)

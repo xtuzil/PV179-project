@@ -10,7 +10,7 @@ namespace Infrastructure
         public Task<TEntity> GetAsync(int id);
         public Task<TEntity> GetAsync(int id, params Expression<Func<TEntity, object>>[] includes);
         public IEnumerable<TEntity> GetAll();
-        public void Create(TEntity entity);
+        public int Create(TEntity entity);
         public void Update(TEntity entity);
         public void Delete(int id);
         public void Delete(TEntity entity);

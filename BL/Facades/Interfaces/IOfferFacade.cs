@@ -1,4 +1,5 @@
 ﻿using BL.DTOs;
+using System.Threading.Tasks;
 
 namespace BL.Facades
 {
@@ -6,7 +7,9 @@ namespace BL.Facades
     {
         public OfferDto CreateOffer(OfferCreateDto offer);
         public OfferDto CreateCounterOffer(OfferCreateDto offer, int previousOfferId);
-        public void AcceptOffer(int offerId);
+        public Task AcceptOfferAsync(OfferDto offer);
         public void RejectOffer(int offerId);
+
+        public Task<OfferDto> GetOffer(int OfferId);
     }
 }

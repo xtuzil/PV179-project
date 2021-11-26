@@ -16,6 +16,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
+using BL.DTOs.Offer;
+using System.Collections.Generic;
+using BL.DTOs.User;
 
 namespace PV179_Project
 {
@@ -23,11 +26,21 @@ namespace PV179_Project
     {
         static async Task Main(string[] args)
         {
+            // DEV: just so that we don't have to drop the DB manually
+            using (var db = new CactusDbContext("Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database=CactusesManager;Trusted_Connection=True;"))
+            {
+                db.Database.EnsureDeleted();    
+                db.Database.EnsureCreated();
+
+            }
+            
+            
+            
             var container = AutofacBLConfig.Configure();
 
             //this will be called from presentation layer
             var facade = container.Resolve<IUserCollectionFacade>();
-
+            
             var allGenuses = facade.GetAllGenuses();
             Console.WriteLine($"All genuses:");
             foreach (var genusS in allGenuses)
@@ -37,10 +50,12 @@ namespace PV179_Project
 
             var userFacade = container.Resolve<IUserFacade>();
 
-            var usersWithName = await userFacade.GetAllUserWithNameAsync("Grace");
-            foreach (var user in usersWithName)
+            userFacade.CreateUser(new UserCreateDto { FirstName = "Jackie", LastName = "Smiths", Email = "example@example.com", AddressId = 1, Password = "password", AccountBalance = 44 });
+
+            var usersWithNameAston = await userFacade.GetAllUserWithNameAsync("Aston");
+            foreach (var user in usersWithNameAston)
             {
-                Console.WriteLine($"Mr. {user.LastName} has firstname Grace and has these cactuses:");
+                Console.WriteLine($"Mr. {user.LastName} has firstname Aston and has these cactuses:");
                 var cactuses = await facade.GetAllUserCactuses(user);
                 foreach (var cactus in cactuses)
                 {
@@ -50,7 +65,60 @@ namespace PV179_Project
 
             }
 
-            
+            var offerFacade = container.Resolve<IOfferFacade>();
+            var cactusFacade = container.Resolve<ICactusFacade>();
+
+            var cactus1 = await cactusFacade.GetCactus(1);
+            var cactus2 = await cactusFacade.GetCactus(2);
+
+
+            var cactusOffers = new List<CactusOfferCreateDto>{
+                    new CactusOfferCreateDto{ 
+                        Amount = 30,
+                        CactusId = cactus1.Id,
+                    }
+            };
+
+            var cactusRequests = new List<CactusOfferCreateDto>{
+                    new CactusOfferCreateDto{
+                        Amount = 20,
+                        CactusId = cactus2.Id,
+                    }
+            };
+
+            var offer = new OfferCreateDto
+            {
+                AuthorId = 2,
+                RecipientId = 4,
+                OfferedMoney = 45,
+                RequestedMoney = 0,
+                OfferedCactuses = cactusOffers,
+                RequestedCactuses = cactusRequests,
+            };
+
+            var createdOffer = offerFacade.CreateOffer(offer);
+
+
+            var getOffer = await offerFacade.GetOffer(createdOffer.Id);
+
+            foreach (var co in getOffer.OfferedCactuses)
+            {
+                Console.WriteLine($" CactusOffer with ID: {co.Id}");
+            }
+
+            await offerFacade.AcceptOfferAsync(getOffer);
+
+            var transferFacade = container.Resolve<ITransferFacade>();
+
+            await transferFacade.ProcessTransfer(2);
+           
+
+           //Console.WriteLine($"Offer with iD: {createdOffer.Id} with offered money: {createdOffer.OfferedMoney} and author Id: {createdOffer.Author.Id}");
+
+           
+
+
+
 
 
             /*Genus genus;
