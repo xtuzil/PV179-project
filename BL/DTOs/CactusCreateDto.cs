@@ -8,6 +8,8 @@ namespace BL.DTOs
         [Required]
         public int OwnerId { get; set; }
         [Required]
+        public int GenusId { get; set; }
+        [Required]
         public int SpeciesId { get; set; }
 
         public bool ForSale { get; set; }

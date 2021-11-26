@@ -6,7 +6,7 @@ namespace BL.Services
 {
     public interface IGenusService
     {
-        public IEnumerable<GenusDto> GetAllGenuses();
+        public Task<IEnumerable<GenusDto>> GetAllGenuses();
         public Task<GenusDto> GetGenusById(int id);
     }
 }

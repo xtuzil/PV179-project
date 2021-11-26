@@ -32,9 +32,9 @@ namespace Infrastructure.EntityFramework
             return await Context.Set<TEntity>().FindAsync(id);
         }
 
-        public IEnumerable<TEntity> GetAll()
+        public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return Context.Set<TEntity>().ToList();
+            return await Context.Set<TEntity>().ToListAsync();
         }
 
         public virtual async Task<TEntity> GetAsync(int id, params Expression<Func<TEntity, object>>[] includes)
@@ -48,22 +48,22 @@ namespace Infrastructure.EntityFramework
             return await result.Where(r => r.Id == id).FirstOrDefaultAsync();
         }
 
-        public virtual void Create(TEntity entity)
+        public async Task Create(TEntity entity)
         {
-            Context.Set<TEntity>().Add(entity);
+            await Context.Set<TEntity>().AddAsync(entity);
         }
 
-        public virtual void Delete(int id)
+        public async Task Delete(int id)
         {
-            Delete(Context.Set<TEntity>().Find(id));
+            TEntity entityToDelete = await Context.Set<TEntity>().FindAsync(id);
         }
 
-        public virtual void Delete(TEntity entityToDelete)
+        public void Delete(TEntity entityToDelete)
         {
             Context.Set<TEntity>().Remove(entityToDelete);
         }
 
-        public virtual void Update(TEntity entityToUpdate)
+        public void Update(TEntity entityToUpdate)
         {
             Context.Set<TEntity>().Attach(entityToUpdate);
             Context.Entry(entityToUpdate).State = EntityState.Modified;

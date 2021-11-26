@@ -1,4 +1,4 @@
-﻿using BL.DTOs;
+using BL.DTOs;
 using BL.Services;
 using Infrastructure.UnitOfWork;
 using System.Collections.Generic;
@@ -30,6 +30,14 @@ namespace BL.Facades
         //        return (List<CactusDto>) await cactusService.GetCactusesLike(name);
         //    }
         //}
+
+        public async Task<CactusDto> GetCactus(int id)
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                return await cactusService.GetCactus(id);
+            }
+        }
 
         public async Task<List<CactusDto>> GetCactusesOlderThan(int age)
         {

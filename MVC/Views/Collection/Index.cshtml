@@ -1,0 +1,71 @@
+﻿@model IEnumerable<CactusDto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Add">Add New Cactus</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Owner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Species)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ForSale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SowingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PotSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.Owner.FirstName @item.Owner.LastName
+            </td>
+            <td>
+                @item.Species.Name
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ForSale)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SowingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PotSize)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
