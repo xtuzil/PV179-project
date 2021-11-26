@@ -24,7 +24,7 @@ namespace BL.Services
 
         public async Task<TransferDto> GetTransfer(int transferId)
         {
-            var transfer = await repository.GetAsync(transferId, transfer => transfer.Offer);
+            var transfer = await repository.GetAsync(transferId);
 
             return mapper.Map<TransferDto>(transfer);
         }
@@ -46,6 +46,13 @@ namespace BL.Services
         public void UpdateTransfer(TransferDto transferDto)
         {
             var transfer = mapper.Map<Transfer>(transferDto);
+            repository.Update(transfer);
+        }
+
+        public async Task SetTransferTimeAsync(int transferId)
+        {
+            var transfer = await repository.GetAsync(transferId);
+            transfer.TransferedTime = DateTime.UtcNow;
             repository.Update(transfer);
         }
     }

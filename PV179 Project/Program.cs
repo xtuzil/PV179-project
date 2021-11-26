@@ -71,9 +71,6 @@ namespace PV179_Project
             var cactus1 = await cactusFacade.GetCactus(1);
             var cactus2 = await cactusFacade.GetCactus(2);
 
-            var author = await userFacade.GetUserInfo(2);
-            var recipient = await userFacade.GetUserInfo(4);
-
 
             var cactusOffers = new List<CactusOfferCreateDto>{
                     new CactusOfferCreateDto{ 
@@ -91,8 +88,8 @@ namespace PV179_Project
 
             var offer = new OfferCreateDto
             {
-                AuthorId = author.Id,
-                RecipientId = recipient.Id,
+                AuthorId = 2,
+                RecipientId = 4,
                 OfferedMoney = 45,
                 RequestedMoney = 0,
                 OfferedCactuses = cactusOffers,
@@ -111,7 +108,12 @@ namespace PV179_Project
 
             await offerFacade.AcceptOfferAsync(getOffer);
 
-            //Console.WriteLine($"Offer with iD: {createdOffer.Id} with offered money: {createdOffer.OfferedMoney} and author Id: {createdOffer.Author.Id}");
+            var transferFacade = container.Resolve<ITransferFacade>();
+
+            await transferFacade.ProcessTransfer(2);
+           
+
+           //Console.WriteLine($"Offer with iD: {createdOffer.Id} with offered money: {createdOffer.OfferedMoney} and author Id: {createdOffer.Author.Id}");
 
            
 

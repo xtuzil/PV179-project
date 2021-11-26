@@ -20,7 +20,7 @@ namespace CactusDAL.Models
         public bool AuthorAprovedDelivery { get; set; }
         public bool RecipientAprovedDelivery { get; set; }
 
-        public DateTime TransferedTime;
+        public DateTime TransferedTime { get; set; }
 
 
 

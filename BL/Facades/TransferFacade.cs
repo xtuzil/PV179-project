@@ -2,7 +2,6 @@
 using BL.DTOs;
 using BL.Services;
 using Infrastructure.UnitOfWork;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,7 +15,7 @@ namespace BL.Facades
         private IUserService userService;
         private ICactusService cactusService;
         private IOfferService offerService;
-        private IUnitOfWorkProvider uowp;
+        private IUnitOfWorkProvider unitOfWorkProvider;
 
         public TransferFacade(IMapper mapper,
             ITransferService transferService,
@@ -24,7 +23,7 @@ namespace BL.Facades
             ICactusService cactusService,
             IOfferService offerService,
             IUserService userService,
-        IUnitOfWorkProvider unitOfWorkProvider
+            IUnitOfWorkProvider unitOfWorkProvider
         )
         {
             this.mapper = mapper;
@@ -33,44 +32,45 @@ namespace BL.Facades
             this.cactusService = cactusService;
             this.offerService = offerService;
             this.userService = userService;
-            uowp = unitOfWorkProvider;
+            this.unitOfWorkProvider = unitOfWorkProvider;
         }
 
         public async Task<List<ReviewDto>> GetTransferReviews(int transferId)
         {
-            using (var uow = uowp.Create())
+            using (var uow = unitOfWorkProvider.Create())
             {
                 return (List<ReviewDto>)await reviewService.GetReviewsOfTransfer(transferId);
             }
         }
 
-        public async void ProcessTransfer(int transferId)
+        public async Task ProcessTransfer(int transferId)
         {
-            var transfer = await transferService.GetTransfer(transferId);
-
-            // add offered money from each user
-            await userService.AddUserMoneyAsync(transfer.Offer.Author.Id, (double)transfer.Offer.RequestedMoney);
-            await userService.AddUserMoneyAsync(transfer.Offer.Recipient.Id, (double)transfer.Offer.OfferedMoney);
-
-
-            // add offer cactuses to each user
-            foreach (var cactusOffer in transfer.Offer.OfferedCactuses)
+            using (var uow = unitOfWorkProvider.Create())
             {
-                cactusOffer.Cactus.Owner = transfer.Offer.Recipient;
-                cactusService.UpdateCactusInformation(cactusOffer.Cactus);
+                var transfer = await transferService.GetTransfer(transferId);
+                var offer = await offerService.GetOffer(transfer.Offer.Id);
+
+                // add offered money to each user
+                await userService.AddUserMoneyAsync(offer.Author.Id, offer.RequestedMoney != null ? (double)offer.RequestedMoney : 0 );
+                await userService.AddUserMoneyAsync(offer.Recipient.Id, offer.OfferedMoney != null ? (double)offer.OfferedMoney : 0);
+
+                // add requested cactuses to author
+                foreach (var cactusRequest in offer.RequestedCactuses)
+                {
+                    await cactusService.UpdateCactusOwnerAsync(cactusRequest.Cactus.Id, offer.Author.Id);
+                }
+
+                // add offered cactuses to recipient
+                foreach (var cactusOffer in offer.OfferedCactuses)
+                {
+                    await cactusService.UpdateCactusOwnerAsync(cactusOffer.Cactus.Id, offer.Recipient.Id);
+                }
+
+                // set processed transfer time
+                await transferService.SetTransferTimeAsync(transfer.Id);
+
+                uow.Commit();
             }
-
-            foreach (var cactusRequest in transfer.Offer.RequestedCactuses)
-            {
-                cactusRequest.Cactus.Owner = transfer.Offer.Author;
-                cactusService.UpdateCactusInformation(cactusRequest.Cactus);
-            }
-
-            // set process transfer time
-            transfer.TransferedTime = DateTime.UtcNow;
-            transferService.UpdateTransfer(transfer);
-
-
         }
     }
 }

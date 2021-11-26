@@ -11,6 +11,8 @@ namespace BL.Services
 
         public void CreateTransfer(int offerId);
 
+        public Task SetTransferTimeAsync(int transferId);
+
         public void UpdateTransfer(TransferDto transferDto);
     }
 }

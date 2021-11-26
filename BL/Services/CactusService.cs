@@ -104,6 +104,14 @@ namespace BL.Services
             repository.Update(cactus);
         }
 
+        public async Task UpdateCactusOwnerAsync(int cactusId, int userId)
+        {
+
+            var cactus = await repository.GetAsync(cactusId);
+            cactus.OwnerId = userId;
+            repository.Update(cactus);
+        }
+
         public void RemoveCactus(CactusDto cactusDto)
         {
             var cactus = mapper.Map<Cactus>(cactusDto);
@@ -113,18 +121,18 @@ namespace BL.Services
         public void RemoveCactusFromUser(CactusDto cactusDto)
         {
             var cactus = mapper.Map<Cactus>(cactusDto);
-            cactus.Owner = null;
+            cactus.OwnerId = null;
             repository.Update(cactus);
         }
 
-        public CactusDto CreateNewCactusInstanceForTransfer(CactusDto cactusDto, int amount)
+        public Cactus CreateNewCactusInstanceForTransfer(CactusDto cactusDto, int amount)
         {
             var cactusCreateDto = mapper.Map<CactusCreateDto>(cactusDto);
             var cactus = mapper.Map<Cactus>(cactusCreateDto);
             cactus.OwnerId = null;
             cactus.Amount = amount;
             repository.Create(cactus);
-            return mapper.Map<CactusDto>(cactus);
+            return cactus;
         }
 
         public async Task<CactusDto> TransferCactus(int userId, int cactusId)

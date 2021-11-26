@@ -1,4 +1,5 @@
 ﻿using BL.DTOs;
+using CactusDAL.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,10 +19,12 @@ namespace BL.Services
         public void AddCactus(CactusCreateDto cactusDto);
         public void UpdateCactusInformation(CactusDto cactusDto);
 
+        public Task UpdateCactusOwnerAsync(int cactusId, int userId);
+
         public Task UpdateCactusAmountAsync(int cactusId, int amount);
 
         public void RemoveCactus(CactusDto cactusDto);
         public void RemoveCactusFromUser(CactusDto cactusDto);
-        public CactusDto CreateNewCactusInstanceForTransfer(CactusDto cactusDto, int amount);
+        public Cactus CreateNewCactusInstanceForTransfer(CactusDto cactusDto, int amount);
     }
 }

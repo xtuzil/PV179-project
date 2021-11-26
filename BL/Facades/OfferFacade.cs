@@ -38,14 +38,11 @@ namespace BL.Facades
             using (var uow = unitOfWorkProvider.Create())
             {
                 await offerService.AcceptOffer(offer.Id);
-
                
                 // remove offered money from each user
                 await _userService.RemoveUserMoneyAsync(offer.Author.Id, (double)offer.OfferedMoney);
                 await _userService.RemoveUserMoneyAsync(offer.Recipient.Id, (double)offer.RequestedMoney);
-
                
-                // @Fuyune uncomment this part of method to get error
                 // remove offer cactuses from each user
                 foreach (var cactusOffer in offer.OfferedCactuses)
                 {
@@ -59,13 +56,16 @@ namespace BL.Facades
                         await _cactusService.UpdateCactusAmountAsync(cactusOffer.Cactus.Id, -cactusOffer.Amount);
 
                         // create new instance of cactus for transfer
-                        cactusOffer.Cactus = _cactusService.CreateNewCactusInstanceForTransfer(cactusOffer.Cactus, cactusOffer.Amount);
-                         
-                    }
-                   
+                        // set the new instance to actual cactuseOffer
+                        var newCatus =  _cactusService.CreateNewCactusInstanceForTransfer(cactusOffer.Cactus, cactusOffer.Amount);
+                        uow.Commit();
+                        await _cactusOfferService.UpdateCactusOfferCactusAsync(cactusOffer.Id, newCatus.Id);
+
+
+                    }                  
                 }
 
-                foreach (var cactusRequest in offer.RequestedCactuses)
+               foreach (var cactusRequest in offer.RequestedCactuses)
                 {
                     if (cactusRequest.Cactus.Amount - cactusRequest.Amount <= 0)
                     {
@@ -77,16 +77,16 @@ namespace BL.Facades
                         await _cactusService.UpdateCactusAmountAsync(cactusRequest.Cactus.Id, -cactusRequest.Amount);
 
                         // create new instance of cactus for transfer
-                        cactusRequest.Cactus = _cactusService.CreateNewCactusInstanceForTransfer(cactusRequest.Cactus, cactusRequest.Amount);
+                        var newCatus = _cactusService.CreateNewCactusInstanceForTransfer(cactusRequest.Cactus, cactusRequest.Amount);
+                        uow.Commit();
+                        await _cactusOfferService.UpdateCactusRequestCactusAsync(cactusRequest.Id, newCatus.Id);
                     }
-
                 }
 
                 // create Transfer object in db
                 _transferService.CreateTransfer(offer.Id);
 
-                uow.Commit();
-                
+                uow.Commit(); 
             }
         }
 
