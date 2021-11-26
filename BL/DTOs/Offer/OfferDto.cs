@@ -1,5 +1,4 @@
-﻿using BL.DTOs.Offer;
-using BL.Enums;
+﻿using BL.Enums;
 using System;
 using System.Collections.Generic;
 

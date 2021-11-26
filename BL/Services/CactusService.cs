@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using BL.DTOs;
 using CactusDAL.Models;
 using Infrastructure;
@@ -35,6 +35,11 @@ namespace BL.Services
         //    IPredicate predicate = new SimplePredicate(nameof(Cactus.Name), name, ValueComparingOperator.StringContains);
         //    return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         //}
+
+        public async Task<CactusDto> GetCactus(int id)
+        {
+            return mapper.Map<CactusDto>(await repository.GetAsync(id));
+        }
 
         public async Task<IEnumerable<CactusDto>> GetCactusesOlderThan(int age)
         {
@@ -78,15 +83,9 @@ namespace BL.Services
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
 
-        public async Task<CactusDto> GetCactus(int cactusId)
-        {
-            return mapper.Map<CactusDto>(await repository.GetAsync(cactusId));
-        }
-
         public void AddCactus(CactusCreateDto cactusDto)
         {
             var cactus = mapper.Map<Cactus>(cactusDto);
-            cactus.ForSale = true;
             repository.Create(cactus);
         }
 

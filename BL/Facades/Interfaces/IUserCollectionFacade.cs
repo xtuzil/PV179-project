@@ -6,9 +6,9 @@ namespace BL.Facades
 {
     public interface IUserCollectionFacade
     {
-        public Task<List<SpeciesDto>> GetAllApprovedSpeciesWithGenus(GenusDto genus);
+        public Task<List<SpeciesDto>> GetAllApprovedSpeciesWithGenus(int genusId);
 
-        public List<GenusDto> GetAllGenuses();
+        public Task<List<GenusDto>> GetAllGenuses();
 
         public Task<List<CactusDto>> GetAllUserCactuses(UserInfoDto user);
 
@@ -21,5 +21,7 @@ namespace BL.Facades
         public void UpdateCactusInformation(CactusDto cactus);
 
         public void RemoveCactus(CactusDto cactus);
+
+        public Task<CactusDto> GetCactus(int id);
     }
 }

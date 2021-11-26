@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BL.DTOs;
-using BL.DTOs.Offer;
 using CactusDAL.Models;
 using Infrastructure;
 using Infrastructure.Predicates;

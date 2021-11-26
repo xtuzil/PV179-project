@@ -24,19 +24,19 @@ namespace BL.Facades
             _cactusService = cactusService;
         }
 
-        public async Task<List<SpeciesDto>> GetAllApprovedSpeciesWithGenus(GenusDto genus)
+        public async Task<List<SpeciesDto>> GetAllApprovedSpeciesWithGenus(int genusId)
         {
             using (var uow = uowp.Create())
             {
-                return (List<SpeciesDto>)await _speciesService.getAllApprovedSpeciesWithGenus(genus.Id);
+                return (List<SpeciesDto>)await _speciesService.getAllApprovedSpeciesWithGenus(genusId);
             }
         }
 
-        public List<GenusDto> GetAllGenuses()
+        public async Task<List<GenusDto>> GetAllGenuses()
         {
             using (var uow = uowp.Create())
             {
-                return (List<GenusDto>)_genusService.GetAllGenuses();
+                return (List<GenusDto>) await _genusService.GetAllGenuses();
             }
         }
 
@@ -92,8 +92,9 @@ namespace BL.Facades
             }
         }
 
-
-
-
+        public async Task<CactusDto> GetCactus(int id)
+        {
+            return await _cactusService.GetCactus(id);
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿
-namespace BL.DTOs.Offer
+namespace BL.DTOs
 {
     public class CactusOfferDto
     {

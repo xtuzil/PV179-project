@@ -40,8 +40,8 @@ namespace PV179_Project
 
             //this will be called from presentation layer
             var facade = container.Resolve<IUserCollectionFacade>();
-            
-            var allGenuses = facade.GetAllGenuses();
+
+            var allGenuses = await facade.GetAllGenuses();
             Console.WriteLine($"All genuses:");
             foreach (var genusS in allGenuses)
             {

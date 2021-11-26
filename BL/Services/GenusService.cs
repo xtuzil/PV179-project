@@ -21,9 +21,9 @@ namespace BL.Services
             this.repository = repository;
         }
 
-        public IEnumerable<GenusDto> GetAllGenuses()
+        public async Task<IEnumerable<GenusDto>> GetAllGenuses()
         {
-            var genuses = repository.GetAll();
+            var genuses = await repository.GetAll();
             return mapper.Map<IEnumerable<GenusDto>>(genuses);
         }
 

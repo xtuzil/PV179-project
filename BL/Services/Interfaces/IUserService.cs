@@ -1,5 +1,4 @@
 ﻿using BL.DTOs;
-using BL.DTOs.User;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,13 +10,19 @@ namespace BL.Services
 
         public Task<UserInfoDto> GetUserInfo(int userId);
 
+        public Task<UserInfoDto> GetUserWithEmail(string email);
+
         public void UpdateUserInfo(UserUpdateDto user);
 
         public Task RemoveUserMoneyAsync(int userId, double amount);
 
         public Task AddUserMoneyAsync(int userId, double amount);
 
-        public void CreateUser(UserCreateDto userDto);
+        public Task CreateUser(UserCreateDto userDto);
+
+        public Task<UserInfoDto> AuthorizeUserAsync(UserLoginDto login);
+
+        public Task RegisterUser(UserCreateDto user);
 
     }
 }

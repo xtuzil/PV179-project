@@ -1,5 +1,4 @@
 ﻿using BL.DTOs;
-using BL.DTOs.User;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,6 +16,9 @@ namespace BL.Facades
         public Task<List<TransferDto>> GetUserTransfers(int userId);
 
         public void CreateUser(UserCreateDto user);
+        public Task<UserInfoDto> LoginAsync(UserLoginDto userLogin);
+        public Task RegisterUserAsync(UserCreateDto user);
+        public Task CheckEmailNotInUse(string email);
 
     }
 }

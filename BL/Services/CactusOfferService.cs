@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BL.DTOs.Offer;
+using BL.DTOs;
 using BL.Services.Interfaces;
 using CactusDAL.Models;
 using Infrastructure;

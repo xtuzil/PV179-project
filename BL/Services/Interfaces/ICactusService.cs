@@ -14,7 +14,7 @@ namespace BL.Services
         public Task<IEnumerable<CactusDto>> GetAllUserCactuses(UserInfoDto userInfoDto);
         public Task<IEnumerable<CactusDto>> GetUserCactusesForSale(UserInfoDto userInfoDto);
 
-        public Task<CactusDto> GetCactus(int cactusId);
+        public Task<CactusDto> GetCactus(int id);
 
         public void AddCactus(CactusCreateDto cactusDto);
         public void UpdateCactusInformation(CactusDto cactusDto);
