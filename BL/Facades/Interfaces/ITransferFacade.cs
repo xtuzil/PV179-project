@@ -7,6 +7,8 @@ namespace BL.Facades
     public interface ITransferFacade
     {
         public Task<List<ReviewDto>> GetTransferReviews(int transferId);
-        public Task ProcessTransfer(int transferId);
+        public Task<bool> ProcessTransfer(int transferId);
+
+        public Task<bool> ApproveDelivery(int transferId, int userId);
     }
 }

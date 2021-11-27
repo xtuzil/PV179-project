@@ -9,8 +9,10 @@ namespace BL.DTOs
 
         public int Id { get; set; }
         public UserInfoDto Author { get; set; }
+        public int AuthorId { get; set; }
 
         public UserInfoDto Recipient { get; set; }
+        public int RecipientId { get; set; }
         public double? OfferedMoney { get; set; }
         public double? RequestedMoney { get; set; }
 

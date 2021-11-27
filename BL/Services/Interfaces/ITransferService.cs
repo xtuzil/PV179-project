@@ -13,6 +13,8 @@ namespace BL.Services
 
         public Task SetTransferTimeAsync(int transferId);
 
+        public Task ApproveDelivery(int transferId, bool authorApproving);
+
         public void UpdateTransfer(TransferDto transferDto);
     }
 }

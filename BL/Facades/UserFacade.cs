@@ -72,6 +72,7 @@ namespace BL.Facades
             using (var uow = _unitOfWorkProvider.Create())
             {
                 _userService.UpdateUserInfo(user);
+                uow.Commit();
             }
         }
 

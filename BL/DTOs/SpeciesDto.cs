@@ -6,5 +6,7 @@
         public string Name { get; set; }
         public string LatinName { get; set; }
         public GenusDto Genus { get; set; }
+
+        public bool Approved { get; set; }
     }
 }

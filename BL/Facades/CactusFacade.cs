@@ -52,9 +52,8 @@ namespace BL.Facades
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                var genus = await genusService.GetGenusById(genusId);
-                var species = await speciesService.getAllApprovedSpeciesWithGenus(genusId);
-                return (List<CactusDto>)await cactusService.GetCactusesWithSpecies(species);
+                var specieses = await speciesService.getAllApprovedSpeciesWithGenus(genusId);
+                return (List<CactusDto>)await cactusService.GetCactusesWithSpecies(specieses);
             }
         }
 

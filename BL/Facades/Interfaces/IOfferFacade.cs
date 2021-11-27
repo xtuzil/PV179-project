@@ -7,7 +7,7 @@ namespace BL.Facades
     {
         public OfferDto CreateOffer(OfferCreateDto offer);
         public OfferDto CreateCounterOffer(OfferCreateDto offer, int previousOfferId);
-        public Task AcceptOfferAsync(OfferDto offer);
+        public Task<bool> AcceptOfferAsync(OfferDto offer);
         public void RejectOffer(int offerId);
 
         public Task<OfferDto> GetOffer(int OfferId);

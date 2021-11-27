@@ -49,6 +49,20 @@ namespace BL.Services
             repository.Update(transfer);
         }
 
+        public async Task ApproveDelivery(int transferId, bool authorApproving)
+        {
+            var transfer = await repository.GetAsync(transferId);
+            if (authorApproving)
+            {
+                transfer.AuthorAprovedDelivery = true;
+            } else
+            {
+                transfer.RecipientAprovedDelivery = true;
+            }
+            repository.Update(transfer);
+        }
+
+
         public async Task SetTransferTimeAsync(int transferId)
         {
             var transfer = await repository.GetAsync(transferId);

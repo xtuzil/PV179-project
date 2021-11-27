@@ -16,9 +16,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
-using BL.DTOs.Offer;
 using System.Collections.Generic;
-using BL.DTOs.User;
 
 namespace PV179_Project
 {
@@ -50,7 +48,7 @@ namespace PV179_Project
 
             var userFacade = container.Resolve<IUserFacade>();
 
-            userFacade.CreateUser(new UserCreateDto { FirstName = "Jackie", LastName = "Smiths", Email = "example@example.com", AddressId = 1, Password = "password", AccountBalance = 44 });
+            userFacade.CreateUser(new UserCreateDto { FirstName = "Jackie", LastName = "Smiths", Email = "example@example.com", Password = "password" });
 
             var usersWithNameAston = await userFacade.GetAllUserWithNameAsync("Aston");
             foreach (var user in usersWithNameAston)

@@ -33,12 +33,21 @@ namespace BL.Facades
             _transferService = transferService;
         }
 
-        public async Task AcceptOfferAsync(OfferDto offer)
+        public async Task<bool> AcceptOfferAsync(OfferDto offer)
         {
             using (var uow = unitOfWorkProvider.Create())
             {
+                await _cactusService.UpdateCactusAmountAsync(1, -20);
+
+                var newcCatus = _cactusService.CreateNewCactusInstanceForTransfer(offer.OfferedCactuses[0].Cactus, 30);
+
                 await offerService.AcceptOffer(offer.Id);
                
+                if ((offer.Author.AccountBalance - (double)offer.OfferedMoney < 0) ||
+                    (offer.Recipient.AccountBalance - (double)offer.RequestedMoney < 0)) {
+                    return false;
+                }
+
                 // remove offered money from each user
                 await _userService.RemoveUserMoneyAsync(offer.Author.Id, (double)offer.OfferedMoney);
                 await _userService.RemoveUserMoneyAsync(offer.Recipient.Id, (double)offer.RequestedMoney);
@@ -60,8 +69,6 @@ namespace BL.Facades
                         var newCatus =  _cactusService.CreateNewCactusInstanceForTransfer(cactusOffer.Cactus, cactusOffer.Amount);
                         uow.Commit();
                         await _cactusOfferService.UpdateCactusOfferCactusAsync(cactusOffer.Id, newCatus.Id);
-
-
                     }                  
                 }
 
@@ -86,7 +93,8 @@ namespace BL.Facades
                 // create Transfer object in db
                 _transferService.CreateTransfer(offer.Id);
 
-                uow.Commit(); 
+                uow.Commit();
+                return true;
             }
         }
 
@@ -94,7 +102,9 @@ namespace BL.Facades
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                return offerService.CreateCounterOffer(offer, previousOfferId);
+                var offerDto = offerService.CreateCounterOffer(offer, previousOfferId);
+                uow.Commit();
+                return offerDto;
             }
         }
 
@@ -113,7 +123,7 @@ namespace BL.Facades
                 foreach (var cactusRequested in offer.RequestedCactuses)
                 {
                     cactusRequested.OfferId = createdOffer.Id;
-                    _cactusOfferService.AddCactusRequest(cactusRequested);
+                    _cactusOfferService.AddCactusRequest(cactusRequested); 
                 }
                 uow.Commit();
 
@@ -136,6 +146,7 @@ namespace BL.Facades
             using (var uow = unitOfWorkProvider.Create())
             {
                 offerService.RejectOffer(offerId);
+                uow.Commit();
             }
         }
     }

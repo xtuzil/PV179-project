@@ -32,7 +32,7 @@ namespace BL.Facades
             this.cactusService = cactusService;
             this.offerService = offerService;
             this.userService = userService;
-            this.unitOfWorkProvider = unitOfWorkProvider;
+            this.unitOfWorkProvider = unitOfWorkProvider; 
         }
 
         public async Task<List<ReviewDto>> GetTransferReviews(int transferId)
@@ -43,11 +43,61 @@ namespace BL.Facades
             }
         }
 
-        public async Task ProcessTransfer(int transferId)
+        public async Task<bool> ApproveDelivery(int transferId, int userId)
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                var authorApproving = false;
+                var recipientApproving = false;
+
+                var transfer = await transferService.GetTransfer(transferId);
+                
+                if (transfer.Offer.AuthorId == userId)
+                {
+                    authorApproving = true;
+                }
+
+                if (transfer.Offer.RecipientId == userId)
+                {
+                    recipientApproving = true;
+                }
+
+                if (authorApproving || recipientApproving)
+                {
+                    await transferService.ApproveDelivery(transferId, authorApproving);
+
+                    if ((authorApproving && transfer.RecipientAprovedDelivery) ||
+                        (recipientApproving && transfer.AuthorAprovedDelivery))
+                    {
+                        await ProcessTransfer(transferId);
+                    }
+
+                    uow.Commit();
+                    return true;
+                }
+
+
+
+                return false;
+
+
+
+
+                
+            }
+        }
+
+        public async Task<bool> ProcessTransfer(int transferId)
         {
             using (var uow = unitOfWorkProvider.Create())
             {
                 var transfer = await transferService.GetTransfer(transferId);
+
+                if (!transfer.RecipientAprovedDelivery || !transfer.AuthorAprovedDelivery)
+                {
+                    return false;
+                }
+
                 var offer = await offerService.GetOffer(transfer.Offer.Id);
 
                 // add offered money to each user
@@ -70,6 +120,7 @@ namespace BL.Facades
                 await transferService.SetTransferTimeAsync(transfer.Id);
 
                 uow.Commit();
+                return true;
             }
         }
     }
