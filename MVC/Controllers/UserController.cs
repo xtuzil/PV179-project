@@ -2,6 +2,7 @@
 using BL.Facades;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -60,7 +61,7 @@ namespace MVC.Controllers
 
         [HttpPost("Login")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginAsync(UserLoginDto userLogin)
+        public async Task<IActionResult> LoginAsync(UserLoginDto userLogin, string returnUrl)
         {
             try
             {
@@ -68,6 +69,10 @@ namespace MVC.Controllers
 
                 await CreateClaimsAndSignInAsync(user);
 
+                if (!string.IsNullOrEmpty(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception)
@@ -97,6 +102,12 @@ namespace MVC.Controllers
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(identity));
+        }
+
+        [Authorize]
+        public IActionResult Profile(int? id)
+        {
+            return View();
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using BL.Facades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace MVC.Controllers
 {
+    [Authorize]
     public class SpeciesController : Controller
     {
         private readonly IUserCollectionFacade _facade;

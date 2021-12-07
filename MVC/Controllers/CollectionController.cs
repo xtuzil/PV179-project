@@ -1,11 +1,13 @@
 ﻿using BL.DTOs;
 using BL.Facades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 
 namespace MVC.Controllers
 {
+    [Authorize]
     public class CollectionController : Controller
     {
         private readonly IUserCollectionFacade _facade;
@@ -67,7 +69,7 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            var cactus = await _facade.GetCactus((int)id);
+            var cactus = await _facade.GetCactus(id.Value);
             if (cactus == null)
             {
                 return NotFound();
@@ -106,7 +108,7 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            var cactus = await _facade.GetCactus((int)id);
+            var cactus = await _facade.GetCactus(id.Value);
             if (cactus == null)
             {
                 return NotFound();
