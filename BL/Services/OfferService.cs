@@ -36,6 +36,7 @@ namespace BL.Services
         {
             var offer = await repository.GetAsync(offerId);
             offer.Response = OfferStatus.Accepted;
+            offer.ResponseDate = DateTime.UtcNow;
             repository.Update(offer);
 
             return mapper.Map<OfferDto>(offer);
@@ -52,6 +53,7 @@ namespace BL.Services
         {
             var offer = await repository.GetAsync(offerId);
             offer.Response = status;
+            offer.ResponseDate = DateTime.UtcNow;
             repository.Update(offer);
 
             return mapper.Map<OfferDto>(offer);
