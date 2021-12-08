@@ -40,11 +40,6 @@ namespace BL.Services
             return list[0];
         }
 
-        public async Task<IEnumerable<TransferDto>> GetTransfersOfUser(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
 
         public void CreateTransfer(int offerId)
         {
