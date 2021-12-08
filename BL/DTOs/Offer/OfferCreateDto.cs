@@ -15,7 +15,7 @@ namespace BL.DTOs
         public OfferStatus Response { get; set; }
         public DateTime ResponseDate { get; set; }
 
-        public OfferDto PreviousOffer { get; set; }
+        public int? PreviousOfferId { get; set; }
         public List<CactusOfferCreateDto> OfferedCactuses { get; set; }
         public List<CactusOfferCreateDto> RequestedCactuses { get; set; }
     }

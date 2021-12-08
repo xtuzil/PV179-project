@@ -12,7 +12,7 @@ namespace BL.Facades
     public class OfferFacade : IOfferFacade
     {
         private IUnitOfWorkProvider unitOfWorkProvider;
-        private IOfferService offerService;
+        private IOfferService _offerService;
         private IUserService _userService;
         private ICactusService _cactusService;
         private ICactusOfferService _cactusOfferService;
@@ -26,7 +26,7 @@ namespace BL.Facades
             ITransferService transferService)
         {
             this.unitOfWorkProvider = unitOfWorkProvider;
-            this.offerService = offerService;
+            _offerService = offerService;
             _userService = userService;
             _cactusService = cactusService;
             _cactusOfferService = cactusOfferService;
@@ -37,11 +37,8 @@ namespace BL.Facades
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                await _cactusService.UpdateCactusAmountAsync(1, -20);
 
-                var newcCatus = _cactusService.CreateNewCactusInstanceForTransfer(offer.OfferedCactuses[0].Cactus, 30);
-
-                await offerService.AcceptOffer(offer.Id);
+                await _offerService.AcceptOffer(offer.Id);
                
                 if ((offer.Author.AccountBalance - (double)offer.OfferedMoney < 0) ||
                     (offer.Recipient.AccountBalance - (double)offer.RequestedMoney < 0)) {
@@ -98,22 +95,11 @@ namespace BL.Facades
             }
         }
 
-        public OfferDto CreateCounterOffer(OfferCreateDto offer, int previousOfferId)
-        {
-            using (var uow = unitOfWorkProvider.Create())
-            {
-                var offerDto = offerService.CreateCounterOffer(offer, previousOfferId);
-                uow.Commit();
-                return offerDto;
-            }
-        }
-
         public OfferDto CreateOffer(OfferCreateDto offer)
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                var createdOffer = offerService.CreateOffer(offer);
-                //Console.WriteLine($"In create offer: Offer with iD: {createdOffer.Id} with offered money: {createdOffer.OfferedMoney} and author Id: {createdOffer.Author.Id}");
+                var createdOffer = _offerService.CreateOffer(offer);
                 uow.Commit();
                 foreach (var cactusOffered in offer.OfferedCactuses)
                 {
@@ -127,7 +113,7 @@ namespace BL.Facades
                 }
                 uow.Commit();
 
-                //TODO:
+                //TODO: We might do not wan to mapping in Facade, but for now it is necessary because of retrieving id
                 var mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
                 return mapper.Map<OfferDto>(createdOffer);
             }
@@ -137,7 +123,7 @@ namespace BL.Facades
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                return await offerService.GetOffer(offerId);
+                return await _offerService.GetOffer(offerId);
             }
         }
 
@@ -145,7 +131,7 @@ namespace BL.Facades
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                offerService.RejectOffer(offerId);
+                _offerService.RejectOffer(offerId);
                 uow.Commit();
             }
         }

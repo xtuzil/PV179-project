@@ -25,12 +25,6 @@ namespace BL.Services
 
         public async Task<OfferDto> GetOffer(int offerId)
         {
-            /*var offer = await repository.GetAsync(offerId,
-                offer => offer.Author,
-                offer => offer.Recipient,
-                offer => offer.CactusOffers,
-                offer => offer.CactusRequests
-            );*/
             var offer = await repository.GetAsync(offerId);
             var offerDto = mapper.Map<OfferDto>(offer);
             offerDto.OfferedCactuses = mapper.Map<List<CactusOfferDto>>(offer.CactusOffers);
@@ -50,19 +44,12 @@ namespace BL.Services
         public Offer CreateOffer(OfferCreateDto offerDto)
         {
             var offer = mapper.Map<Offer>(offerDto);
+            if (offer.PreviousOfferId != null)
+            {
+                offer.Response = OfferStatus.Counteroffer;
+            }
             repository.Create(offer);
             return offer;
-            //Console.WriteLine($"In create service offer: Offer with iD: {offer.Id}");
-
-        }
-
-        public OfferDto CreateCounterOffer(OfferCreateDto offerDto, int previousOffer)
-        {
-            var offer = mapper.Map<Offer>(offerDto);
-            offer.PreviousOfferId = previousOffer;
-            repository.Create(offer);
-
-            return mapper.Map<OfferDto>(offer);
         }
 
         public async Task<OfferDto> RejectOffer(int offerId)
