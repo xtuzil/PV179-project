@@ -9,6 +9,7 @@ namespace BL.DTOs
 {
     public class UserLoginDto
     {
+        [EmailAddress]
         [Required]
         public string Email { get; set; }
         [Required]
