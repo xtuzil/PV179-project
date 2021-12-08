@@ -1,10 +1,13 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BL.DTOs
 {
     public class TransferDto
     {
+        [Required]
         public int Id { get; set; }
+        [Required]
         public OfferDto Offer { get; set; }
 
         public ReviewDto AuthorReview { get; set; }

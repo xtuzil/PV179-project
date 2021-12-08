@@ -43,6 +43,37 @@ namespace BL.Facades
             }
         }
 
+        public async Task<bool> CreateReview(ReviewCreateDto reviewCreateDto)
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                var transfer = await transferService.GetTransfer(reviewCreateDto.TransferId);
+
+                // Review can write only Author or Recipient
+                if (transfer.Offer.AuthorId != reviewCreateDto.AuthorId && transfer.Offer.RecipientId != reviewCreateDto.AuthorId)
+                {
+                    return false;
+                }
+
+                // Author can have only one review
+                if ((transfer.Offer.AuthorId == reviewCreateDto.AuthorId) && transfer.AuthorReview != null)
+                {
+                    return false;
+                }
+
+                // Recipient can have only one review
+                if ((transfer.Offer.RecipientId == reviewCreateDto.AuthorId) && transfer.RecipientReview != null)
+                {
+                    return false;
+                }
+
+                await reviewService.CreateReview(reviewCreateDto);
+                uow.Commit();
+
+                return true;
+            }
+        }
+
         public async Task<bool> ApproveDelivery(int transferId, int userId)
         {
             using (var uow = unitOfWorkProvider.Create())

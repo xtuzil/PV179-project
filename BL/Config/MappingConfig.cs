@@ -25,6 +25,7 @@ namespace BL.Config
             config.CreateMap<QueryResult<User>, QueryResultDto<UserInfoDto>>().ReverseMap();
             config.CreateMap<Report, ReportDto>().ReverseMap();
             config.CreateMap<Review, ReviewDto>().ReverseMap();
+            config.CreateMap<Review, ReviewCreateDto>().ReverseMap();
             config.CreateMap<Species, SpeciesDto>().ReverseMap();
             config.CreateMap<Species, SpeciesCreateDto>().ReverseMap();
             config.CreateMap<Transfer, TransferDto>().ReverseMap();

@@ -40,5 +40,13 @@ namespace BL.Services
             IPredicate predicate = new SimplePredicate(nameof(Review.UserId), usedId, ValueComparingOperator.Equal);
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
+
+        public async Task CreateReview(ReviewCreateDto reviewCreateDto)
+        {
+            var review = mapper.Map<Review>(reviewCreateDto);
+            await repository.Create(review);
+        }
+
+
     }
 }

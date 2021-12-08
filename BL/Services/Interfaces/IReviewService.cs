@@ -8,5 +8,6 @@ namespace BL.Services
     {
         public Task<IEnumerable<ReviewDto>> GetReviewsOnUser(int usedId);
         public Task<IEnumerable<ReviewDto>> GetReviewsOfTransfer(int transferId);
+        public Task CreateReview(ReviewCreateDto reviewCreateDto);
     }
 }
