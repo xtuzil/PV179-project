@@ -31,10 +31,12 @@ namespace PV179_Project
                 db.Database.EnsureCreated();
 
             }
-            
-            
-            
+
             var container = AutofacBLConfig.Configure();
+
+            var cactusFacade = container.Resolve<ICactusFacade>();
+
+            await cactusFacade.ProposeNewSpecies(new SpeciesCreateDto { GenusId = 1, Name = "ProposedName", LatinName = "Veni vidi vici" });
 
             //this will be called from presentation layer
             var facade = container.Resolve<IUserCollectionFacade>();
@@ -64,7 +66,6 @@ namespace PV179_Project
             }
 
             var offerFacade = container.Resolve<IOfferFacade>();
-            var cactusFacade = container.Resolve<ICactusFacade>();
 
             var cactus1 = await cactusFacade.GetCactus(1);
             var cactus2 = await cactusFacade.GetCactus(2);

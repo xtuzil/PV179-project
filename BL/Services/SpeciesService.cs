@@ -38,10 +38,29 @@ namespace BL.Services
             IPredicate predicate = new CompositePredicate(new List<IPredicate> { approvedPredicate, genusPredicate }, LogicalOperator.AND);
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
+        public async Task CreateSpecies(SpeciesCreateDto speciesCreateDto)
+        {
+            var species = mapper.Map<Species>(speciesCreateDto);
+            await repository.Create(species);
+        }
 
+        public async Task ApproveSpecies(int speciesId)
+        {
+            var species = await repository.GetAsync(speciesId);
+            species.Approved = true;
+            repository.Update(species);
+        }
 
+        public async Task DeleteSpecies(int speciesId)
+        {
+            await repository.Delete(speciesId);
+        }
 
-
+        public async Task<IEnumerable<SpeciesDto>> getAllNewSpeciesProposals()
+        {
+            IPredicate predicate = new SimplePredicate(nameof(Species.Approved), false, ValueComparingOperator.Equal);
+            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
+        }
 
     }
 }

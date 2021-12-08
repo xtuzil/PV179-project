@@ -76,14 +76,7 @@ namespace BL.Facades
                     return true;
                 }
 
-
-
                 return false;
-
-
-
-
-                
             }
         }
 
