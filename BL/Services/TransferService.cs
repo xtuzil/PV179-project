@@ -2,6 +2,8 @@
 using BL.DTOs;
 using CactusDAL.Models;
 using Infrastructure;
+using Infrastructure.Predicates;
+using Infrastructure.Predicates.Operators;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -29,10 +31,20 @@ namespace BL.Services
             return mapper.Map<TransferDto>(transfer);
         }
 
+        public async Task<TransferDto> GetTransferByOfferId(int offerId)
+        { 
+ 
+            IPredicate predicate = new SimplePredicate(nameof(Transfer.OfferId), offerId, ValueComparingOperator.Equal);
+            var result = await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true });
+            var list = (List<TransferDto>) result.Items;
+            return list[0];
+        }
+
         public async Task<IEnumerable<TransferDto>> GetTransfersOfUser(int userId)
         {
             throw new NotImplementedException();
         }
+
 
         public void CreateTransfer(int offerId)
         {

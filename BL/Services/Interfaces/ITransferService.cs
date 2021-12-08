@@ -16,5 +16,6 @@ namespace BL.Services
         public Task ApproveDelivery(int transferId, bool authorApproving);
 
         public void UpdateTransfer(TransferDto transferDto);
+        public Task<TransferDto> GetTransferByOfferId(int offerId);
     }
 }

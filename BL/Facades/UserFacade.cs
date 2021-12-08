@@ -95,7 +95,16 @@ namespace BL.Facades
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
-                return (List<TransferDto>)await _transferService.GetTransfersOfUser(userId);
+                var userOffers = await _offerService.GetTransferedOffersOfUser(userId);
+
+                var transfers = new List <TransferDto> { };
+
+                foreach (var offer in userOffers)
+                {
+                    transfers.Add(await _transferService.GetTransferByOfferId(offer.Id));
+                }
+
+                return transfers;
             }
         }
 

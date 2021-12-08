@@ -49,6 +49,18 @@ namespace BL.Services
             return offer;
         }
 
+        public async Task<IEnumerable<OfferDto>> GetTransferedOffersOfUser(int userId)
+        {
+            IPredicate authorPredicate = new SimplePredicate(nameof(Offer.AuthorId), userId, ValueComparingOperator.Equal);
+            IPredicate recipientPredicate = new SimplePredicate(nameof(Offer.RecipientId), userId, ValueComparingOperator.Equal);
+            IPredicate containUserIdPredicate = new CompositePredicate(new List<IPredicate> { authorPredicate, recipientPredicate }, LogicalOperator.OR);
+
+            IPredicate trasferedPredicate = new SimplePredicate(nameof(Offer.Response), OfferStatus.Transfered, ValueComparingOperator.Equal);
+
+            IPredicate compositePredicate = new CompositePredicate(new List<IPredicate> { containUserIdPredicate, trasferedPredicate }, LogicalOperator.AND);
+            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = compositePredicate, SortAscending = true })).Items;
+        }
+
         public async Task<OfferDto> UpdateOfferStatus(int offerId, OfferStatus status)
         {
             var offer = await repository.GetAsync(offerId);

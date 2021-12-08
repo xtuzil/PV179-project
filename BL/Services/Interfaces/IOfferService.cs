@@ -13,5 +13,7 @@ namespace BL.Services
         public Task<OfferDto> UpdateOfferStatus(int offerId, OfferStatus status);
         public Task<IEnumerable<OfferDto>> GetAuthoredOffersForUser(int userId);
         public Task<IEnumerable<OfferDto>> GetReceivedOffersForUser(int userId);
+
+        public Task<IEnumerable<OfferDto>> GetTransferedOffersOfUser(int userId);
     }
 }
