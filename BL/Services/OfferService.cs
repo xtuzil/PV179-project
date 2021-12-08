@@ -44,18 +44,14 @@ namespace BL.Services
         public Offer CreateOffer(OfferCreateDto offerDto)
         {
             var offer = mapper.Map<Offer>(offerDto);
-            if (offer.PreviousOfferId != null)
-            {
-                offer.Response = OfferStatus.Counteroffer;
-            }
             repository.Create(offer);
             return offer;
         }
 
-        public async Task<OfferDto> RejectOffer(int offerId)
+        public async Task<OfferDto> UpdateOfferStatus(int offerId, OfferStatus status)
         {
             var offer = await repository.GetAsync(offerId);
-            offer.Response = OfferStatus.Declined;
+            offer.Response = status;
             repository.Update(offer);
 
             return mapper.Map<OfferDto>(offer);

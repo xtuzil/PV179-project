@@ -3,6 +3,7 @@ using BL.Config;
 using BL.DTOs;
 using BL.Services;
 using BL.Services.Interfaces;
+using CactusDAL.Models;
 using Infrastructure.UnitOfWork;
 using System;
 using System.Threading.Tasks;
@@ -100,6 +101,13 @@ namespace BL.Facades
             using (var uow = unitOfWorkProvider.Create())
             {
                 var createdOffer = _offerService.CreateOffer(offer);
+
+                if (offer.PreviousOfferId != null)
+                {
+                    // updating status of previous offer to Counteroffer status
+                    _offerService.UpdateOfferStatus(offer.PreviousOfferId.Value, OfferStatus.Counteroffer);
+                }
+
                 uow.Commit();
                 foreach (var cactusOffered in offer.OfferedCactuses)
                 {
@@ -113,7 +121,7 @@ namespace BL.Facades
                 }
                 uow.Commit();
 
-                //TODO: We might do not wan to mapping in Facade, but for now it is necessary because of retrieving id
+                //TODO: We might do not want to mapping in Facade, but for now it is necessary because of retrieving id
                 var mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
                 return mapper.Map<OfferDto>(createdOffer);
             }
@@ -131,7 +139,7 @@ namespace BL.Facades
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                _offerService.RejectOffer(offerId);
+                _offerService.UpdateOfferStatus(offerId, OfferStatus.Declined);
                 uow.Commit();
             }
         }
