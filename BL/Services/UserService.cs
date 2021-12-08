@@ -106,7 +106,7 @@ namespace BL.Services
             var (hash, salt) = CreateHash(user.Password);
             user.Password = string.Join(',', hash, salt);
 
-            CreateUser(user);
+            await CreateUser(user);
         }
 
         private (string, string) GetPassAndSalt(string passwordHash)
@@ -141,5 +141,14 @@ namespace BL.Services
                 return Tuple.Create(Convert.ToBase64String(subkey), Convert.ToBase64String(salt));
             }
         }
+
+        public async Task BanUser(int userId, bool ban)
+        {
+            var user = await repository.GetAsync(userId);
+            user.Banned = ban;
+            repository.Update(user);
+        }
+
+
     }
 }

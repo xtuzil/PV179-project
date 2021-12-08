@@ -14,6 +14,6 @@ namespace BL.Facades
         public Task ProposeNewSpecies(SpeciesCreateDto speciesCreateDto);
 
         public Task AcceptNewSpeciesProposal(int speciesId);
-        public Task RejecttNewSpeciesProposal(int speciesId);
+        public Task RejectNewSpeciesProposal(int speciesId);
     }
 }

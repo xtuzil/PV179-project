@@ -83,7 +83,7 @@ namespace BL.Facades
             }
         }
 
-        public async Task RejecttNewSpeciesProposal(int speciesId)
+        public async Task RejectNewSpeciesProposal(int speciesId)
         {
             using (var uow = unitOfWorkProvider.Create())
             {

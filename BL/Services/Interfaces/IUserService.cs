@@ -23,6 +23,6 @@ namespace BL.Services
         public Task<UserInfoDto> AuthorizeUserAsync(UserLoginDto login);
 
         public Task RegisterUser(UserCreateDto user);
-
+        public Task BanUser(int userId, bool ban);
     }
 }

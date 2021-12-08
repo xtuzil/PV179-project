@@ -38,7 +38,6 @@ namespace BL.Facades
 
             // do we need this?
             throw new NotImplementedException();
-
         }
 
         public async Task<List<ReviewDto>> GetReviewsOnUser(int userId)
@@ -103,7 +102,7 @@ namespace BL.Facades
         public async Task<UserInfoDto> LoginAsync(UserLoginDto userLogin)
         {
             var user = await _userService.AuthorizeUserAsync(userLogin);
-            if (user != null)
+            if (user != null && !user.Banned)
             {
                 return user;
             }
@@ -127,5 +126,25 @@ namespace BL.Facades
                 throw new InvalidOperationException("User with this email already exists.");
             }
         }
+
+        public async Task BanUser(int userId)
+        {
+            using (var uow = _unitOfWorkProvider.Create())
+            {
+                await _userService.BanUser(userId, true);
+                uow.Commit();
+            }
+        }
+
+        public async Task UnBanUser(int userId)
+        {
+            using (var uow = _unitOfWorkProvider.Create())
+            {
+                await _userService.BanUser(userId, false);
+                uow.Commit();
+            }
+        }
+
+
     }
 }
