@@ -1,5 +1,6 @@
 ﻿using Autofac.Extras.Moq;
 using BL.DTOs;
+using BL.Enums;
 using BL.Facades;
 using BL.Services;
 using CactusDAL;
@@ -35,7 +36,7 @@ namespace BLTests
                     Name = "Golden Barrel",
                     LatinName = "Echinocactus grusonii",
                     Genus = genus,
-                    Approved = true
+                    ApprovalStatus = ApprovalStatus.Approved
                 };
 
                 var species2 = new SpeciesDto
@@ -44,7 +45,7 @@ namespace BLTests
                     Name = "Silver Ball",
                     LatinName = "Parodia scopa",
                     Genus = genus,
-                    Approved = true
+                    ApprovalStatus = ApprovalStatus.Approved
                 };
 
 
