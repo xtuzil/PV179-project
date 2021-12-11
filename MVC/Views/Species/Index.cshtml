@@ -1,0 +1,42 @@
+﻿@model IEnumerable<SpeciesDto>
+
+@{
+ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LatinName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.LatinName
+                </td>
+                <td>
+                    @item.Genus.Name
+                </td>
+                <td>
+                    <a asp-action="Approve" asp-route-id="@item.Id">Approve</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

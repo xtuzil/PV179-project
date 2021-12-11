@@ -30,13 +30,19 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="Add">Propose new species</a>
                             </li>
                         }
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
-                            </li>
-                        }
+
                     </ul>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Admin
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="nav-link text-dark" asp-area="" asp-controller="Species" asp-action="Index">View pending species proposals</a></li>
+                            </ul>
+                        </div>
+                    }
                     <div class="ms-auto">
                         @if (!User.Identity.IsAuthenticated)
                         {

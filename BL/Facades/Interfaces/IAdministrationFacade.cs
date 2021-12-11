@@ -6,10 +6,11 @@ namespace BL.Facades
 {
     public interface IAdministrationFacade
     {
-        public Task<List<ReportDto>> GetAllReports();
-        public void BlockUser(int userId);
+        //public Task<List<ReportDto>> GetAllReports();
+        public Task BlockUser(int userId);
+        public Task UnblockUser(int userId);
         public Task<List<SpeciesDto>> GetAllPendingRequestsForNewSpecies();
-        public Task<SpeciesDto> ApproveSpecies(int speciesId);
-        public Task<SpeciesDto> RejectSpecies(int speciesId);
+        public Task ApproveSpecies(int speciesId);
+        public Task RejectSpecies(int speciesId);
     }
 }

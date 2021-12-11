@@ -19,8 +19,5 @@ namespace BL.Facades
         public Task<UserInfoDto> LoginAsync(UserLoginDto userLogin);
         public Task RegisterUserAsync(UserCreateDto user);
         public Task CheckEmailNotInUse(string email);
-        public Task BanUser(int userId);
-        public Task UnBanUser(int userId);
-
     }
 }

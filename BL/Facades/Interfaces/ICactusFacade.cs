@@ -12,8 +12,5 @@ namespace BL.Facades
         public Task<List<CactusDto>> GetCactusesWithSpecies(int speciesId);
         public Task<List<CactusDto>> GetCactusesWithGenus(int genusId);
         public Task ProposeNewSpecies(SpeciesCreateDto speciesCreateDto);
-
-        public Task AcceptNewSpeciesProposal(int speciesId);
-        public Task RejectNewSpeciesProposal(int speciesId);
     }
 }

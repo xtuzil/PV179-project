@@ -73,33 +73,5 @@ namespace BL.Facades
                 uow.Commit();
             }
         }
-
-        public async Task AcceptNewSpeciesProposal(int speciesId)
-        {
-            using (var uow = unitOfWorkProvider.Create())
-            {
-                await speciesService.ApproveSpecies(speciesId);
-                uow.Commit();
-            }
-        }
-
-        public async Task RejectNewSpeciesProposal(int speciesId)
-        {
-            using (var uow = unitOfWorkProvider.Create())
-            {
-                await speciesService.DeleteSpecies(speciesId);
-                uow.Commit();
-            }
-        }
-
-        public async Task<List<SpeciesDto>> getAllNewSpeciesProposals()
-        {
-            using (var uow = unitOfWorkProvider.Create())
-            {
-                return (List<SpeciesDto>)await speciesService.getAllNewSpeciesProposals();
-            }
-        }
-
-        
     }
 }

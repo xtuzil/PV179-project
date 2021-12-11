@@ -144,16 +144,5 @@ namespace BL.Facades
                 uow.Commit();
             }
         }
-
-        public async Task UnBanUser(int userId)
-        {
-            using (var uow = _unitOfWorkProvider.Create())
-            {
-                await _userService.BanUser(userId, false);
-                uow.Commit();
-            }
-        }
-
-
     }
 }

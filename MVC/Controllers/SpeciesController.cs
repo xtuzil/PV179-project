@@ -12,11 +12,38 @@ namespace MVC.Controllers
     {
         private readonly IUserCollectionFacade _userCollectionFacade;
         private readonly ICactusFacade _cactusFacade;
+        private readonly IAdministrationFacade _administrationFacade;
 
-        public SpeciesController(IUserCollectionFacade userCollectionFacade, ICactusFacade cactusFacade)
+        public SpeciesController(IUserCollectionFacade userCollectionFacade, ICactusFacade cactusFacade, IAdministrationFacade administrationFacade)
         {
             _userCollectionFacade = userCollectionFacade;
             _cactusFacade = cactusFacade;
+            _administrationFacade = administrationFacade;
+        }
+
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _administrationFacade.GetAllPendingRequestsForNewSpecies());
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Approve(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _administrationFacade.ApproveSpecies(id.Value);
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
