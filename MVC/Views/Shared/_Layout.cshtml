@@ -74,7 +74,7 @@
                                     My account
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="#">My profile</a></li>
+                                    <li><a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Profile" asp-route-id="@User.Identity.Name">My profile</a></li>
                                     <li><a class="dropdown-item" href="#">Settings</a></li>
                                     <li><a class="dropdown-item" href="/user/logout">Logout</a></li>
                                 </ul>

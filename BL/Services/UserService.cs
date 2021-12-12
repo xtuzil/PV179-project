@@ -58,9 +58,20 @@ namespace BL.Services
             return result.Items.First();
         }
 
-        public void UpdateUserInfo(UserUpdateDto userDto)
+        public async void UpdateUserInfo(UserUpdateProfileDto userDto)
         {
-            var user = mapper.Map<User>(userDto);
+            var user = await repository.GetAsync(userDto.Id);
+            user.FirstName = userDto.FirstName;
+            user.LastName = userDto.LastName;
+            user.Email = userDto.Email;
+            user.PhoneNumber = userDto.PhoneNumber;
+            repository.Update(user);
+        }
+
+        public async void ChangePassword(ChangePasswordDto userDto)
+        {
+            var user = await repository.GetAsync(userDto.Id);
+            user.Password = userDto.Password;
             repository.Update(user);
         }
 

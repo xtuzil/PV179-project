@@ -31,9 +31,10 @@ namespace BL.Config
             config.CreateMap<Species, SpeciesCreateDto>().ReverseMap();
             config.CreateMap<Transfer, TransferDto>().ReverseMap();
             config.CreateMap<User, UserCreateDto>().ReverseMap();
-            config.CreateMap<User, UserUpdateDto>().ReverseMap();
+            config.CreateMap<User, UserUpdateProfileDto>().ReverseMap();
+            config.CreateMap<User, ChangePasswordDto>().ReverseMap();
             config.CreateMap<User, UserInfoDto>().ReverseMap();
-            config.CreateMap<UserInfoDto, UserUpdateDto>().ReverseMap();
+            config.CreateMap<UserInfoDto, UserUpdateProfileDto>().ReverseMap();
         }
     }
 }

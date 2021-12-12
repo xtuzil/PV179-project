@@ -66,11 +66,20 @@ namespace BL.Facades
             }
         }
 
-        public void UpdateUserInfo(UserUpdateDto user)
+        public void UpdateUserInfo(UserUpdateProfileDto user)
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
                 _userService.UpdateUserInfo(user);
+                uow.Commit();
+            }
+        }
+
+        public void ChangePassword(ChangePasswordDto user)
+        {
+            using (var uow = _unitOfWorkProvider.Create())
+            {
+                _userService.ChangePassword(user);
                 uow.Commit();
             }
         }

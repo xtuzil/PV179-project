@@ -10,7 +10,8 @@ namespace BL.Facades
         public Task<UserInfoDto> GetUserInfo(int userId);
         public Task<List<ReviewDto>> GetUserReviews(int userId);
         public Task<List<ReviewDto>> GetReviewsOnUser(int userId);
-        public void UpdateUserInfo(UserUpdateDto user);
+        public void UpdateUserInfo(UserUpdateProfileDto user);
+        public void ChangePassword(ChangePasswordDto user);
         public Task<List<OfferDto>> GetUserOffers(int userId);
         public Task<List<OfferDto>> GetUserReceivedOffers(int userId);
         public Task<List<TransferDto>> GetUserTransfers(int userId);

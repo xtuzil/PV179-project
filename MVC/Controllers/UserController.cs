@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace MVC.Controllers
 {
-    [Route("[controller]")]
     public class UserController : Controller
     {
         readonly IUserFacade _userFacade;
@@ -23,7 +22,8 @@ namespace MVC.Controllers
             _userFacade = userFacade;
         }
 
-        [HttpGet("Register")]
+        [HttpGet]
+        [Route("/register")]
         public IActionResult Register()
         {
             if (User.Identity.IsAuthenticated)
@@ -33,9 +33,10 @@ namespace MVC.Controllers
             return View();
         }
 
-        [HttpPost("Register")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RegisterAsync(UserCreateDto user)
+        [Route("/register")]
+        public async Task<IActionResult> Register(UserCreateDto user)
         {
             if (!ModelState.IsValid)
             {
@@ -56,7 +57,8 @@ namespace MVC.Controllers
             }
         }
 
-        [HttpGet("Login")]
+        [HttpGet]
+        [Route("/login")]
         public IActionResult Login()
         {
             if (User.Identity.IsAuthenticated)
@@ -66,9 +68,10 @@ namespace MVC.Controllers
             return View();
         }
 
-        [HttpPost("Login")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> LoginAsync(UserLoginDto userLogin, string returnUrl)
+        [Route("/login")]
+        public async Task<IActionResult> Login(UserLoginDto userLogin, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -94,7 +97,7 @@ namespace MVC.Controllers
             }
         }
 
-        [HttpGet("Logout")]
+        [HttpGet]
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync();
@@ -117,9 +120,88 @@ namespace MVC.Controllers
         }
 
         [Authorize]
-        public IActionResult Profile(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Profile(int? id)
         {
-            return View();
+            if(id == null ||(User.Identity.Name != id.Value.ToString() && !User.IsInRole("Admin")))
+            {
+                return NotFound();
+            }
+
+            UserInfoDto user = await _userFacade.GetUserInfo(id.Value);
+
+            return View(user);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> EditProfile(int? id)
+        {
+            if (id == null || (User.Identity.Name != id.Value.ToString() && !User.IsInRole("Admin")))
+            {
+                return NotFound();
+            }
+
+            UserInfoDto user = await _userFacade.GetUserInfo(id.Value);
+
+            return View(new UserUpdateProfileDto {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult EditProfile(int id, [Bind("Id,FirstName,LastName,Email,PhoneNumber")] UserUpdateProfileDto user)
+        {
+            if (id != user.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _userFacade.UpdateUserInfo(user);
+            }
+
+            return RedirectToAction(nameof(Profile), new { id = user.Id });
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword(int? id)
+        {
+            if (id == null || (User.Identity.Name != id.Value.ToString() && !User.IsInRole("Admin")))
+            {
+                return NotFound();
+            }
+
+            UserInfoDto user = await _userFacade.GetUserInfo(id.Value);
+
+            return View(new ChangePasswordDto
+            {
+                Id = user.Id,
+            });
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult ChangePassword(int id, [Bind("Id,Password,PasswordConfirmation")] ChangePasswordDto user)
+        {
+            if (id != user.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _userFacade.ChangePassword(user);
+            }
+
+            return RedirectToAction(nameof(Profile), new { id = user.Id });
         }
     }
 }

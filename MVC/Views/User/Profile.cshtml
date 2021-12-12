@@ -1,0 +1,56 @@
+﻿@model UserInfoDto
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>Profile</h1>
+
+<hr />
+<div class="row d-flex justify-content-center">
+    <div class="col-md-4">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title text-center">@Model.FirstName @Model.LastName</h5>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-4">
+                        <img class='img-circle' src='~/img/cactus-avatar.png' width="80" />
+                    </div>
+                </div>
+                <form>
+                    <div class="form-group">
+                        <label asp-for="FirstName" class="control-label"><b>First name:</b></label>
+                        <input type="text" readonly class="form-control-plaintext" asp-for="FirstName" value="@Model.FirstName" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName" class="control-label"><b>Last name:</b></label>
+                        <input type="text" readonly class="form-control-plaintext" asp-for="LastName" value="@Model.LastName" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"><b>Email:</b></label>
+                        <input type="text" readonly class="form-control-plaintext" asp-for="Email" value="@Model.Email" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber" class="control-label"><b>Phone number:</b></label>
+                        <input type="text" readonly class="form-control-plaintext" asp-for="PhoneNumber" value="@Model.PhoneNumber" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AccountBalance" class="control-label"><b>Account balance:</b></label>
+                        <input type="text" readonly class="form-control-plaintext" asp-for="AccountBalance" value="@Model.AccountBalance" />
+                    </div>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="form-check-inline disabled">
+                            <label asp-for="Banned" class="control-label"><b>Banned:</b></label>
+                            <input type="checkbox" disabled class="form-check-input" asp-for="Banned" checked="@Model.Banned" />
+                        </div>
+                    }
+                </form>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <a asp-action="EditProfile" asp-route-id="@User.Identity.Name" class="btn btn-primary">Edit profile</a>
+                    <a asp-action="ChangePassword" asp-route-id="@User.Identity.Name" class="btn btn-primary">Change password</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

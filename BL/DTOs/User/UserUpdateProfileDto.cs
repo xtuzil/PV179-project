@@ -2,7 +2,7 @@
 
 namespace BL.DTOs
 {
-    public class UserUpdateDto
+    public class UserUpdateProfileDto
     {
         [Required]
         public int Id { get; set; }
@@ -15,9 +15,6 @@ namespace BL.DTOs
         [EmailAddress]
         [Required]
         public string Email { get; set; }
-        public string Password { get; set; }
         public string PhoneNumber { get; set; }
-
-        public double AccountBalance { get; set; }
     }
 }
