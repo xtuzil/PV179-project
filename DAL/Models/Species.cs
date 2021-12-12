@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CactusDAL.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,7 +21,7 @@ namespace CactusDAL.Models
         // type of flower (if it has flower at all), use (edible, healing…)
 
         // Proposing
-        public bool Approved { get; set; }
+        public ApprovalStatus ApprovalStatus { get; set; }
         public DateTime ConfirmationDate { get; set; }
 
 

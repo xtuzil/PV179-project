@@ -21,10 +21,9 @@ namespace MVC.Controllers
             _administrationFacade = administrationFacade;
         }
 
-
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> PendingProposals()
         {
             return View(await _administrationFacade.GetAllPendingRequestsForNewSpecies());
         }
@@ -43,7 +42,24 @@ namespace MVC.Controllers
                 await _administrationFacade.ApproveSpecies(id.Value);
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(PendingProposals));
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Reject(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _administrationFacade.RejectSpecies(id.Value);
+            }
+
+            return RedirectToAction(nameof(PendingProposals));
         }
 
         [HttpGet]

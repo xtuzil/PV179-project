@@ -1,4 +1,5 @@
 ﻿using CactusDAL.Models;
+using CactusDAL.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -144,7 +145,7 @@ namespace CactusDAL
                 Name = "Golden Barrel",
                 LatinName = "Echinocactus grusonii",
                 GenusId = genus.Id,
-                Approved = true
+                ApprovalStatus = ApprovalStatus.Approved,
             };
 
             var species2 = new Species
@@ -153,7 +154,7 @@ namespace CactusDAL
                 Name = "Silver Ball",
                 LatinName = "Parodia scopa",
                 GenusId = genus2.Id,
-                Approved = true
+                ApprovalStatus = ApprovalStatus.Approved,
             };
 
             var cactus = new Cactus

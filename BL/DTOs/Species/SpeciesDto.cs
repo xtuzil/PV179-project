@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BL.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace BL.DTOs
 {
@@ -14,6 +15,6 @@ namespace BL.DTOs
         [Required]
         public GenusDto Genus { get; set; }
 
-        public bool Approved { get; set; }
+        public ApprovalStatus ApprovalStatus { get; set; }
     }
 }

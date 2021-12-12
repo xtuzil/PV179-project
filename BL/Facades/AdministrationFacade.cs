@@ -35,7 +35,7 @@ namespace BL.Facades
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                await speciesService.DeleteSpecies(speciesId);
+                await speciesService.RejectSpecies(speciesId);
                 uow.Commit();
             }
         }

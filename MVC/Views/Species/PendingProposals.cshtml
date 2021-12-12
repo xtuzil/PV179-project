@@ -1,0 +1,45 @@
+﻿@model IEnumerable<SpeciesDto>
+
+@{
+ViewData["Title"] = "Pending species proposals";
+}
+
+<h1>Pending species proposals</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name:
+            </th>
+            <th>
+                Latin name:
+            </th>
+            <th>
+                Genus:
+            </th>
+            <th>
+                Action:
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.LatinName
+            </td>
+            <td>
+                @item.Genus.Name
+            </td>
+            <td>
+                <a asp-action="Approve" asp-route-id="@item.Id">Approve</a> |
+                <a asp-action="Reject" asp-route-id="@item.Id">Reject</a> |
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
