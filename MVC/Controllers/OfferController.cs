@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace MVC.Controllers
         public static readonly string SKEY_OFFER_ACCEPTED = "_offerAccepted";
         public static readonly string SKEY_OFFER_DECLINED = "_offerDeclined";
         public static readonly string SKEY_DELIVERY_APPROVED = "_deliveryApproved";
+        public static readonly string SKEY_OFFER_MODEL = "_offerModel";
 
         public OfferController(IOfferFacade offerFacade, IUserCollectionFacade userCollectionFacade, IUserFacade userFacade, ITransferFacade transferFacade)
         {
@@ -61,7 +63,9 @@ namespace MVC.Controllers
             }
 
             var yourId = id.Value;
-            var model = new OfferCreateDto { AuthorId = myId, RecipientId = yourId, RequestedMoney = 0, OfferedMoney = 0, OfferedCactuses = new Dictionary<int, int>(), RequestedCactuses = new Dictionary<int, int>() };
+            var model = (TempData.ContainsKey(SKEY_OFFER_MODEL))
+                ? JsonConvert.DeserializeObject<OfferCreateDto>((string)TempData[SKEY_OFFER_MODEL])
+                : new OfferCreateDto { AuthorId = myId, RecipientId = yourId, RequestedMoney = 0, OfferedMoney = 0, OfferedCactuses = new Dictionary<int, int>(), RequestedCactuses = new Dictionary<int, int>() };
 
             ViewBag.MyCollection = await _userCollectionFacade.GetUserCactusesForSale(await _userFacade.GetUserInfo(myId));
             ViewBag.YourCollection = await _userCollectionFacade.GetUserCactusesForSale(await _userFacade.GetUserInfo(yourId));
@@ -130,7 +134,7 @@ namespace MVC.Controllers
             {
                 offer.OfferedCactuses = new Dictionary<int, int>(offeredCactuses);
                 offer.RequestedCactuses = new Dictionary<int, int>(requestedCactuses);
-                _offerFacade.CreateOffer(offer);
+                await _offerFacade.CreateOffer(offer);
                 return RedirectToAction("Outgoing");
             }
 
@@ -157,6 +161,35 @@ namespace MVC.Controllers
             TempData.Add(SKEY_OFFER_ACCEPTED, success);
 
             return RedirectToAction("Incoming");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Counter(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var offer = await _offerFacade.GetOffer(id.Value);
+            if (offer == null)
+            {
+                return NotFound();
+            }
+
+            var o = new OfferCreateDto
+            {
+                AuthorId = offer.RecipientId,
+                RecipientId = offer.AuthorId,
+                OfferedMoney = offer.RequestedMoney,
+                RequestedMoney = offer.OfferedMoney,
+                OfferedCactuses = offer.RequestedCactuses.ToDictionary(c => c.CactusId, c => c.Amount),
+                RequestedCactuses = offer.OfferedCactuses.ToDictionary(c => c.CactusId, c => c.Amount),
+                PreviousOfferId = offer.Id
+            };
+
+            TempData.Add(SKEY_OFFER_MODEL, JsonConvert.SerializeObject(o));
+            return RedirectToAction("Create", new { id = offer.AuthorId });
         }
 
         [HttpPost]

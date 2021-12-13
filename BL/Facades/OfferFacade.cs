@@ -96,7 +96,7 @@ namespace BL.Facades
             }
         }
 
-        public OfferDto CreateOffer(OfferCreateDto offer)
+        public async Task<OfferDto> CreateOffer(OfferCreateDto offer)
         {
             using (var uow = unitOfWorkProvider.Create())
             {
@@ -105,7 +105,7 @@ namespace BL.Facades
                 if (offer.PreviousOfferId != null)
                 {
                     // updating status of previous offer to Counteroffer status
-                    _offerService.UpdateOfferStatus(offer.PreviousOfferId.Value, OfferStatus.Counteroffer);
+                    await _offerService.UpdateOfferStatus(offer.PreviousOfferId.Value, OfferStatus.Counteroffer);
                 }
 
                 uow.Commit();

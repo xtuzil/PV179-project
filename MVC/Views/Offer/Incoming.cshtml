@@ -110,12 +110,16 @@
                             <input type="hidden" name="id" value="@offer.Id" />
                             <button type="submit" class="btn btn-outline-success">Accept</button>
                         </form>
+                        <form asp-action="Counter">
+                            <input type="hidden" name="id" value="@offer.Id" />
+                            <button type="submit" class="btn btn-outline-primary">Counter Offer</button>
+                        </form>
                         <form asp-action="Decline">
                             <input type="hidden" name="id" value="@offer.Id" />
                             <button type="submit" class="btn btn-outline-danger">Decline</button>
                         </form>
                     }
-                    else if (offer.Response == BL.Enums.OfferStatus.Accepted && !offer.Transfer.AuthorAprovedDelivery)
+                    else if (offer.Response == BL.Enums.OfferStatus.Accepted && !offer.Transfer.RecipientAprovedDelivery)
                     {
                         <form asp-action="Confirm">
                             <input type="hidden" name="id" value="@offer.Id" />

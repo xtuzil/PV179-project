@@ -5,7 +5,7 @@ namespace BL.Facades
 {
     public interface IOfferFacade
     {
-        public OfferDto CreateOffer(OfferCreateDto offer);
+        public Task<OfferDto> CreateOffer(OfferCreateDto offer);
         public Task<bool> AcceptOfferAsync(OfferDto offer);
         public void RejectOffer(int offerId);
 
