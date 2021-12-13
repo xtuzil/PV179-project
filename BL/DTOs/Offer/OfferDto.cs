@@ -28,5 +28,7 @@ namespace BL.DTOs
 
         public List<CactusOfferDto> OfferedCactuses { get; set; }
         public List<CactusOfferDto> RequestedCactuses { get; set; }
+
+        public TransferDto Transfer { get; set; }
     }
 }

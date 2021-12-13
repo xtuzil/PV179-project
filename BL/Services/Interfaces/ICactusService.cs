@@ -24,7 +24,7 @@ namespace BL.Services
         public Task UpdateCactusAmountAsync(int cactusId, int amount);
 
         public void RemoveCactus(CactusDto cactusDto);
-        public void RemoveCactusFromUser(CactusDto cactusDto);
+        public Task RemoveCactusFromUser(int cactusId);
         public Cactus CreateNewCactusInstanceForTransfer(CactusDto cactusDto, int amount);
     }
 }

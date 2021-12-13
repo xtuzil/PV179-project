@@ -100,6 +100,7 @@ namespace BL.Facades
                     if ((authorApproving && transfer.RecipientAprovedDelivery) ||
                         (recipientApproving && transfer.AuthorAprovedDelivery))
                     {
+                        uow.Commit();
                         await ProcessTransfer(transferId);
                     }
 
@@ -123,6 +124,7 @@ namespace BL.Facades
                 }
 
                 var offer = await offerService.GetOffer(transfer.Offer.Id);
+                await offerService.UpdateOfferStatus(offer.Id, CactusDAL.Models.OfferStatus.Transfered);
 
                 // add offered money to each user
                 await userService.AddUserMoneyAsync(offer.Author.Id, offer.RequestedMoney != null ? (double)offer.RequestedMoney : 0 );
@@ -145,6 +147,14 @@ namespace BL.Facades
 
                 uow.Commit();
                 return true;
+            }
+        }
+
+        public async Task<TransferDto> GetTransferByOfferId(int offerId)
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                return await transferService.GetTransferByOfferId(offerId);
             }
         }
     }

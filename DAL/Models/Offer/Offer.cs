@@ -29,6 +29,6 @@ namespace CactusDAL.Models
         [ForeignKey(nameof(PreviousOfferId))]
         public virtual Offer PreviousOffer { get; set; }
 
-
+        public virtual Transfer Transfer { get; set; }
     }
 }

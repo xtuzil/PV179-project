@@ -28,6 +28,41 @@
     }
 }
 
+@if (TempData.ContainsKey(MVC.Controllers.OfferController.SKEY_DELIVERY_APPROVED))
+{
+    @if ((bool)TempData[MVC.Controllers.OfferController.SKEY_DELIVERY_APPROVED])
+    {
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+            <div>
+                Delivery confirmed.
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+            <div>
+                The delivery could not be confirmed.
+            </div>
+        </div>
+    }
+}
+
+@if (TempData.ContainsKey(MVC.Controllers.OfferController.SKEY_OFFER_DECLINED))
+{
+    @if ((bool)TempData[MVC.Controllers.OfferController.SKEY_OFFER_DECLINED])
+    {
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+            <div>
+                Offer successfully declined.
+            </div>
+        </div>
+    }
+}
+
 <table class="table table-bordered">
     <thead style="text-align: center; vertical-align: middle">
         <tr>
@@ -46,7 +81,7 @@
             <th scope="col" style="font-weight: 300">Cactuses</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody style="vertical-align: middle">
         @foreach (var offer in Model)
         {
             <tr>
@@ -56,14 +91,14 @@
                 <td>
                     @for (int i = 0; i < offer.OfferedCactuses.Count; i++)
                     {
-                        <p>@offer.OfferedCactuses[i].Cactus.Species.Name: <em>@offer.OfferedCactuses[i].Amount pcs</em></p>
+                        <span>@offer.OfferedCactuses[i].Cactus.Species.Name: <em>@offer.OfferedCactuses[i].Amount pcs</em></span><br />
                     }
                 </td>
                 <td>@offer.RequestedMoney</td>
                 <td>
                     @for (int i = 0; i < offer.RequestedCactuses.Count; i++)
                     {
-                        <p>@offer.RequestedCactuses[i].Cactus.Species.Name: <em>@offer.RequestedCactuses[i].Amount pcs</em></p>
+                        <span>@offer.RequestedCactuses[i].Cactus.Species.Name: <em>@offer.RequestedCactuses[i].Amount pcs</em></span><br />
                     }
                 </td>
                 <td>@offer.CreationDate</td>
@@ -78,6 +113,14 @@
                         <form asp-action="Decline">
                             <input type="hidden" name="id" value="@offer.Id" />
                             <button type="submit" class="btn btn-outline-danger">Decline</button>
+                        </form>
+                    }
+                    else if (offer.Response == BL.Enums.OfferStatus.Accepted && !offer.Transfer.AuthorAprovedDelivery)
+                    {
+                        <form asp-action="Confirm">
+                            <input type="hidden" name="id" value="@offer.Id" />
+                            <input type="hidden" name="redirect" value="Incoming" />
+                            <button type="submit" class="btn btn-outline-primary">Confirm delivery</button>
                         </form>
                     }
                 </td>

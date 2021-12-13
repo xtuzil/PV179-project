@@ -55,7 +55,7 @@ namespace BL.Facades
                 {
                     if (cactusOffer.Cactus.Amount - cactusOffer.Amount <= 0)
                     {
-                        _cactusService.RemoveCactusFromUser(cactusOffer.Cactus);
+                        await _cactusService.RemoveCactusFromUser(cactusOffer.Cactus.Id);
                     } 
                     else
                     {
@@ -74,7 +74,7 @@ namespace BL.Facades
                 {
                     if (cactusRequest.Cactus.Amount - cactusRequest.Amount <= 0)
                     {
-                        _cactusService.RemoveCactusFromUser(cactusRequest.Cactus);
+                        await _cactusService.RemoveCactusFromUser(cactusRequest.Cactus.Id);
                     }
                     else
                     {

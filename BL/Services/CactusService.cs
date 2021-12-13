@@ -117,9 +117,9 @@ namespace BL.Services
             repository.Delete(cactus);
         }
 
-        public void RemoveCactusFromUser(CactusDto cactusDto)
+        public async Task RemoveCactusFromUser(int cactusId)
         {
-            var cactus = mapper.Map<Cactus>(cactusDto);
+            var cactus = await repository.GetAsync(cactusId);
             cactus.OwnerId = null;
             repository.Update(cactus);
         }

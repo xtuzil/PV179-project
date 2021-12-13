@@ -19,14 +19,18 @@ namespace MVC.Controllers
         readonly IOfferFacade _offerFacade;
         readonly IUserCollectionFacade _userCollectionFacade;
         readonly IUserFacade _userFacade;
+        readonly ITransferFacade _transferFacade;
 
         public static readonly string SKEY_OFFER_ACCEPTED = "_offerAccepted";
+        public static readonly string SKEY_OFFER_DECLINED = "_offerDeclined";
+        public static readonly string SKEY_DELIVERY_APPROVED = "_deliveryApproved";
 
-        public OfferController(IOfferFacade offerFacade, IUserCollectionFacade userCollectionFacade, IUserFacade userFacade)
+        public OfferController(IOfferFacade offerFacade, IUserCollectionFacade userCollectionFacade, IUserFacade userFacade, ITransferFacade transferFacade)
         {
             _offerFacade = offerFacade;
             _userCollectionFacade = userCollectionFacade;
             _userFacade = userFacade;
+            _transferFacade = transferFacade;
         }
 
         public IActionResult Index()
@@ -49,14 +53,14 @@ namespace MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Create(int? id)
         {
-            if (id == null)
+            var myId = int.Parse(User.Identity.Name);
+
+            if (id == null || id == myId)
             {
                 return NotFound();
             }
 
-            var myId = int.Parse(User.Identity.Name);
             var yourId = id.Value;
-
             var model = new OfferCreateDto { AuthorId = myId, RecipientId = yourId, RequestedMoney = 0, OfferedMoney = 0, OfferedCactuses = new Dictionary<int, int>(), RequestedCactuses = new Dictionary<int, int>() };
 
             ViewBag.MyCollection = await _userCollectionFacade.GetUserCactusesForSale(await _userFacade.GetUserInfo(myId));
@@ -76,8 +80,8 @@ namespace MVC.Controllers
             var myCollection = await _userCollectionFacade.GetUserCactusesForSale(await _userFacade.GetUserInfo(myId));
             var yourCollection = await _userCollectionFacade.GetUserCactusesForSale(await _userFacade.GetUserInfo(yourId));
 
-            var offeredCactuses = offer.OfferedCactuses.Where(o => o.Value != 0).ToList();
-            var requestedCactuses = offer.RequestedCactuses.Where(o => o.Value != 0).ToList();
+            var offeredCactuses = (offer.OfferedCactuses != null) ? offer.OfferedCactuses.Where(o => o.Value != 0).ToList() : new List<KeyValuePair<int, int>>();
+            var requestedCactuses = (offer.RequestedCactuses != null) ? offer.RequestedCactuses.Where(o => o.Value != 0).ToList() : new List<KeyValuePair<int, int>>();
 
             if (offeredCactuses.Sum(c => c.Value) + requestedCactuses.Sum(c => c.Value) == 0)
             {
@@ -135,6 +139,7 @@ namespace MVC.Controllers
             return View(offer);
         }
 
+        [HttpPost]
         public async Task<IActionResult> Accept(int? id)
         {
             if (id == null)
@@ -147,11 +152,53 @@ namespace MVC.Controllers
             {
                 return NotFound();
             }
-
+            
             var success = await _offerFacade.AcceptOfferAsync(offer);
             TempData.Add(SKEY_OFFER_ACCEPTED, success);
 
             return RedirectToAction("Incoming");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Decline(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var offer = await _offerFacade.GetOffer(id.Value);
+            if (offer == null)
+            {
+                return NotFound();
+            }
+
+            _offerFacade.RejectOffer(id.Value);
+            TempData.Add(SKEY_OFFER_DECLINED, true);
+
+            return RedirectToAction("Incoming");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Confirm(int? id, string redirect)
+        {
+            if (id == null || redirect == null)
+            {
+                return NotFound();
+            }
+
+            var userId = int.Parse(User.Identity.Name);
+            var offer = await _offerFacade.GetOffer(id.Value);
+            if (offer == null || (offer.AuthorId != userId && offer.RecipientId != userId))
+            {
+                return NotFound();
+            }
+
+            var transfer = await _transferFacade.GetTransferByOfferId(id.Value);
+            var success = await _transferFacade.ApproveDelivery(transfer.Id, userId);
+            TempData.Add(SKEY_DELIVERY_APPROVED, success);
+
+            return RedirectToAction(redirect);
         }
     }
 }
