@@ -7,7 +7,19 @@
 
 <h1>Log in</h1>
 
+@if (TempData.ContainsKey(MVC.Controllers.UserController.SKEY_REGISTERED)
+    && (bool)TempData[MVC.Controllers.UserController.SKEY_REGISTERED])
+{
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+        <div>
+            Successfully registered. Please log in to start using the website.
+        </div>
+    </div>
+}
+
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Login" asp-route-returnurl="@returnUrl">

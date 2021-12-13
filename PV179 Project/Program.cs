@@ -71,18 +71,12 @@ namespace PV179_Project
             var cactus2 = await cactusFacade.GetCactus(2);
 
 
-            var cactusOffers = new List<CactusOfferCreateDto>{
-                    new CactusOfferCreateDto{ 
-                        Amount = 30,
-                        CactusId = cactus1.Id,
-                    }
+            var cactusOffers = new Dictionary<int, int>{
+                { cactus1.Id, 30 }
             };
 
-            var cactusRequests = new List<CactusOfferCreateDto>{
-                    new CactusOfferCreateDto{
-                        Amount = 20,
-                        CactusId = cactus2.Id,
-                    }
+            var cactusRequests = new Dictionary<int, int>{
+                { cactus2.Id, 20 }
             };
 
             var offer = new OfferCreateDto

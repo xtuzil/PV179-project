@@ -1,0 +1,101 @@
+﻿@model OfferCreateDto
+
+@{
+    ViewData["Title"] = "New Offer";
+}
+
+<h1>New Offer</h1>
+
+<hr />
+<span class="text-danger">@Html.ValidationMessage("General")</span>
+<div class="row">
+
+    <form asp-action="Create">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AuthorId" />
+            <input type="hidden" asp-for="RecipientId" />
+            <div class="mb-3">
+                <label asp-for="OfferedMoney" class="control-label"></label>
+                <input asp-for="OfferedMoney" class="form-control" />
+                <span asp-validation-for="OfferedMoney" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="RequestedMoney" class="control-label"></label>
+                <input asp-for="RequestedMoney" class="form-control" />
+                <span asp-validation-for="RequestedMoney" class="text-danger"></span>
+            </div>
+        </div>
+        <h3>Offered cactuses</h3>
+        <span asp-validation-for="OfferedCactuses" class="text-danger"></span>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Sowing Date</th>
+                    <th scope="col">Pot size</th>
+                    <th scope="col">Max amount </th>
+                    <th scope="col">Amount </th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < ViewBag.MyCollection.Count; i++)
+                {
+                    <tr>
+                        <td>@ViewBag.MyCollection[i].Species.Name</td>
+                        <td>@ViewBag.MyCollection[i].SowingDate.ToLongDateString()</td>
+                        <td>@ViewBag.MyCollection[i].PotSize</td>
+                        <td>@ViewBag.MyCollection[i].Amount</td>
+                        <td>
+                            <div class="mb-3">
+                                <input type="hidden" name="OfferedCactuses[@i].Key" value="@ViewBag.MyCollection[i].Id" />
+                                <input type="number" name="OfferedCactuses[@i].Value" value="@(Model.OfferedCactuses.ContainsKey(ViewBag.MyCollection[i].Id) ? Model.OfferedCactuses[ViewBag.MyCollection[i].Id] : 0)" class="form-control" />
+                                @*@Html.ValidationMessage($"OfferedCactuses[{i}].Value")*@
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <h3>Requested cactuses</h3>
+        <span asp-validation-for="RequestedCactuses" class="text-danger"></span>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Sowing Date</th>
+                    <th scope="col">Pot size</th>
+                    <th scope="col">Max amount </th>
+                    <th scope="col">Amount </th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < ViewBag.YourCollection.Count; i++)
+                {
+                    <tr>
+                        <td>@ViewBag.YourCollection[i].Species.Name</td>
+                        <td>@ViewBag.YourCollection[i].SowingDate.ToLongDateString()</td>
+                        <td>@ViewBag.YourCollection[i].PotSize</td>
+                        <td>@ViewBag.YourCollection[i].Amount</td>
+                        <td>
+                            <div class="mb-3">
+                                <input type="hidden" name="RequestedCactuses[@i].Key" value="@ViewBag.YourCollection[i].Id" />
+                                <input type="number" name="RequestedCactuses[@i].Value" value="@(Model.RequestedCactuses.ContainsKey(ViewBag.YourCollection[i].Id) ? Model.RequestedCactuses[ViewBag.YourCollection[i].Id] : 0)" class="form-control" />
+                                @*@Html.ValidationMessage($"RequestedCactuses[{i}].Value")*@
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="col-md-4">
+            <div class="mb-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

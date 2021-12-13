@@ -16,6 +16,8 @@ namespace MVC.Controllers
     {
         readonly IUserFacade _userFacade;
 
+        public static readonly string SKEY_REGISTERED = "_registered";
+
         public UserController(IUserFacade userFacade)
         {
             _userFacade = userFacade;
@@ -35,17 +37,22 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterAsync(UserCreateDto user)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(user);
+            }
+
             try
             {
                 await _userFacade.CheckEmailNotInUse(user.Email);
                 await _userFacade.RegisterUserAsync(user);
+                TempData.Add(SKEY_REGISTERED, true);
                 return RedirectToAction("Login", "User");
             }
             catch (Exception)
             {
-
                 ModelState.AddModelError("Email", "An account with this email address already exists.");
-                return View("Register");
+                return View(user);
             }
         }
 
@@ -63,6 +70,11 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginAsync(UserLoginDto userLogin, string returnUrl)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(userLogin);
+            }
+
             try
             {
                 var user = await _userFacade.LoginAsync(userLogin);

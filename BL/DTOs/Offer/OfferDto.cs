@@ -21,7 +21,7 @@ namespace BL.DTOs
         public double? RequestedMoney { get; set; }
 
         public OfferStatus Response { get; set; }
-        public DateTime ResponseDate { get; set; }
+        public DateTime? ResponseDate { get; set; }
 
         public OfferDto PreviousOffer { get; set; }
         public DateTime CreationDate { get; set; }

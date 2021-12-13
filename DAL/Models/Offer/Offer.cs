@@ -20,8 +20,8 @@ namespace CactusDAL.Models
         public virtual IEnumerable<CactusRequest> CactusRequests { get; set; }
         public double? RequestedMoney { get; set; }
 
-        public OfferStatus Response { get; set; }
-        public DateTime ResponseDate { get; set; }
+        public OfferStatus Response { get; set; } = OfferStatus.Created;
+        public DateTime? ResponseDate { get; set; }
 
         public virtual IEnumerable<Comment> Comments { get; set; }
 

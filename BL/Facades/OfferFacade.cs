@@ -111,13 +111,13 @@ namespace BL.Facades
                 uow.Commit();
                 foreach (var cactusOffered in offer.OfferedCactuses)
                 {
-                    cactusOffered.OfferId = createdOffer.Id;
-                    _cactusOfferService.AddCactusOffer(cactusOffered);
+                    var o = new CactusOfferCreateDto() { OfferId = createdOffer.Id, CactusId = cactusOffered.Key, Amount = cactusOffered.Value };
+                    _cactusOfferService.AddCactusOffer(o);
                 }
                 foreach (var cactusRequested in offer.RequestedCactuses)
                 {
-                    cactusRequested.OfferId = createdOffer.Id;
-                    _cactusOfferService.AddCactusRequest(cactusRequested); 
+                    var r = new CactusOfferCreateDto() { OfferId = createdOffer.Id, CactusId = cactusRequested.Key, Amount = cactusRequested.Value };
+                    _cactusOfferService.AddCactusRequest(r);
                 }
                 uow.Commit();
 

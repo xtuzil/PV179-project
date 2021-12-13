@@ -32,6 +32,8 @@ namespace BL
             var queryResult = await query.ExecuteAsync();
 
             var queryResultDto = mapper.Map<QueryResultDto<TDto>>(queryResult);
+            //var queryResultDtoEntiy = mapper.Map<QueryResultDto<TEntity>>(queryResult);
+            //var queryResultDto = mapper.Map<QueryResultDto<TDto>>(queryResultDtoEntiy);
             return queryResultDto;
         }
 

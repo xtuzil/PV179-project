@@ -11,7 +11,7 @@ namespace BL.DTOs
     {
         [Required]
         public virtual int CactusId { get; set; }
-        [Range(1, int.MaxValue, ErrorMessage = "{0} should be minimum of {1}.")]
+        [Range(0, int.MaxValue, ErrorMessage = "{0} should be minimum of {1}.")]
         [Required]
         public int Amount { get; set; }
         [Required]

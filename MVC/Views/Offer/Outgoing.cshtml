@@ -1,0 +1,55 @@
+﻿@model IEnumerable<OfferDto>
+
+@{
+    ViewData["Title"] = "Outgoing offers";
+}
+
+<h1>Outgoing offers</h1>
+
+<table class="table table-bordered">
+    <thead style="text-align: center; vertical-align: middle">
+        <tr>
+            <th scope="col" rowspan="2">ID</th>
+            <th scope="col" rowspan="2">Recipient</th>
+            <th scope="col" colspan="2" style="text-align: center">Offered</th>
+            <th scope="col" colspan="2" style="text-align: center">Requested</th>
+            <th scope="col" rowspan="2">Created</th>
+            <th scope="col" rowspan="2">State</th>
+            <th scope="col" rowspan="2">Actions</th>
+        </tr>
+        <tr style="font-size: 0.8rem">
+            <th scope="col" style="font-weight: 300">Money</th>
+            <th scope="col" style="font-weight: 300">Cactuses</th>
+            <th scope="col" style="font-weight: 300">Money</th>
+            <th scope="col" style="font-weight: 300">Cactuses</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var offer in Model)
+        {
+            <tr>
+                <td>@offer.Id</td>
+                <td>@offer.Recipient.FirstName @offer.Recipient.LastName</td>
+                <td>@offer.OfferedMoney</td>
+                <td>
+                    @for (int i = 0; i < offer.OfferedCactuses.Count; i++)
+                    {
+                        <p>@offer.OfferedCactuses[i].Cactus.Species.Name: <em>@offer.OfferedCactuses[i].Amount pcs</em></p>
+                    }
+                </td>
+                <td>@offer.RequestedMoney</td>
+                <td>
+                    @for (int i = 0; i < offer.RequestedCactuses.Count; i++)
+                    {
+                        <p>@offer.RequestedCactuses[i].Cactus.Species.Name: <em>@offer.RequestedCactuses[i].Amount pcs</em></p>
+                    }
+                </td>
+                <td>@offer.CreationDate</td>
+                <td>@offer.Response</td>
+                <td>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

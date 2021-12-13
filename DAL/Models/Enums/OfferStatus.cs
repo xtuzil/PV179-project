@@ -2,6 +2,7 @@
 {
     public enum OfferStatus
     {
+        Created,
         Accepted,
         Declined,
         Counteroffer,

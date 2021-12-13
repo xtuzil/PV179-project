@@ -19,10 +19,11 @@ namespace BL.Config
             config.CreateMap<Genus, GenusDto>().ReverseMap();
             config.CreateMap<Offer, OfferDto>().ReverseMap();
             config.CreateMap<Offer, OfferCreateDto>().ReverseMap();
-            config.CreateMap<QueryResult<Cactus>, QueryResultDto<CactusDto>>().ReverseMap();
-            config.CreateMap<QueryResult<Offer>, QueryResultDto<OfferDto>>().ReverseMap();
-            config.CreateMap<QueryResult<Species>, QueryResultDto<SpeciesDto>>().ReverseMap();
-            config.CreateMap<QueryResult<User>, QueryResultDto<UserInfoDto>>().ReverseMap();
+            config.CreateMap(typeof(QueryResult<>), typeof(QueryResultDto<>)).ReverseMap();
+            //config.CreateMap<QueryResultDto<Cactus>, QueryResultDto<CactusDto>>().ReverseMap();
+            //config.CreateMap<QueryResultDto<Offer>, QueryResultDto<OfferDto>>().ReverseMap();
+            //config.CreateMap<QueryResultDto<Species>, QueryResultDto<SpeciesDto>>().ReverseMap();
+            //config.CreateMap<QueryResultDto<User>, QueryResultDto<UserInfoDto>>().ReverseMap();
             config.CreateMap<Report, ReportDto>().ReverseMap();
             config.CreateMap<Review, ReviewDto>().ReverseMap();
             config.CreateMap<Review, ReviewCreateDto>().ReverseMap();

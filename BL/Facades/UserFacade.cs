@@ -79,7 +79,14 @@ namespace BL.Facades
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
-                return (List<OfferDto>)await _offerService.GetAuthoredOffersForUser(userId);
+                var offers = (List<OfferDto>)await _offerService.GetAuthoredOffersForUser(userId);
+                foreach (var offer in offers)
+                {
+                    var cactusOffer = await _offerService.GetOffer(offer.Id);
+                    offer.OfferedCactuses = cactusOffer.OfferedCactuses;
+                    offer.RequestedCactuses = cactusOffer.RequestedCactuses;
+                }
+                return offers;
             }
         }
 
@@ -87,7 +94,14 @@ namespace BL.Facades
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
-                return (List<OfferDto>)await _offerService.GetReceivedOffersForUser(userId);
+                var offers = (List<OfferDto>)await _offerService.GetReceivedOffersForUser(userId);
+                foreach (var offer in offers)
+                {
+                    var cactusOffer = await _offerService.GetOffer(offer.Id);
+                    offer.OfferedCactuses = cactusOffer.OfferedCactuses;
+                    offer.RequestedCactuses = cactusOffer.RequestedCactuses;
+                }
+                return offers;
             }
         }
 
