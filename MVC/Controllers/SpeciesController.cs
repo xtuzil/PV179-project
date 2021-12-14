@@ -29,6 +29,12 @@ namespace MVC.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            return View(await _cactusFacade.GetAllSpecies());
+        }
+
+        [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Approve(int? id)
         {

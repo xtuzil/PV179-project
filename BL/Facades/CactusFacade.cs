@@ -73,5 +73,13 @@ namespace BL.Facades
                 uow.Commit();
             }
         }
+
+        public async Task<IEnumerable<SpeciesDto>> GetAllSpecies()
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                return (List<SpeciesDto>)await speciesService.GetAllSpecies();
+            }
+        }
     }
 }

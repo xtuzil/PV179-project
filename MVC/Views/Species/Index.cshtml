@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SpeciesDto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1>Index</h1>
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+        <a class="text-dark btn btn-primary" asp-action="Add">Propose new species</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name:
+            </th>
+            <th>
+                Latin name:
+            </th>
+            <th>
+                Genus:
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.LatinName
+                </td>
+                <td>
+                    @item.Genus.Name
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

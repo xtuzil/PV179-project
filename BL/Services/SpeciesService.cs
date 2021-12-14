@@ -27,7 +27,8 @@ namespace BL.Services
         }
         public async Task<IEnumerable<SpeciesDto>> GetAllSpecies()
         {
-            return (List<SpeciesDto>)await repository.GetAll();
+            var species = await repository.GetAll();
+            return mapper.Map<IEnumerable<SpeciesDto>>(species);
         }
 
         public async Task<IEnumerable<SpeciesDto>> GetAllAprovedSpecies()
