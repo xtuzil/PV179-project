@@ -20,7 +20,7 @@ namespace BLTests
 
 
         [Fact]
-        public void CreateOfferTest()
+        public async Task CreateOfferTest()
         {
             using (var mock = AutoMock.GetLoose())
             {
@@ -94,7 +94,7 @@ namespace BLTests
                 var cls = mock.Create<OfferFacade>();
 
                 //Act
-                var obtainedCreatedOffer = cls.CreateOffer(offer);
+                var obtainedCreatedOffer = await cls.CreateOffer(offer);
 
                 //Assert
                 Assert.Equal(createdOffer.Id, obtainedCreatedOffer.Id);
