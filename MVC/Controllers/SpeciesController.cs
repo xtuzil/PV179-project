@@ -83,7 +83,7 @@ namespace MVC.Controllers
             {
                 await _cactusFacade.ProposeNewSpecies(species);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
 
             ViewData["GenusId"] = new SelectList(await _userCollectionFacade.GetAllGenuses(), "Id", "Name", species.GenusId);
