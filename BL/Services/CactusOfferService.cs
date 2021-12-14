@@ -30,15 +30,15 @@ namespace BL.Services
             this.repositoryRequest = repositoryRequest;
             this.queryObject = queryObject;
         }
-        public void AddCactusOffer(CactusOfferCreateDto cactusOfferDto)
+        public void AddCactusOffer(int offerId, int cactusId, int amount)
         {
-            var cactusOffer = mapper.Map<CactusOffer>(cactusOfferDto);
+            var cactusOffer = new CactusOffer { OfferId = offerId, CactusId = cactusId, Amount = amount };
             repositoryOffer.Create(cactusOffer);
         }
 
-        public void AddCactusRequest(CactusOfferCreateDto cactusRequestDto)
+        public void AddCactusRequest(int offerId, int cactusId, int amount)
         {
-            var cactusRequest = mapper.Map<CactusRequest>(cactusRequestDto);
+            var cactusRequest = new CactusRequest { OfferId = offerId, CactusId = cactusId, Amount = amount };
             repositoryRequest.Create(cactusRequest);
         }
 

@@ -206,7 +206,7 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            _offerFacade.RejectOffer(id.Value);
+            await _offerFacade.RejectOffer(id.Value);
             TempData.Add(SKEY_OFFER_DECLINED, true);
 
             return RedirectToAction("Incoming");

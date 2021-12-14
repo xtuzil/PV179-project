@@ -111,13 +111,11 @@ namespace BL.Facades
                 uow.Commit();
                 foreach (var cactusOffered in offer.OfferedCactuses)
                 {
-                    var o = new CactusOfferCreateDto() { OfferId = createdOffer.Id, CactusId = cactusOffered.Key, Amount = cactusOffered.Value };
-                    _cactusOfferService.AddCactusOffer(o);
+                    _cactusOfferService.AddCactusOffer(createdOffer.Id, cactusOffered.Key, cactusOffered.Value);
                 }
                 foreach (var cactusRequested in offer.RequestedCactuses)
                 {
-                    var r = new CactusOfferCreateDto() { OfferId = createdOffer.Id, CactusId = cactusRequested.Key, Amount = cactusRequested.Value };
-                    _cactusOfferService.AddCactusRequest(r);
+                    _cactusOfferService.AddCactusRequest(createdOffer.Id, cactusRequested.Key, cactusRequested.Value);
                 }
                 uow.Commit();
 
@@ -135,11 +133,11 @@ namespace BL.Facades
             }
         }
 
-        public void RejectOffer(int offerId)
+        public async Task RejectOffer(int offerId)
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                _offerService.UpdateOfferStatus(offerId, OfferStatus.Declined);
+                await _offerService.UpdateOfferStatus(offerId, OfferStatus.Declined);
                 uow.Commit();
             }
         }

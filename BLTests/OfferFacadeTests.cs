@@ -9,6 +9,7 @@ using Infrastructure.EntityFramework;
 using Infrastructure.UnitOfWork;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -51,18 +52,12 @@ namespace BLTests
                     Amount = 50
                 };
 
-                var cactusOffers = new List<CactusOfferCreateDto>{
-                    new CactusOfferCreateDto{
-                        Amount = 30,
-                        CactusId = cactus1.Id,
-                    }
+                var cactusOffers = new Dictionary<int,int>{
+                    { cactus1.Id, 30 }
                 };
 
-                var cactusRequests = new List<CactusOfferCreateDto>{
-                    new CactusOfferCreateDto{
-                        Amount = 20,
-                        CactusId = cactus2.Id,
-                    }
+                var cactusRequests = new Dictionary<int, int>{
+                    { cactus2.Id, 20 }
                 };
 
                 var offer = new OfferCreateDto
@@ -90,11 +85,11 @@ namespace BLTests
                    .Returns(createdOffer);
 
                 mock.Mock<ICactusOfferService>()
-                   .Setup(x => x.AddCactusOffer(cactusOffers[0]));
+                   .Setup(x => x.AddCactusOffer(createdOffer.Id, cactusOffers.Keys.ElementAt(0), cactusOffers.Values.ElementAt(0)));
 
 
                 mock.Mock<ICactusOfferService>()
-                   .Setup(x => x.AddCactusRequest(cactusRequests[0]));
+                   .Setup(x => x.AddCactusRequest(createdOffer.Id, cactusRequests.Keys.ElementAt(0), cactusRequests.Values.ElementAt(0)));
 
                 var cls = mock.Create<OfferFacade>();
 
@@ -210,10 +205,10 @@ namespace BLTests
                    .Returns(Task.Run(() => { }));
 
                 mock.Mock<ICactusService>()
-                   .Setup(x => x.RemoveCactusFromUser(cactus1));
+                   .Setup(x => x.RemoveCactusFromUser(cactus1.Id));
 
                 mock.Mock<ICactusService>()
-                   .Setup(x => x.RemoveCactusFromUser(cactus2));
+                   .Setup(x => x.RemoveCactusFromUser(cactus2.Id));
 
                 mock.Mock<ICactusService>()
                    .Setup(x => x.CreateNewCactusInstanceForTransfer(cactusOffers[0].Cactus, cactusOffers[0].Amount))
@@ -351,10 +346,10 @@ namespace BLTests
                    .Returns(Task.Run(() => { }));
 
                 mock.Mock<ICactusService>()
-                   .Setup(x => x.RemoveCactusFromUser(cactus1));
+                   .Setup(x => x.RemoveCactusFromUser(cactus1.Id));
 
                 mock.Mock<ICactusService>()
-                   .Setup(x => x.RemoveCactusFromUser(cactus2));
+                   .Setup(x => x.RemoveCactusFromUser(cactus2.Id));
 
                 mock.Mock<ICactusService>()
                    .Setup(x => x.CreateNewCactusInstanceForTransfer(cactusOffers[0].Cactus, cactusOffers[0].Amount))

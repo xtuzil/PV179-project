@@ -9,9 +9,9 @@ namespace BL.Services.Interfaces
 {
     public interface ICactusOfferService
     {
-        public void AddCactusOffer(CactusOfferCreateDto cactusOfferDto);
+        public void AddCactusOffer(int offerId, int cactusId, int amount);
 
-        public void AddCactusRequest(CactusOfferCreateDto cactusRequestDto);
+        public void AddCactusRequest(int offerId, int cactusId, int amount);
         public void UpdateCactusOffer(CactusOfferDto cactusOfferDto);
 
         public void UpdateCactusRequest(CactusOfferDto cactusRequestDto);
