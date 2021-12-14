@@ -36,6 +36,12 @@ namespace BL.Services
             this.queryObject = queryObject;
         }
 
+        public async Task<IEnumerable<UserInfoDto>> GetAll()
+        {
+            var users = await repository.GetAll();
+            return mapper.Map<IEnumerable<UserInfoDto>>(users);
+        }
+
         public async Task<UserInfoDto> GetUserInfo(int userId)
         {
             return mapper.Map<UserInfoDto>(await repository.GetAsync(userId));

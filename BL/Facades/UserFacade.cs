@@ -24,7 +24,13 @@ namespace BL.Facades
             _transferService = transferService;
             _unitOfWorkProvider = unitOfWorkProvider;
         }
-
+        public async Task<List<UserInfoDto>> GetAllUsers()
+        {
+            using (var uow = _unitOfWorkProvider.Create())
+            {
+                return (List<UserInfoDto>)await _userService.GetAll();
+            }
+        }
         public async Task<List<UserInfoDto>> GetAllUserWithNameAsync(string name)
         {
             using (var uow = _unitOfWorkProvider.Create())

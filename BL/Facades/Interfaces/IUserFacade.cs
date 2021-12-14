@@ -6,6 +6,7 @@ namespace BL.Facades
 {
     public interface IUserFacade
     {
+        public Task<List<UserInfoDto>> GetAllUsers();
         public Task<List<UserInfoDto>> GetAllUserWithNameAsync(string name);
         public Task<UserInfoDto> GetUserInfo(int userId);
         public Task<List<ReviewDto>> GetUserReviews(int userId);
