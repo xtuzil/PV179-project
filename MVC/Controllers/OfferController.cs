@@ -141,6 +141,7 @@ namespace MVC.Controllers
 
             ViewBag.MyCollection = myCollection;
             ViewBag.YourCollection = yourCollection;
+            ViewBag.UserDetails = await _userFacade.GetUserInfo(yourId);
             return View(offer);
         }
 
