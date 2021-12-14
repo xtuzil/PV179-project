@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<SpeciesDto>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Species";
 }
-<h1>Index</h1>
+<h1>List of species</h1>
 @if (User.Identity.IsAuthenticated)
 {
     <p>
-        <a class="text-dark btn btn-primary" asp-action="Add">Propose new species</a>
+        <a class="btn btn-primary" asp-action="Add">Propose new species</a>
     </p>
 }
 <table class="table">
@@ -21,6 +21,9 @@
             </th>
             <th>
                 Genus:
+            </th>
+            <th>
+                Approved:
             </th>
         </tr>
     </thead>
@@ -36,6 +39,9 @@
                 </td>
                 <td>
                     @item.Genus.Name
+                </td>
+                <td>
+                    @item.ApprovalStatus
                 </td>
             </tr>
         }
