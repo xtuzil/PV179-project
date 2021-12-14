@@ -1,4 +1,5 @@
 ﻿using BL.DTOs;
+using BL.Exceptions;
 using BL.Facades;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -105,12 +106,12 @@ namespace MVC.Controllers
                 }
                 return RedirectToAction("Index", "Home");
             }
-            catch (UnauthorizedAccessException)
+            catch (BannedUserException)
             {
                 TempData.Add(SKEY_BANNED, true);
                 return View("Login");
             }
-            catch (Exception)
+            catch (UnauthorizedAccessException)
             {
                 ModelState.AddModelError("Password", "Invalid email or password.");
                 return View("Login");

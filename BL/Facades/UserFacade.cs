@@ -1,4 +1,5 @@
 ﻿using BL.DTOs;
+using BL.Exceptions;
 using BL.Services;
 using Infrastructure.UnitOfWork;
 using System;
@@ -140,8 +141,13 @@ namespace BL.Facades
         public async Task<UserInfoDto> LoginAsync(UserLoginDto userLogin)
         {
             var user = await _userService.AuthorizeUserAsync(userLogin);
-            if (user != null && !user.Banned)
+            if (user != null)
             {
+                if (user.Banned)
+                {
+                    throw new BannedUserException();
+                }
+
                 return user;
             }
             throw new UnauthorizedAccessException();
