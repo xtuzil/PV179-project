@@ -158,14 +158,5 @@ namespace BL.Facades
                 throw new InvalidOperationException("User with this email already exists.");
             }
         }
-
-        public async Task BanUser(int userId)
-        {
-            using (var uow = _unitOfWorkProvider.Create())
-            {
-                await _userService.BanUser(userId, true);
-                uow.Commit();
-            }
-        }
     }
 }
