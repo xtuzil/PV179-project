@@ -4,7 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Collection of @ViewBag.UserDetails.FirstName @ViewBag.UserDetails.LastName</h1>
+<a class="btn btn-success" asp-controller="offer" asp-action="create" asp-route-id="@ViewBag.UserDetails.Id">Create offer</a>
 <table class="table">
     <thead>
         <tr>

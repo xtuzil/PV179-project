@@ -69,6 +69,7 @@ namespace MVC.Controllers
 
             ViewBag.MyCollection = await _userCollectionFacade.GetUserCactusesForSale(await _userFacade.GetUserInfo(myId));
             ViewBag.YourCollection = await _userCollectionFacade.GetUserCactusesForSale(await _userFacade.GetUserInfo(yourId));
+            ViewBag.UserDetails = await _userFacade.GetUserInfo(yourId);
 
             return View(model);
         }
