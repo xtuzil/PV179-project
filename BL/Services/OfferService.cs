@@ -45,6 +45,8 @@ namespace BL.Services
         public Offer CreateOffer(OfferCreateDto offerDto)
         {
             var offer = mapper.Map<Offer>(offerDto);
+            offer.Response = OfferStatus.Created;
+            offer.ResponseDate = DateTime.UtcNow;
             repository.Create(offer);
             return offer;
         }
