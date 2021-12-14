@@ -39,29 +39,29 @@ namespace BL.Facades
             }
         }
 
-        public async Task<List<CactusDto>> GetCactusesOlderThan(int age)
+        public async Task<IEnumerable<CactusDto>> GetCactusesOlderThan(int age)
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                return (List<CactusDto>)await cactusService.GetCactusesOlderThan(age);
+                return await cactusService.GetCactusesOlderThan(age);
             }
         }
 
 
-        public async Task<List<CactusDto>> GetCactusesWithGenus(int genusId)
+        public async Task<IEnumerable<CactusDto>> GetCactusesWithGenus(int genusId)
         {
             using (var uow = unitOfWorkProvider.Create())
             {
                 var specieses = await speciesService.getAllApprovedSpeciesWithGenus(genusId);
-                return (List<CactusDto>)await cactusService.GetCactusesWithSpecies(specieses);
+                return await cactusService.GetCactusesWithSpecies(specieses);
             }
         }
 
-        public async Task<List<CactusDto>> GetCactusesWithSpecies(int speciesId)
+        public async Task<IEnumerable<CactusDto>> GetCactusesWithSpecies(int speciesId)
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                return (List<CactusDto>)await cactusService.GetCactusesWithSpecies(speciesId);
+                return await cactusService.GetCactusesWithSpecies(speciesId);
             }
         }
 
@@ -78,7 +78,7 @@ namespace BL.Facades
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                return (List<SpeciesDto>)await speciesService.GetAllSpecies();
+                return await speciesService.GetAllSpecies();
             }
         }
     }

@@ -6,16 +6,16 @@ namespace BL.Facades
 {
     public interface IUserFacade
     {
-        public Task<List<UserInfoDto>> GetAllUsers();
-        public Task<List<UserInfoDto>> GetAllUserWithNameAsync(string name);
+        public Task<IEnumerable<UserInfoDto>> GetAllUsers();
+        public Task<IEnumerable<UserInfoDto>> GetAllUserWithNameAsync(string name);
         public Task<UserInfoDto> GetUserInfo(int userId);
-        public Task<List<ReviewDto>> GetUserReviews(int userId);
-        public Task<List<ReviewDto>> GetReviewsOnUser(int userId);
+        public Task<IEnumerable<ReviewDto>> GetUserReviews(int userId);
+        public Task<IEnumerable<ReviewDto>> GetReviewsOnUser(int userId);
         public void UpdateUserInfo(UserUpdateProfileDto user);
         public void ChangePassword(ChangePasswordDto user);
-        public Task<List<OfferDto>> GetUserOffers(int userId);
-        public Task<List<OfferDto>> GetUserReceivedOffers(int userId);
-        public Task<List<TransferDto>> GetUserTransfers(int userId);
+        public Task<IEnumerable<OfferDto>> GetUserOffers(int userId);
+        public Task<IEnumerable<OfferDto>> GetUserReceivedOffers(int userId);
+        public Task<IEnumerable<TransferDto>> GetUserTransfers(int userId);
 
         public void CreateUser(UserCreateDto user);
         public Task<UserInfoDto> LoginAsync(UserLoginDto userLogin);

@@ -9,7 +9,7 @@ namespace BL.Facades
         //public Task<List<ReportDto>> GetAllReports();
         public Task BlockUser(int userId);
         public Task UnblockUser(int userId);
-        public Task<List<SpeciesDto>> GetAllPendingRequestsForNewSpecies();
+        public Task<IEnumerable<SpeciesDto>> GetAllPendingRequestsForNewSpecies();
         public Task ApproveSpecies(int speciesId);
         public Task RejectSpecies(int speciesId);
     }

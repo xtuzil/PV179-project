@@ -58,11 +58,11 @@ namespace BL.Facades
             }
         }
 
-        public async Task<List<SpeciesDto>> GetAllPendingRequestsForNewSpecies()
+        public async Task<IEnumerable<SpeciesDto>> GetAllPendingRequestsForNewSpecies()
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                return (List<SpeciesDto>)await speciesService.getAllNewSpeciesProposals();
+                return await speciesService.getAllNewSpeciesProposals();
             }
         }
 

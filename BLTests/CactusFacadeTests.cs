@@ -70,8 +70,8 @@ namespace BLTests
                     Species = species2
                 };
 
-                var specieses = new List<SpeciesDto> { species, species2 };
-                var cactuses = new List<CactusDto> { cactus1, cactus2, cactus3 };
+                IEnumerable<SpeciesDto> specieses = new List<SpeciesDto> { species, species2 };
+                IEnumerable<CactusDto> cactuses = new List<CactusDto> { cactus1, cactus2, cactus3 };
 
                 //Mock setup
                 mock.Mock<IUnitOfWorkProvider>()
@@ -90,10 +90,10 @@ namespace BLTests
                 var cls = mock.Create<CactusFacade>();
 
                 //Act
-                var obtainedCactuses = await cls.GetCactusesWithGenus(genus.Id);
+                IEnumerable<CactusDto> obtainedCactuses = await cls.GetCactusesWithGenus(genus.Id);
 
                 //Assert
-                Assert.Equal(cactuses.Count, obtainedCactuses.Count);
+                Assert.Equal(cactuses.Count(), obtainedCactuses.Count());
             }
         }
     }

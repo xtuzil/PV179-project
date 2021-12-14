@@ -35,7 +35,7 @@ namespace BL.Facades
             this.unitOfWorkProvider = unitOfWorkProvider; 
         }
 
-        public async Task<List<ReviewDto>> GetTransferReviews(int transferId)
+        public async Task<IEnumerable<ReviewDto>> GetTransferReviews(int transferId)
         {
             using (var uow = unitOfWorkProvider.Create())
             {

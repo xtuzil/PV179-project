@@ -24,14 +24,14 @@ namespace BL.Facades
             _transferService = transferService;
             _unitOfWorkProvider = unitOfWorkProvider;
         }
-        public async Task<List<UserInfoDto>> GetAllUsers()
+        public async Task<IEnumerable<UserInfoDto>> GetAllUsers()
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
                 return (List<UserInfoDto>)await _userService.GetAll();
             }
         }
-        public async Task<List<UserInfoDto>> GetAllUserWithNameAsync(string name)
+        public async Task<IEnumerable<UserInfoDto>> GetAllUserWithNameAsync(string name)
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
@@ -39,14 +39,14 @@ namespace BL.Facades
             }
         }
 
-        public Task<List<ReviewDto>> GetUserReviews(int userId)
+        public Task<IEnumerable<ReviewDto>> GetUserReviews(int userId)
         {
 
             // do we need this?
             throw new NotImplementedException();
         }
 
-        public async Task<List<ReviewDto>> GetReviewsOnUser(int userId)
+        public async Task<IEnumerable<ReviewDto>> GetReviewsOnUser(int userId)
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
@@ -90,7 +90,7 @@ namespace BL.Facades
             }
         }
 
-        public async Task<List<OfferDto>> GetUserOffers(int userId)
+        public async Task<IEnumerable<OfferDto>> GetUserOffers(int userId)
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
@@ -105,7 +105,7 @@ namespace BL.Facades
             }
         }
 
-        public async Task<List<OfferDto>> GetUserReceivedOffers(int userId)
+        public async Task<IEnumerable<OfferDto>> GetUserReceivedOffers(int userId)
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
@@ -120,7 +120,7 @@ namespace BL.Facades
             }
         }
 
-        public async Task<List<TransferDto>> GetUserTransfers(int userId)
+        public async Task<IEnumerable<TransferDto>> GetUserTransfers(int userId)
         {
             using (var uow = _unitOfWorkProvider.Create())
             {

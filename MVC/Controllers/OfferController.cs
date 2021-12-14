@@ -97,7 +97,7 @@ namespace MVC.Controllers
             {
                 foreach (var offeredCactus in offeredCactuses)
                 {
-                    var found = myCollection.Find(dto => dto.Id == offeredCactus.Key);
+                    var found = myCollection.Where(dto => dto.Id == offeredCactus.Key).FirstOrDefault();
                     if (found == null)
                     {
                         ModelState.AddModelError("OfferedCactuses", "Invalid cactus offered.");
@@ -115,7 +115,7 @@ namespace MVC.Controllers
 
                 foreach (var requestedCactus in requestedCactuses)
                 {
-                    var found = yourCollection.Find(dto => dto.Id == requestedCactus.Key);
+                    var found = yourCollection.Where(dto => dto.Id == requestedCactus.Key).FirstOrDefault();
                     if (found == null)
                     {
                         ModelState.AddModelError("RequestedCactuses", "Invalid cactus requested.");

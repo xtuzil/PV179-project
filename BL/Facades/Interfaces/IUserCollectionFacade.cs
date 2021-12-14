@@ -6,13 +6,13 @@ namespace BL.Facades
 {
     public interface IUserCollectionFacade
     {
-        public Task<List<SpeciesDto>> GetAllApprovedSpeciesWithGenus(int genusId);
+        public Task<IEnumerable<SpeciesDto>> GetAllApprovedSpeciesWithGenus(int genusId);
 
-        public Task<List<GenusDto>> GetAllGenuses();
+        public Task<IEnumerable<GenusDto>> GetAllGenuses();
 
-        public Task<List<CactusDto>> GetAllUserCactuses(UserInfoDto user);
+        public Task<IEnumerable<CactusDto>> GetAllUserCactuses(UserInfoDto user);
 
-        public Task<List<CactusDto>> GetUserCactusesForSale(UserInfoDto user);
+        public Task<IEnumerable<CactusDto>> GetUserCactusesForSale(UserInfoDto user);
 
         public void AddCactusForSale(CactusDto cactus);
 
