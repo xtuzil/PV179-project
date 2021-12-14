@@ -15,15 +15,18 @@ namespace MVC.Controllers
     {
         readonly IUserFacade _userFacade;
         readonly IAdministrationFacade _administrationFacade;
+        readonly IUserCollectionFacade _userCollectionFacade;
 
         public static readonly string SKEY_REGISTERED = "_registered";
         public static readonly string SKEY_BANNED = "_banned";
 
         public UserController(IUserFacade userFacade,
-            IAdministrationFacade administrationFacade)
+            IAdministrationFacade administrationFacade,
+            IUserCollectionFacade userCollectionFacade)
         {
             _userFacade = userFacade;
             _administrationFacade = administrationFacade;
+            _userCollectionFacade = userCollectionFacade;
         }
 
         [HttpGet]
@@ -247,6 +250,17 @@ namespace MVC.Controllers
             _administrationFacade.UnblockUser(id.Value);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Collection(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            return View(await _userCollectionFacade.GetAllUserCactuses(new UserInfoDto { Id = int.Parse(User.Identity.Name) }));
         }
     }
 }

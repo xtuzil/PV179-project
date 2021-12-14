@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CactusDto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Species:
+            </th>
+            <th>
+                For sale:
+            </th>
+            <th>
+                Sowing date:
+            </th>
+            <th>
+                Pot size:
+            </th>
+            <th>
+                Amount:
+            </th>
+            <th>
+                Note:
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Species.Name
+                </td>
+                <td>
+                    @item.ForSale
+                </td>
+                <td>
+                    @item.SowingDate
+                </td>
+                <td>
+                    @item.PotSize
+                </td>
+                <td>
+                    @item.Amount
+                </td>
+                <td>
+                    @item.Note
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
