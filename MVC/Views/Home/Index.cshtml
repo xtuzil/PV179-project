@@ -3,7 +3,14 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h1 class="display-4">Welcome back, @ViewBag.User.FirstName</h1>
+    }
+    else
+    {
+        <h1 class="display-4">Welcome</h1>
+    }
     <p>This is the place to exchange your cactuses for species you don't own yet.</p>
     <img src="~/img/cactus.svg" />
 </div>

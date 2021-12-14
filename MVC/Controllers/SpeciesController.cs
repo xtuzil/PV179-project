@@ -10,13 +10,17 @@ using System.Threading.Tasks;
 namespace MVC.Controllers
 {
     [Authorize]
-    public class SpeciesController : Controller
+    public class SpeciesController : WithUserInfoController
     {
         private readonly IUserCollectionFacade _userCollectionFacade;
         private readonly ICactusFacade _cactusFacade;
         private readonly IAdministrationFacade _administrationFacade;
 
-        public SpeciesController(IUserCollectionFacade userCollectionFacade, ICactusFacade cactusFacade, IAdministrationFacade administrationFacade)
+        public SpeciesController(
+            IUserCollectionFacade userCollectionFacade,
+            ICactusFacade cactusFacade,
+            IAdministrationFacade administrationFacade,
+            IUserFacade userFacade) : base(userFacade)
         {
             _userCollectionFacade = userCollectionFacade;
             _cactusFacade = cactusFacade;

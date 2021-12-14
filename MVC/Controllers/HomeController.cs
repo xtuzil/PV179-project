@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BL.Facades;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MVC.Models;
 using System.Diagnostics;
 
 namespace MVC.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : WithUserInfoController
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUserFacade userFacade) : base(userFacade)
         {
             _logger = logger;
         }

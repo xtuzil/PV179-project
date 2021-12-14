@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace MVC.Controllers
 {
     [Authorize]
-    public class OfferController : Controller
+    public class OfferController : WithUserInfoController
     {
         readonly IOfferFacade _offerFacade;
         readonly IUserCollectionFacade _userCollectionFacade;
@@ -28,7 +28,11 @@ namespace MVC.Controllers
         public static readonly string SKEY_DELIVERY_APPROVED = "_deliveryApproved";
         public static readonly string SKEY_OFFER_MODEL = "_offerModel";
 
-        public OfferController(IOfferFacade offerFacade, IUserCollectionFacade userCollectionFacade, IUserFacade userFacade, ITransferFacade transferFacade)
+        public OfferController(
+            IOfferFacade offerFacade,
+            IUserCollectionFacade userCollectionFacade,
+            IUserFacade userFacade,
+            ITransferFacade transferFacade) : base(userFacade)
         {
             _offerFacade = offerFacade;
             _userCollectionFacade = userCollectionFacade;

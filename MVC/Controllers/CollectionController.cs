@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace MVC.Controllers
 {
     [Authorize]
-    public class CollectionController : Controller
+    public class CollectionController : WithUserInfoController
     {
         private readonly IUserCollectionFacade _facade;
 
-        public CollectionController(IUserCollectionFacade facade)
+        public CollectionController(IUserCollectionFacade facade, IUserFacade userFacade) : base(userFacade)
         {
             _facade = facade;
         }
@@ -77,6 +77,10 @@ namespace MVC.Controllers
             }
 
             var cactus = await _facade.GetCactus(id.Value);
+            if (cactus == null)
+            {
+                return NotFound();
+            }
 
             var updateDto = new CactusUpdateDto()
             {
@@ -90,10 +94,7 @@ namespace MVC.Controllers
                 Species = cactus.Species,
                 Image = cactus.Image,
             };
-            if (updateDto == null)
-            {
-                return NotFound();
-            }
+
             ViewData["GenusId"] = new SelectList(await _facade.GetAllGenuses(), "Id", "Name", updateDto.Species.Genus.Id);
             ViewData["SpeciesId"] = new SelectList(await _facade.GetAllApprovedSpeciesWithGenus(updateDto.Species.Genus.Id), "Id", "Name", cactus);
             return View(updateDto);
@@ -119,7 +120,7 @@ namespace MVC.Controllers
                     fileStream.Read(cactus.Image, 0, (int)photo.Length);
                 }
                 cactus.OwnerId = int.Parse(User.Identity.Name);
-                _facade.UpdateCactusInformation(cactus);
+                await _facade.UpdateCactusInformation(cactus);
                 return RedirectToAction(nameof(Details), new { id = cactus.Id });
             }
             ViewData["GenusId"] = new SelectList(await _facade.GetAllGenuses(), "Id", "Name", cactus.Species.Genus.Id);

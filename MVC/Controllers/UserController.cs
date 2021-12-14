@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace MVC.Controllers
 {
-    public class UserController : Controller
+    public class UserController : WithUserInfoController
     {
         readonly IUserFacade _userFacade;
         readonly IAdministrationFacade _administrationFacade;
@@ -25,7 +25,7 @@ namespace MVC.Controllers
 
         public UserController(IUserFacade userFacade,
             IAdministrationFacade administrationFacade,
-            IUserCollectionFacade userCollectionFacade)
+            IUserCollectionFacade userCollectionFacade) : base(userFacade)
         {
             _userFacade = userFacade;
             _administrationFacade = administrationFacade;

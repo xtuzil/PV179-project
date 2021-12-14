@@ -95,7 +95,10 @@ namespace BL.Facades
 
         public async Task<CactusDto> GetCactus(int id)
         {
-            return await _cactusService.GetCactus(id);
+            using (var uow = uowp.Create())
+            {
+                return await _cactusService.GetCactus(id);
+            }
         }
     }
 }
