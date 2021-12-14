@@ -27,6 +27,14 @@ namespace MVC.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var users = await _userFacade.GetAllUsers();
+
+            return View(users);
+        }
+
+        [HttpGet]
         [Route("/register")]
         public IActionResult Register()
         {
@@ -224,7 +232,7 @@ namespace MVC.Controllers
 
             _administrationFacade.BlockUser(id.Value);
 
-            return RedirectToAction(nameof(Profile), new { id });
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
@@ -238,7 +246,7 @@ namespace MVC.Controllers
 
             _administrationFacade.UnblockUser(id.Value);
 
-            return RedirectToAction(nameof(Profile), new { id });
+            return RedirectToAction(nameof(Index));
         }
     }
 }
