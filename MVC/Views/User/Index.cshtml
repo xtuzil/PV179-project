@@ -50,7 +50,10 @@
                 </form>
                 <div class="btn-group mt-2" role="group" aria-label="Basic example">
                     <a asp-action="Collection" asp-route-id="@user.Id" class="btn btn-primary">Collection</a>
-                    <a class="btn btn-success" asp-controller="offer" asp-action="create" asp-route-id="@user.Id">Create offer</a>
+                    @if (int.Parse(User.Identity.Name) != user.Id)
+                    {
+                        <a class="btn btn-success" asp-controller="offer" asp-action="create" asp-route-id="@user.Id">Create offer</a>
+                    }
                     @if (User.IsInRole("Admin") && user.Id != int.Parse(User.Identity.Name))
                     {
                         @if (user.Banned)
