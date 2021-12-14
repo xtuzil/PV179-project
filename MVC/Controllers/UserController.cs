@@ -1,4 +1,4 @@
-﻿using BL.DTOs;
+using BL.DTOs;
 using BL.Facades;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -261,6 +261,7 @@ namespace MVC.Controllers
             }
 
             return View(await _userCollectionFacade.GetAllUserCactuses(new UserInfoDto { Id = int.Parse(User.Identity.Name) }));
+            return View(await _userCollectionFacade.GetAllUserCactuses(new UserInfoDto { Id = id.Value }));
         }
     }
 }
