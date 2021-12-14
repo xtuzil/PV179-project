@@ -71,7 +71,8 @@ namespace BL.Services
         public async void ChangePassword(ChangePasswordDto userDto)
         {
             var user = await repository.GetAsync(userDto.Id);
-            user.Password = userDto.Password;
+            var (hash, salt) = CreateHash(userDto.Password);
+            user.Password = string.Join(',', hash, salt);
             repository.Update(user);
         }
 
