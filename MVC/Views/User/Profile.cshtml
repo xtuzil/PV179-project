@@ -40,15 +40,27 @@
                     </div>
                     @if (User.IsInRole("Admin"))
                     {
-                        <div class="form-check-inline disabled">
+                        <div class="form-check-inline">
                             <label asp-for="Banned" class="control-label"><b>Banned:</b></label>
                             <input type="checkbox" disabled class="form-check-input" asp-for="Banned" checked="@Model.Banned" />
                         </div>
                     }
                 </form>
                 <div class="btn-group" role="group" aria-label="Basic example">
-                    <a asp-action="EditProfile" asp-route-id="@User.Identity.Name" class="btn btn-primary">Edit profile</a>
-                    <a asp-action="ChangePassword" asp-route-id="@User.Identity.Name" class="btn btn-primary">Change password</a>
+                    <a asp-action="EditProfile" asp-route-id="@Model.Id" class="btn btn-primary">Edit profile</a>
+                    <a asp-action="ChangePassword" asp-route-id="@Model.Id" class="btn btn-primary">Change password</a>
+                    @if (User.IsInRole("Admin") && Model.Id != int.Parse(User.Identity.Name))
+                    {
+                        @if (Model.Banned)
+                        {
+                            <a asp-action="UnbanUser" asp-route-id="@Model.Id" class="btn btn-primary">Unban user</a>
+                        }
+                        else
+                        {
+                            <a asp-action="BanUser" asp-route-id="@Model.Id" class="btn btn-primary">Ban user</a>
+                        }
+
+                    }
                 </div>
             </div>
         </div>

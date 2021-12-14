@@ -14,12 +14,16 @@ namespace MVC.Controllers
     public class UserController : Controller
     {
         readonly IUserFacade _userFacade;
+        readonly IAdministrationFacade _administrationFacade;
 
         public static readonly string SKEY_REGISTERED = "_registered";
+        public static readonly string SKEY_BANNED = "_banned";
 
-        public UserController(IUserFacade userFacade)
+        public UserController(IUserFacade userFacade,
+            IAdministrationFacade administrationFacade)
         {
             _userFacade = userFacade;
+            _administrationFacade = administrationFacade;
         }
 
         [HttpGet]
@@ -89,6 +93,11 @@ namespace MVC.Controllers
                     return Redirect(returnUrl);
                 }
                 return RedirectToAction("Index", "Home");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                TempData.Add(SKEY_BANNED, true);
+                return View("Login");
             }
             catch (Exception)
             {
@@ -201,7 +210,35 @@ namespace MVC.Controllers
                 _userFacade.ChangePassword(user);
             }
 
-            return RedirectToAction(nameof(Profile), new { id = user.Id });
+            return RedirectToAction(nameof(Profile), new { id });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult BanUser(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            _administrationFacade.BlockUser(id.Value);
+
+            return RedirectToAction(nameof(Profile), new { id });
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult UnbanUser(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            _administrationFacade.UnblockUser(id.Value);
+
+            return RedirectToAction(nameof(Profile), new { id });
         }
     }
 }
