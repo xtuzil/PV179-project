@@ -187,8 +187,8 @@ namespace MVC.Controllers
                 RecipientId = offer.AuthorId,
                 OfferedMoney = offer.RequestedMoney,
                 RequestedMoney = offer.OfferedMoney,
-                OfferedCactuses = offer.RequestedCactuses.ToDictionary(c => c.CactusId, c => c.Amount),
-                RequestedCactuses = offer.OfferedCactuses.ToDictionary(c => c.CactusId, c => c.Amount),
+                OfferedCactuses = offer.RequestedCactuses.ToDictionary(c => c.Cactus.Id, c => c.Amount),
+                RequestedCactuses = offer.OfferedCactuses.ToDictionary(c => c.Cactus.Id, c => c.Amount),
                 PreviousOfferId = offer.Id
             };
 

@@ -84,7 +84,7 @@ namespace BL.Facades
                 }
 
                 // create Transfer object in db
-                _transferService.CreateTransfer(offer.Id);
+                await _transferService.CreateTransfer(offer.Id);
 
                 uow.Commit();
             }

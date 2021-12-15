@@ -54,7 +54,6 @@ namespace BLTests
                 var cactusOffers = new List<CactusOfferDto>{
                     new CactusOfferDto{
                         Amount = 30,
-                        CactusId = cactus1.Id,
                         Cactus = cactus1
                     }
                 };
@@ -62,7 +61,6 @@ namespace BLTests
                 var cactusRequests = new List<CactusOfferDto>{
                     new CactusOfferDto{
                         Amount = 20,
-                        CactusId = cactus2.Id,
                         Cactus = cactus2
                     }
                 };
@@ -173,7 +171,6 @@ namespace BLTests
                 var cactusOffers = new List<CactusOfferDto>{
                     new CactusOfferDto{
                         Amount = 30,
-                        CactusId = cactus1.Id,
                         Cactus = cactus1
                     }
                 };
@@ -181,7 +178,6 @@ namespace BLTests
                 var cactusRequests = new List<CactusOfferDto>{
                     new CactusOfferDto{
                         Amount = 20,
-                        CactusId = cactus2.Id,
                         Cactus = cactus2
                     }
                 };
@@ -292,7 +288,6 @@ namespace BLTests
                 var cactusOffers = new List<CactusOfferDto>{
                     new CactusOfferDto{
                         Amount = 30,
-                        CactusId = cactus1.Id,
                         Cactus = cactus1
                     }
                 };
@@ -300,7 +295,6 @@ namespace BLTests
                 var cactusRequests = new List<CactusOfferDto>{
                     new CactusOfferDto{
                         Amount = 20,
-                        CactusId = cactus2.Id,
                         Cactus = cactus2
                     }
                 };
@@ -402,7 +396,6 @@ namespace BLTests
                 var cactusOffers = new List<CactusOfferDto>{
                     new CactusOfferDto{
                         Amount = 30,
-                        CactusId = cactus1.Id,
                         Cactus = cactus1
                     }
                 };
@@ -410,7 +403,6 @@ namespace BLTests
                 var cactusRequests = new List<CactusOfferDto>{
                     new CactusOfferDto{
                         Amount = 20,
-                        CactusId = cactus2.Id,
                         Cactus = cactus2
                     }
                 };

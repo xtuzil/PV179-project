@@ -8,6 +8,7 @@ using CactusDAL;
 using CactusDAL.Models;
 using Infrastructure.EntityFramework;
 using Infrastructure.UnitOfWork;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,7 +70,7 @@ namespace BLTests
                     RequestedCactuses = cactusRequests,
                 };
 
-                var createdOffer = new Offer
+                var createdOffer = new OfferDto
                 {
                     Id = 5,
                     OfferedMoney = 45,
@@ -83,7 +84,7 @@ namespace BLTests
 
                 mock.Mock<IOfferService>()
                    .Setup(x => x.CreateOffer(offer))
-                   .Returns(createdOffer);
+                   .ReturnsAsync(createdOffer);
 
                 mock.Mock<ICactusOfferService>()
                    .Setup(x => x.AddCactusOffer(createdOffer.Id, cactusOffers.Keys.ElementAt(0), cactusOffers.Values.ElementAt(0)));
@@ -136,13 +137,13 @@ namespace BLTests
                     Amount = 50
                 };
 
-                var cactus3 = new Cactus
+                var cactus3 = new CactusDto
                 {
                     Id = 3,
                     Amount = 70
                 };
 
-                var cactus4 = new Cactus
+                var cactus4 = new CactusDto
                 {
                     Id = 4,
                     Amount = 30
@@ -152,7 +153,6 @@ namespace BLTests
                 var cactusOffers = new List<CactusOfferDto>{
                     new CactusOfferDto{
                         Amount = 30,
-                        CactusId = cactus1.Id,
                         Cactus = cactus1
                     }
                 };
@@ -160,7 +160,6 @@ namespace BLTests
                 var cactusRequests = new List<CactusOfferDto>{
                     new CactusOfferDto{
                         Amount = 20,
-                        CactusId = cactus2.Id,
                         Cactus = cactus2
                     }
                 };
@@ -213,11 +212,11 @@ namespace BLTests
 
                 mock.Mock<ICactusService>()
                    .Setup(x => x.CreateNewCactusInstanceForTransfer(cactusOffers[0].Cactus, cactusOffers[0].Amount))
-                   .Returns(cactus3);
+                   .ReturnsAsync(cactus3);
 
                 mock.Mock<ICactusService>()
                    .Setup(x => x.CreateNewCactusInstanceForTransfer(cactusRequests[0].Cactus, cactusRequests[0].Amount))
-                   .Returns(cactus4);
+                   .ReturnsAsync(cactus4);
 
                 mock.Mock<ICactusOfferService>()
                    .Setup(x => x.UpdateCactusOfferCactusAsync(cactusOffers[0].Id, cactus3.Id))
@@ -280,13 +279,13 @@ namespace BLTests
                     Amount = 50
                 };
 
-                var cactus3 = new Cactus
+                var cactus3 = new CactusDto
                 {
                     Id = 3,
                     Amount = 70
                 };
 
-                var cactus4 = new Cactus
+                var cactus4 = new CactusDto
                 {
                     Id = 4,
                     Amount = 30
@@ -296,7 +295,6 @@ namespace BLTests
                 var cactusOffers = new List<CactusOfferDto>{
                     new CactusOfferDto{
                         Amount = 30,
-                        CactusId = cactus1.Id,
                         Cactus = cactus1
                     }
                 };
@@ -304,7 +302,6 @@ namespace BLTests
                 var cactusRequests = new List<CactusOfferDto>{
                     new CactusOfferDto{
                         Amount = 20,
-                        CactusId = cactus2.Id,
                         Cactus = cactus2
                     }
                 };
@@ -357,11 +354,11 @@ namespace BLTests
 
                 mock.Mock<ICactusService>()
                    .Setup(x => x.CreateNewCactusInstanceForTransfer(cactusOffers[0].Cactus, cactusOffers[0].Amount))
-                   .Returns(cactus3);
+                   .ReturnsAsync(cactus3);
 
                 mock.Mock<ICactusService>()
                    .Setup(x => x.CreateNewCactusInstanceForTransfer(cactusRequests[0].Cactus, cactusRequests[0].Amount))
-                   .Returns(cactus4);
+                   .ReturnsAsync(cactus4);
 
                 mock.Mock<ICactusOfferService>()
                    .Setup(x => x.UpdateCactusOfferCactusAsync(cactusOffers[0].Id, cactus3.Id))

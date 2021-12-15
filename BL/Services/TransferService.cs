@@ -41,13 +41,13 @@ namespace BL.Services
         }
 
 
-        public void CreateTransfer(int offerId)
+        public async Task CreateTransfer(int offerId)
         {
             var transfer = new Transfer
             {
                 OfferId = offerId
             };
-            repository.Create(transfer);
+            await repository.Create(transfer);
         }
 
         public void UpdateTransfer(TransferDto transferDto)

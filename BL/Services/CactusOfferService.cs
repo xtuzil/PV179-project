@@ -30,25 +30,25 @@ namespace BL.Services
             this.repositoryRequest = repositoryRequest;
             this.queryObject = queryObject;
         }
-        public void AddCactusOffer(int offerId, int cactusId, int amount)
+        public async Task AddCactusOffer(int offerId, int cactusId, int amount)
         {
             var cactusOffer = new CactusOffer { OfferId = offerId, CactusId = cactusId, Amount = amount };
-            repositoryOffer.Create(cactusOffer);
+            await repositoryOffer.Create(cactusOffer);
         }
 
-        public void AddCactusRequest(int offerId, int cactusId, int amount)
+        public async Task AddCactusRequest(int offerId, int cactusId, int amount)
         {
             var cactusRequest = new CactusRequest { OfferId = offerId, CactusId = cactusId, Amount = amount };
-            repositoryRequest.Create(cactusRequest);
+            await repositoryRequest.Create(cactusRequest);
         }
 
-        public void UpdateCactusOffer(CactusOfferDto cactusOfferDto)
+        public void UpdateCactusOffer(CactusOfferUpdateDto cactusOfferDto)
         {
             var cactusOffer = mapper.Map<CactusOffer>(cactusOfferDto);
             repositoryOffer.Update(cactusOffer);
         }
 
-        public void UpdateCactusRequest(CactusOfferDto cactusRequestDto)
+        public void UpdateCactusRequest(CactusOfferUpdateDto cactusRequestDto)
         {
             var cactusRequest = mapper.Map<CactusRequest>(cactusRequestDto);
             repositoryRequest.Update(cactusRequest);

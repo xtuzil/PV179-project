@@ -9,12 +9,12 @@ namespace BL.Services.Interfaces
 {
     public interface ICactusOfferService
     {
-        public void AddCactusOffer(int offerId, int cactusId, int amount);
+        public Task AddCactusOffer(int offerId, int cactusId, int amount);
 
-        public void AddCactusRequest(int offerId, int cactusId, int amount);
-        public void UpdateCactusOffer(CactusOfferDto cactusOfferDto);
+        public Task AddCactusRequest(int offerId, int cactusId, int amount);
+        public void UpdateCactusOffer(CactusOfferUpdateDto cactusOfferDto);
 
-        public void UpdateCactusRequest(CactusOfferDto cactusRequestDto);
+        public void UpdateCactusRequest(CactusOfferUpdateDto cactusRequestDto);
 
         public Task UpdateCactusOfferCactusAsync(int Id, int cactusId);
 

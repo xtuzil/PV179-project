@@ -80,10 +80,10 @@ namespace BL.Services
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
 
-        public void AddCactus(CactusCreateDto cactusDto)
+        public async Task AddCactus(CactusCreateDto cactusDto)
         {
             var cactus = mapper.Map<Cactus>(cactusDto);
-            repository.Create(cactus);
+            await repository.Create(cactus);
         }
 
         public void UpdateCactusInformation(CactusUpdateDto cactusDto)
@@ -120,14 +120,13 @@ namespace BL.Services
             repository.Update(cactus);
         }
 
-        public Cactus CreateNewCactusInstanceForTransfer(CactusDto cactusDto, int amount)
+        public async Task<CactusDto> CreateNewCactusInstanceForTransfer(CactusDto cactusCreateDto, int amount)
         {
-            var cactusCreateDto = mapper.Map<CactusCreateDto>(cactusDto);
             var cactus = mapper.Map<Cactus>(cactusCreateDto);
             cactus.OwnerId = null;
             cactus.Amount = amount;
-            repository.Create(cactus);
-            return cactus;
+            await repository.Create(cactus);
+            return mapper.Map<CactusDto>(cactus);
         }
 
         public async Task<CactusDto> TransferCactus(int userId, int cactusId)

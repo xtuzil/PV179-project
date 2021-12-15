@@ -15,6 +15,7 @@ namespace BL.Config
             config.CreateMap<CactusDto, CactusCreateDto>().ReverseMap();
             config.CreateMap<CactusOffer, CactusOfferDto>().ReverseMap();
             config.CreateMap<CactusOffer, CactusOfferCreateDto>().ReverseMap();
+            config.CreateMap<CactusOffer, CactusOfferUpdateDto>().ReverseMap();
             config.CreateMap<CactusRequest, CactusOfferDto>().ReverseMap();
             config.CreateMap<CactusRequest, CactusOfferCreateDto>().ReverseMap();
             config.CreateMap<Genus, GenusDto>().ReverseMap();
@@ -31,6 +32,7 @@ namespace BL.Config
             config.CreateMap<Species, SpeciesDto>().ReverseMap();
             config.CreateMap<Species, SpeciesCreateDto>().ReverseMap();
             config.CreateMap<Transfer, TransferDto>().ReverseMap();
+            config.CreateMap<Transfer, TransferUpdateDto>().ReverseMap();
             config.CreateMap<User, UserCreateDto>().ReverseMap();
             config.CreateMap<User, UserUpdateProfileDto>().ReverseMap();
             config.CreateMap<User, ChangePasswordDto>().ReverseMap();

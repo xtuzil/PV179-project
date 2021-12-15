@@ -8,7 +8,7 @@ namespace BL.Services
     {
         public Task<TransferDto> GetTransfer(int transferId);
 
-        public void CreateTransfer(int offerId);
+        public Task CreateTransfer(int offerId);
 
         public Task SetTransferTimeAsync(int transferId);
 

@@ -49,13 +49,13 @@ namespace BL.Services
             return mapper.Map<OfferDto>(offer);
         }
 
-        public Offer CreateOffer(OfferCreateDto offerDto)
+        public async Task<OfferDto> CreateOffer(OfferCreateDto offerDto)
         {
             var offer = mapper.Map<Offer>(offerDto);
             offer.Response = OfferStatus.Created;
             offer.ResponseDate = DateTime.UtcNow;
-            repository.Create(offer);
-            return offer;
+            await repository.Create(offer);
+            return mapper.Map<OfferDto>(offer);
         }
 
         public async Task<IEnumerable<OfferDto>> GetTransferedOffersOfUser(int userId)
