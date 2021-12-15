@@ -38,8 +38,7 @@ namespace BL.Facades
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                await _offerService.AcceptOffer(offerId);
-                var offer = await _offerService.GetOffer(offerId);
+                var offer = await _offerService.AcceptOffer(offerId);
 
                 // remove offered money from each user
                 await _userService.RemoveUserMoneyAsync(offer.Author.Id, (double)offer.OfferedMoney);
@@ -94,7 +93,7 @@ namespace BL.Facades
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-                var createdOffer = _offerService.CreateOffer(offer);
+                var createdOffer = await _offerService.CreateOffer(offer);
 
                 if (offer.PreviousOfferId != null)
                 {
@@ -105,17 +104,15 @@ namespace BL.Facades
                 uow.Commit();
                 foreach (var cactusOffered in offer.OfferedCactuses)
                 {
-                    _cactusOfferService.AddCactusOffer(createdOffer.Id, cactusOffered.Key, cactusOffered.Value);
+                    await _cactusOfferService.AddCactusOffer(createdOffer.Id, cactusOffered.Key, cactusOffered.Value);
                 }
                 foreach (var cactusRequested in offer.RequestedCactuses)
                 {
-                    _cactusOfferService.AddCactusRequest(createdOffer.Id, cactusRequested.Key, cactusRequested.Value);
+                    await _cactusOfferService.AddCactusRequest(createdOffer.Id, cactusRequested.Key, cactusRequested.Value);
                 }
                 uow.Commit();
 
-                //TODO: We might do not want to mapping in Facade, but for now it is necessary because of retrieving id
-                var mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
-                return mapper.Map<OfferDto>(createdOffer);
+                return createdOffer;
             }
         }
 

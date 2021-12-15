@@ -87,11 +87,13 @@ namespace BLTests
                    .ReturnsAsync(createdOffer);
 
                 mock.Mock<ICactusOfferService>()
-                   .Setup(x => x.AddCactusOffer(createdOffer.Id, cactusOffers.Keys.ElementAt(0), cactusOffers.Values.ElementAt(0)));
+                   .Setup(x => x.AddCactusOffer(createdOffer.Id, cactusOffers.Keys.ElementAt(0), cactusOffers.Values.ElementAt(0)))
+                   .Returns(Task.Run(() => { }));
 
 
                 mock.Mock<ICactusOfferService>()
-                   .Setup(x => x.AddCactusRequest(createdOffer.Id, cactusRequests.Keys.ElementAt(0), cactusRequests.Values.ElementAt(0)));
+                   .Setup(x => x.AddCactusRequest(createdOffer.Id, cactusRequests.Keys.ElementAt(0), cactusRequests.Values.ElementAt(0)))
+                   .Returns(Task.Run(() => { }));
 
                 var cls = mock.Create<OfferFacade>();
 
@@ -227,7 +229,8 @@ namespace BLTests
                    .Returns(Task.Run(() => { }));
 
                 mock.Mock<ITransferService>()
-                   .Setup(x => x.CreateTransfer(offer.Id));
+                   .Setup(x => x.CreateTransfer(offer.Id))
+                   .Returns(Task.Run(() => { }));
 
 
                 var cls = mock.Create<OfferFacade>();
@@ -336,7 +339,7 @@ namespace BLTests
 
                 mock.Mock<IOfferService>()
                    .Setup(x => x.AcceptOffer(offer.Id))
-                   .Returns(Task.Run(() => acceptedOffer));
+                   .Throws(new InsufficientMoneyException());
 
                 mock.Mock<IUserService>()
                    .Setup(x => x.RemoveUserMoneyAsync(author.Id, (double)offer.OfferedMoney))
@@ -369,13 +372,14 @@ namespace BLTests
                    .Returns(Task.Run(() => { }));
 
                 mock.Mock<ITransferService>()
-                   .Setup(x => x.CreateTransfer(offer.Id));
+                   .Setup(x => x.CreateTransfer(offer.Id))
+                   .Returns(Task.Run(() => { }));
 
 
                 var cls = mock.Create<OfferFacade>();
 
                 //Act + Assert
-                await Assert.ThrowsAsync<InsufficientMoneyException>(() => cls.AcceptOfferAsync(offer.Id));
+                await Assert.ThrowsAsync<InsufficientMoneyException>(async () => await cls.AcceptOfferAsync(offer.Id));
 
             }
         }
