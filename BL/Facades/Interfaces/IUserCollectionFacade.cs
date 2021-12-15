@@ -10,17 +10,17 @@ namespace BL.Facades
 
         public Task<IEnumerable<GenusDto>> GetAllGenuses();
 
-        public Task<IEnumerable<CactusDto>> GetAllUserCactuses(UserInfoDto user);
+        public Task<IEnumerable<CactusDto>> GetAllUserCactuses(int userId);
 
-        public Task<IEnumerable<CactusDto>> GetUserCactusesForSale(UserInfoDto user);
+        public Task<IEnumerable<CactusDto>> GetUserCactusesForSale(int userId);
 
-        public void AddCactusForSale(CactusDto cactus);
+        public void AddCactusForSale(CactusUpdateDto cactus);
 
         public void AddCactusToCollection(CactusCreateDto cactus);
 
-        public void UpdateCactusInformation(CactusDto cactus);
+        public void UpdateCactusInformation(CactusUpdateDto cactus);
 
-        public void RemoveCactus(CactusDto cactus);
+        public Task RemoveCactus(int cactusId);
 
         public Task<CactusDto> GetCactus(int id);
     }

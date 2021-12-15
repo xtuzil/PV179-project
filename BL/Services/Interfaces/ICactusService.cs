@@ -11,19 +11,19 @@ namespace BL.Services
         public Task<IEnumerable<CactusDto>> GetCactusesWithSpecies(int speciesId);
         public Task<IEnumerable<CactusDto>> GetCactusesWithSpecies(IEnumerable<SpeciesDto> speciesList);
         //public Task<IEnumerable<CactusDto>> GetCactusesLike(string name);
-        public Task<IEnumerable<CactusDto>> GetAllUserCactuses(UserInfoDto userInfoDto);
-        public Task<IEnumerable<CactusDto>> GetUserCactusesForSale(UserInfoDto userInfoDto);
+        public Task<IEnumerable<CactusDto>> GetAllUserCactuses(int userId);
+        public Task<IEnumerable<CactusDto>> GetUserCactusesForSale(int userId);
 
         public Task<CactusDto> GetCactus(int id);
 
         public void AddCactus(CactusCreateDto cactusDto);
-        public void UpdateCactusInformation(CactusDto cactusDto);
+        public void UpdateCactusInformation(CactusUpdateDto cactusDto);
 
         public Task UpdateCactusOwnerAsync(int cactusId, int userId);
 
         public Task UpdateCactusAmountAsync(int cactusId, int amount);
 
-        public void RemoveCactus(CactusDto cactusDto);
+        public Task RemoveCactus(int cactusId);
         public Task RemoveCactusFromUser(int cactusId);
         public Cactus CreateNewCactusInstanceForTransfer(CactusDto cactusDto, int amount);
     }

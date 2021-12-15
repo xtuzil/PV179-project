@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BL.DTOs;
+using BL.Exceptions;
 using CactusDAL.Models;
 using Infrastructure;
 using Infrastructure.Predicates;
@@ -35,6 +36,12 @@ namespace BL.Services
         public async Task<OfferDto> AcceptOffer(int offerId)
         {
             var offer = await repository.GetAsync(offerId);
+            if ((offer.Author.AccountBalance - (double)offer.OfferedMoney < 0) ||
+                    (offer.Recipient.AccountBalance - (double)offer.RequestedMoney < 0))
+            {
+                throw new InsufficientMoneyException();
+            }
+
             offer.Response = OfferStatus.Accepted;
             offer.ResponseDate = DateTime.UtcNow;
             repository.Update(offer);

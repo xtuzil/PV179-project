@@ -262,7 +262,7 @@ namespace MVC.Controllers
             }
 
             ViewBag.UserDetails = await _userFacade.GetUserInfo(id.Value);
-            return View(await _userCollectionFacade.GetAllUserCactuses(new UserInfoDto { Id = id.Value }));
+            return View(await _userCollectionFacade.GetAllUserCactuses(id.Value));
         }
     }
 }

@@ -65,18 +65,15 @@ namespace BL.Services
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
 
-        public async Task<IEnumerable<CactusDto>> GetAllUserCactuses(UserInfoDto userInfoDto)
+        public async Task<IEnumerable<CactusDto>> GetAllUserCactuses(int userId)
         {
-            var user = mapper.Map<User>(userInfoDto);
-
-            IPredicate predicate = new SimplePredicate(nameof(Cactus.Owner), user, ValueComparingOperator.Equal);
+            IPredicate predicate = new SimplePredicate(nameof(Cactus.OwnerId), userId, ValueComparingOperator.Equal);
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
 
-        public async Task<IEnumerable<CactusDto>> GetUserCactusesForSale(UserInfoDto userInfoDto)
+        public async Task<IEnumerable<CactusDto>> GetUserCactusesForSale(int userId)
         {
-            var user = mapper.Map<User>(userInfoDto);
-            IPredicate userPredicate = new SimplePredicate(nameof(Cactus.Owner), user, ValueComparingOperator.Equal);
+            IPredicate userPredicate = new SimplePredicate(nameof(Cactus.OwnerId), userId, ValueComparingOperator.Equal);
             IPredicate forSalePredicate = new SimplePredicate(nameof(Cactus.ForSale), true, ValueComparingOperator.Equal);
             IPredicate predicate = new CompositePredicate(new List<IPredicate> { userPredicate, forSalePredicate }, LogicalOperator.AND);
 
@@ -89,7 +86,7 @@ namespace BL.Services
             repository.Create(cactus);
         }
 
-        public void UpdateCactusInformation(CactusDto cactusDto)
+        public void UpdateCactusInformation(CactusUpdateDto cactusDto)
         {
             var cactus = mapper.Map<Cactus>(cactusDto);
             repository.Update(cactus);
@@ -111,10 +108,9 @@ namespace BL.Services
             repository.Update(cactus);
         }
 
-        public void RemoveCactus(CactusDto cactusDto)
+        public async Task RemoveCactus(int cactusId)
         {
-            var cactus = mapper.Map<Cactus>(cactusDto);
-            repository.Delete(cactus);
+            await repository.Delete(cactusId);
         }
 
         public async Task RemoveCactusFromUser(int cactusId)

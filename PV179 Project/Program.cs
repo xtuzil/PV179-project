@@ -56,7 +56,7 @@ namespace PV179_Project
             foreach (var user in usersWithNameAston)
             {
                 Console.WriteLine($"Mr. {user.LastName} has firstname Aston and has these cactuses:");
-                var cactuses = await facade.GetAllUserCactuses(user);
+                var cactuses = await facade.GetAllUserCactuses(user.Id);
                 foreach (var cactus in cactuses)
                 {
                     Console.WriteLine($"  - Cactus with ID: {cactus.Id},  species ID: {cactus.Species.Name}");
@@ -99,7 +99,7 @@ namespace PV179_Project
                 Console.WriteLine($" CactusOffer with ID: {co.Id}");
             }
 
-            await offerFacade.AcceptOfferAsync(getOffer);
+            await offerFacade.AcceptOfferAsync(getOffer.Id);
 
             var transferFacade = container.Resolve<ITransferFacade>();
 

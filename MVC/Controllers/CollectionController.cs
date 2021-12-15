@@ -19,7 +19,7 @@ namespace MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _facade.GetAllUserCactuses(new UserInfoDto { Id = int.Parse(User.Identity.Name) }));
+            return View(await _facade.GetAllUserCactuses(int.Parse(User.Identity.Name)));
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -70,20 +70,32 @@ namespace MVC.Controllers
             }
 
             var cactus = await _facade.GetCactus(id.Value);
-            if (cactus == null)
+
+            var updateDto = new CactusUpdateDto()
+            {
+                Id = cactus.Id,
+                Amount = cactus.Amount,
+                ForSale = cactus.ForSale,
+                Note = cactus.Note,
+                OwnerId = cactus.Owner.Id,
+                PotSize = cactus.PotSize,
+                SowingDate = cactus.SowingDate,
+                Species = cactus.Species,
+            };
+            if (updateDto == null)
             {
                 return NotFound();
             }
-            ViewData["GenusId"] = new SelectList(await _facade.GetAllGenuses(), "Id", "Name", cactus.Species.Genus.Id);
-            ViewData["SpeciesId"] = new SelectList(await _facade.GetAllApprovedSpeciesWithGenus(cactus.Species.Genus.Id), "Id", "Name", cactus);
-            return View(cactus);
+            ViewData["GenusId"] = new SelectList(await _facade.GetAllGenuses(), "Id", "Name", updateDto.Species.Genus.Id);
+            ViewData["SpeciesId"] = new SelectList(await _facade.GetAllApprovedSpeciesWithGenus(updateDto.Species.Genus.Id), "Id", "Name", cactus);
+            return View(updateDto);
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Species,ForSale,SowingDate,PotSize,Amount,Note,Id")] CactusDto cactus)
+        public async Task<IActionResult> Edit(int id, [Bind("Species,ForSale,SowingDate,PotSize,Amount,Note,Id")] CactusUpdateDto cactus)
         {
             if (id != cactus.Id)
             {
@@ -92,7 +104,7 @@ namespace MVC.Controllers
 
             if (ModelState.IsValid)
             {
-                cactus.Owner = new UserInfoDto { Id = int.Parse(User.Identity.Name) };
+                cactus.OwnerId = int.Parse(User.Identity.Name);
                 _facade.UpdateCactusInformation(cactus);
                 return RedirectToAction(nameof(Details), new { id = cactus.Id });
             }
@@ -121,8 +133,7 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cactus = await _facade.GetCactus(id);
-            _facade.RemoveCactus(cactus);
+            await _facade.RemoveCactus(id);
             return RedirectToAction(nameof(Index));
         }
     }

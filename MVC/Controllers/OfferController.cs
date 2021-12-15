@@ -1,4 +1,5 @@
 ﻿using BL.DTOs;
+using BL.Exceptions;
 using BL.Facades;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -67,8 +68,8 @@ namespace MVC.Controllers
                 ? JsonConvert.DeserializeObject<OfferCreateDto>((string)TempData[SKEY_OFFER_MODEL])
                 : new OfferCreateDto { AuthorId = myId, RecipientId = yourId, RequestedMoney = 0, OfferedMoney = 0, OfferedCactuses = new Dictionary<int, int>(), RequestedCactuses = new Dictionary<int, int>() };
 
-            ViewBag.MyCollection = await _userCollectionFacade.GetUserCactusesForSale(await _userFacade.GetUserInfo(myId));
-            ViewBag.YourCollection = await _userCollectionFacade.GetUserCactusesForSale(await _userFacade.GetUserInfo(yourId));
+            ViewBag.MyCollection = await _userCollectionFacade.GetUserCactusesForSale(myId);
+            ViewBag.YourCollection = await _userCollectionFacade.GetUserCactusesForSale(yourId);
             ViewBag.UserDetails = await _userFacade.GetUserInfo(yourId);
 
             return View(model);
@@ -82,8 +83,8 @@ namespace MVC.Controllers
             var myId = offer.AuthorId;
             var yourId = offer.RecipientId;
 
-            var myCollection = await _userCollectionFacade.GetUserCactusesForSale(await _userFacade.GetUserInfo(myId));
-            var yourCollection = await _userCollectionFacade.GetUserCactusesForSale(await _userFacade.GetUserInfo(yourId));
+            var myCollection = await _userCollectionFacade.GetUserCactusesForSale(myId);
+            var yourCollection = await _userCollectionFacade.GetUserCactusesForSale(yourId);
 
             var offeredCactuses = (offer.OfferedCactuses != null) ? offer.OfferedCactuses.Where(o => o.Value != 0).ToList() : new List<KeyValuePair<int, int>>();
             var requestedCactuses = (offer.RequestedCactuses != null) ? offer.RequestedCactuses.Where(o => o.Value != 0).ToList() : new List<KeyValuePair<int, int>>();
@@ -152,15 +153,16 @@ namespace MVC.Controllers
             {
                 return NotFound();
             }
-
-            var offer = await _offerFacade.GetOffer(id.Value);
-            if (offer == null)
-            {
-                return NotFound();
-            }
             
-            var success = await _offerFacade.AcceptOfferAsync(offer);
-            TempData.Add(SKEY_OFFER_ACCEPTED, success);
+            try
+            {
+                await _offerFacade.AcceptOfferAsync(id.Value);
+                TempData.Add(SKEY_OFFER_ACCEPTED, true);
+            }
+            catch (InsufficientMoneyException)
+            {
+                TempData.Add(SKEY_OFFER_ACCEPTED, false);
+            }
 
             return RedirectToAction("Incoming");
         }

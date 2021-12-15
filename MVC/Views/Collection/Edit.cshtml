@@ -1,4 +1,4 @@
-﻿@model CactusDto
+﻿@model CactusUpdateDto
 
 @{
     ViewData["Title"] = "Edit";
@@ -15,14 +15,14 @@
             <div class="mb-3">
                 <label asp-for="Species.Genus.Id" class="control-label">Genus</label>
                 <select asp-for="Species.Genus.Id" class="form-control" asp-items="ViewBag.GenusId">
-                    <option>Select one...</option>
+                    <option disabled>Select one...</option>
                 </select>
                 <span asp-validation-for="Species.Genus.Id" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="Species.Id" class="control-label"></label>
                 <select asp-for="Species.Id" class="form-control" asp-items="ViewBag.SpeciesId">
-                    <option>Select one...</option>
+                    <option disabled>Select one...</option>
                 </select>
                 <span asp-validation-for="Species.Id" class="text-danger"></span>
             </div>

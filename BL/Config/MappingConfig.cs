@@ -10,6 +10,7 @@ namespace BL.Config
         public static void ConfigureMapping(IMapperConfigurationExpression config)
         {
             config.CreateMap<Cactus, CactusDto>().ReverseMap();
+            config.CreateMap<Cactus, CactusUpdateDto>().ReverseMap();
             config.CreateMap<Cactus, CactusCreateDto>().ReverseMap();
             config.CreateMap<CactusDto, CactusCreateDto>().ReverseMap();
             config.CreateMap<CactusOffer, CactusOfferDto>().ReverseMap();

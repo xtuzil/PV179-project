@@ -34,17 +34,12 @@ namespace BL.Facades
             _transferService = transferService;
         }
 
-        public async Task<bool> AcceptOfferAsync(OfferDto offer)
+        public async Task AcceptOfferAsync(int offerId)
         {
             using (var uow = unitOfWorkProvider.Create())
             {
-
-                await _offerService.AcceptOffer(offer.Id);
-               
-                if ((offer.Author.AccountBalance - (double)offer.OfferedMoney < 0) ||
-                    (offer.Recipient.AccountBalance - (double)offer.RequestedMoney < 0)) {
-                    return false;
-                }
+                await _offerService.AcceptOffer(offerId);
+                var offer = await _offerService.GetOffer(offerId);
 
                 // remove offered money from each user
                 await _userService.RemoveUserMoneyAsync(offer.Author.Id, (double)offer.OfferedMoney);
@@ -92,7 +87,6 @@ namespace BL.Facades
                 _transferService.CreateTransfer(offer.Id);
 
                 uow.Commit();
-                return true;
             }
         }
 

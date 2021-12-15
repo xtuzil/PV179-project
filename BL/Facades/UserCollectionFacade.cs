@@ -28,7 +28,7 @@ namespace BL.Facades
         {
             using (var uow = uowp.Create())
             {
-                return (List<SpeciesDto>)await _speciesService.getAllApprovedSpeciesWithGenus(genusId);
+                return await _speciesService.getAllApprovedSpeciesWithGenus(genusId);
             }
         }
 
@@ -36,27 +36,27 @@ namespace BL.Facades
         {
             using (var uow = uowp.Create())
             {
-                return (List<GenusDto>) await _genusService.GetAllGenuses();
+                return await _genusService.GetAllGenuses();
             }
         }
 
-        public async Task<IEnumerable<CactusDto>> GetAllUserCactuses(UserInfoDto user)
+        public async Task<IEnumerable<CactusDto>> GetAllUserCactuses(int userId)
         {
             using (var uow = uowp.Create())
             {
-                return (List<CactusDto>)await _cactusService.GetAllUserCactuses(user);
+                return await _cactusService.GetAllUserCactuses(userId);
             }
         }
 
-        public async Task<IEnumerable<CactusDto>> GetUserCactusesForSale(UserInfoDto user)
+        public async Task<IEnumerable<CactusDto>> GetUserCactusesForSale(int userId)
         {
             using (var uow = uowp.Create())
             {
-                return (List<CactusDto>)await _cactusService.GetUserCactusesForSale(user);
+                return await _cactusService.GetUserCactusesForSale(userId);
             }
         }
 
-        public void AddCactusForSale(CactusDto cactus)
+        public void AddCactusForSale(CactusUpdateDto cactus)
         {
             using (var uow = uowp.Create())
             {
@@ -74,7 +74,7 @@ namespace BL.Facades
             }
         }
 
-        public void UpdateCactusInformation(CactusDto cactus)
+        public void UpdateCactusInformation(CactusUpdateDto cactus)
         {
             using (var uow = uowp.Create())
             {
@@ -83,11 +83,11 @@ namespace BL.Facades
             }
         }
 
-        public void RemoveCactus(CactusDto cactus)
+        public async Task RemoveCactus(int cactusId)
         {
             using (var uow = uowp.Create())
             {
-                _cactusService.RemoveCactus(cactus);
+                await _cactusService.RemoveCactus(cactusId);
                 uow.Commit();
             }
         }

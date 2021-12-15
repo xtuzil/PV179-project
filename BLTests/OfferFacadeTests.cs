@@ -1,5 +1,6 @@
 using Autofac.Extras.Moq;
 using BL.DTOs;
+using BL.Exceptions;
 using BL.Facades;
 using BL.Services;
 using BL.Services.Interfaces;
@@ -233,11 +234,14 @@ namespace BLTests
                 var cls = mock.Create<OfferFacade>();
 
                 //Act
-                var status = await cls.AcceptOfferAsync(offer);
-
-                //Assert
-                Assert.True(status);
- 
+                try
+                {
+                    await cls.AcceptOfferAsync(offer.Id);
+                }
+                catch(InsufficientMoneyException)
+                {
+                    Assert.True(false, "No exception should have been thrown");
+                }
             }
         }
 
@@ -373,11 +377,8 @@ namespace BLTests
 
                 var cls = mock.Create<OfferFacade>();
 
-                //Act
-                var status = await cls.AcceptOfferAsync(offer);
-
-                //Assert
-                Assert.False(status);
+                //Act + Assert
+                await Assert.ThrowsAsync<InsufficientMoneyException>(() => cls.AcceptOfferAsync(offer.Id));
 
             }
         }
