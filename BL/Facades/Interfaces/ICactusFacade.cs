@@ -13,5 +13,8 @@ namespace BL.Facades
         public Task<IEnumerable<CactusDto>> GetCactusesWithGenus(int genusId);
         public Task ProposeNewSpecies(SpeciesCreateDto speciesCreateDto);
         public Task<IEnumerable<SpeciesDto>> GetAllSpecies();
+        public Task<IEnumerable<SpeciesDto>> GetAllApprovedSpecies();
+        public Task<IEnumerable<SpeciesDto>> GetAllPendingSpecies();
+        public Task<IEnumerable<SpeciesDto>> GetAllRejectedSpecies();
     }
 }

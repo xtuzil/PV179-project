@@ -3,6 +3,8 @@ using BL.Facades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MVC.Controllers
@@ -31,7 +33,13 @@ namespace MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            return View(await _cactusFacade.GetAllSpecies());
+            var approvedSpecies = await _cactusFacade.GetAllApprovedSpecies();
+            var pendingSpecies = await _cactusFacade.GetAllPendingSpecies();
+            var rejectedSpecies = await _cactusFacade.GetAllRejectedSpecies();
+            ViewBag.ApprovedSpecies = approvedSpecies;
+            ViewBag.PendingSpecies = pendingSpecies;
+            ViewBag.RejectedSpecies = rejectedSpecies;
+            return View();
         }
 
         [HttpGet]

@@ -1,6 +1,4 @@
-﻿@model IEnumerable<SpeciesDto>
-
-@{
+﻿@{
     ViewData["Title"] = "Species";
 }
 <h1>List of species</h1>
@@ -10,40 +8,60 @@
         <a class="btn btn-primary" asp-action="Add">Propose new species</a>
     </p>
 }
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Name:
-            </th>
-            <th>
-                Latin name:
-            </th>
-            <th>
-                Genus:
-            </th>
-            <th>
-                Approved:
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.LatinName
-                </td>
-                <td>
-                    @item.Genus.Name
-                </td>
-                <td>
-                    @item.ApprovalStatus
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="mb-3">
+    <svg class="bi flex-shrink-0 me-2 text-success" width="24" height="24" role="img" aria-label="Error:"><use xlink:href="#check-circle-fill" /></svg>
+    <h2 class="h2 d-inline mb-0">Approved</h2>
+</div>
+<div class="row">
+    @foreach (var species in ViewBag.ApprovedSpecies)
+    {
+
+        <div class="col-md-4 col-sm-6 mb-3">
+            <div class="card border-success" style="width: 18rem;">
+                <img class="card-img-top" src="~/img/cactus-species.png" alt="Card image cap">
+                <div class="card-body">
+                    <h3 class="card-title h5 text-success">@species.Name (@species.LatinName)</h3>
+                    <h4 class="card-subtitle mb-2 text-muted h6">@species.Genus.Name</h4>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="mb-3">
+    <svg class="bi flex-shrink-0 me-2 text-warning" width="24" height="24" role="img" aria-label="Error:"><use xlink:href="#question-circle-fill" /></svg>
+    <h2 class="h2 d-inline mb-0">Pending</h2>
+</div>
+<div class="row">
+    @foreach (var species in ViewBag.PendingSpecies)
+    {
+
+        <div class="col-md-4 col-sm-6 mb-3">
+            <div class="card border-warning" style="width: 18rem;">
+                <img class="card-img-top" src="~/img/cactus-species.png" alt="Card image cap">
+                <div class="card-body">
+                    <h3 class="card-title h5 text-warning">@species.Name (@species.LatinName)</h3>
+                    <h4 class="card-subtitle mb-2 text-muted h6">@species.Genus.Name</h4>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="mb-3">
+    <svg class="bi flex-shrink-0 me-2 text-danger" width="24" height="24" role="img" aria-label="Error:"><use xlink:href="#x-circle-fill" /></svg>
+    <h2 class="h2 d-inline mb-0">Rejected</h2>
+</div>
+<div class="row">
+    @foreach (var species in ViewBag.RejectedSpecies)
+    {
+
+        <div class="col-md-4 col-sm-6 mb-3">
+            <div class="card border-danger" style="width: 18rem;">
+                <img class="card-img-top" src="~/img/cactus-species.png" alt="Card image cap">
+                <div class="card-body">
+                    <h3 class="card-title h5 text-danger">@species.Name (@species.LatinName)</h3>
+                    <h4 class="card-subtitle mb-2 text-muted h6">@species.Genus.Name</h4>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -37,6 +37,18 @@ namespace BL.Services
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
 
+        public async Task<IEnumerable<SpeciesDto>> GetAllPendingSpecies()
+        {
+            IPredicate predicate = new SimplePredicate(nameof(Species.ApprovalStatus), ApprovalStatus.Pending, ValueComparingOperator.Equal);
+            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
+        }
+
+        public async Task<IEnumerable<SpeciesDto>> GetAllRejectedSpecies()
+        {
+            IPredicate predicate = new SimplePredicate(nameof(Species.ApprovalStatus), ApprovalStatus.Rejected, ValueComparingOperator.Equal);
+            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
+        }
+
         public async Task<IEnumerable<SpeciesDto>> getAllApprovedSpeciesWithGenus(int genusId)
         {
             IPredicate approvedPredicate = new SimplePredicate(nameof(Species.ApprovalStatus), ApprovalStatus.Approved, ValueComparingOperator.Equal);

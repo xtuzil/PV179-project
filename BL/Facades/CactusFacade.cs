@@ -81,5 +81,27 @@ namespace BL.Facades
                 return await speciesService.GetAllSpecies();
             }
         }
+
+        public async Task<IEnumerable<SpeciesDto>> GetAllApprovedSpecies()
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                return await speciesService.GetAllAprovedSpecies();
+            }
+        }
+        public async Task<IEnumerable<SpeciesDto>> GetAllPendingSpecies()
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                return await speciesService.GetAllPendingSpecies();
+            }
+        }
+        public async Task<IEnumerable<SpeciesDto>> GetAllRejectedSpecies()
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                return await speciesService.GetAllRejectedSpecies();
+            }
+        }
     }
 }
