@@ -88,6 +88,7 @@ namespace MVC.Controllers
                 PotSize = cactus.PotSize,
                 SowingDate = cactus.SowingDate,
                 Species = cactus.Species,
+                Image = cactus.Image,
             };
             if (updateDto == null)
             {
