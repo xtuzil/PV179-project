@@ -64,17 +64,22 @@ namespace BL.Services
             return result.Items.First();
         }
 
-        public async void UpdateUserInfo(UserUpdateProfileDto userDto)
+        public async Task UpdateUserInfo(UserUpdateProfileDto userDto)
         {
             var user = await repository.GetAsync(userDto.Id);
             user.FirstName = userDto.FirstName;
             user.LastName = userDto.LastName;
             user.Email = userDto.Email;
             user.PhoneNumber = userDto.PhoneNumber;
+            if(userDto.Avatar != null)
+            {
+                user.Avatar = new byte[userDto.Avatar.Length];
+                userDto.Avatar.CopyTo(user.Avatar, 0);
+            }
             repository.Update(user);
         }
 
-        public async void ChangePassword(ChangePasswordDto userDto)
+        public async Task ChangePassword(ChangePasswordDto userDto)
         {
             var (hash, salt) = CreateHash(userDto.Password);
             var user = await repository.GetAsync(userDto.Id);

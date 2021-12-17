@@ -3,7 +3,14 @@
 @{
     ViewData["Title"] = "Profile";
 }
-
+@{
+    String imgSrc = null;
+    if (Model.Avatar != null)
+    {
+        var base64 = Convert.ToBase64String(Model.Avatar);
+        imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+    }
+}
 <h1>Profile</h1>
 
 <hr />
@@ -14,7 +21,14 @@
                 <h5 class="card-title text-center text-success">@Model.FirstName @Model.LastName</h5>
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-4">
-                        <img class='img-circle' src='~/img/cactus-avatar.png' width="80" />
+                        @if (imgSrc == null)
+                        {
+                            <img class='img-circle' src='~/img/cactus-avatar.png' width="80" />
+                        }
+                        else
+                        {
+                            <img class='img-circle' src='@imgSrc' width="80" />
+                        }
                     </div>
                 </div>
                 <form>

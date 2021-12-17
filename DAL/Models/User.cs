@@ -9,7 +9,7 @@ namespace CactusDAL.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-
+        public byte[] Avatar { get; set; }
         public virtual ProfilePhoto ProfilePhoto { get; set; }
         public virtual IEnumerable<CactusPhoto> UploadedCactusPhotos { get; set; }
 

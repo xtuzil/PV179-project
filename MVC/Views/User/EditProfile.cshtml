@@ -7,7 +7,7 @@
 <h1>Edit profile</h1>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditProfile">
+        <form asp-action="EditProfile" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="mb-3">
                 <label asp-for="FirstName" class="control-label">First name:</label>
@@ -28,6 +28,10 @@
                 <label asp-for="PhoneNumber" class="control-label">Phone number:</label>
                 <input asp-for="PhoneNumber" type="tel" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="control-label">Avatar:</label>
+                <input type="file" name="avatar" class="form-control" />
             </div>
             <div class="mb-3">
                 <input type="submit" value="Submit" class="btn btn-primary" />

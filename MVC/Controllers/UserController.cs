@@ -4,9 +4,11 @@ using BL.Facades;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -176,7 +178,7 @@ namespace MVC.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult EditProfile(int id, [Bind("Id,FirstName,LastName,Email,PhoneNumber")] UserUpdateProfileDto user)
+        public async Task<IActionResult> EditProfile(int id, [Bind("Id,FirstName,LastName,Email,PhoneNumber")] UserUpdateProfileDto user, IFormFile avatar)
         {
             if (id != user.Id)
             {
@@ -185,7 +187,13 @@ namespace MVC.Controllers
 
             if (ModelState.IsValid)
             {
-                _userFacade.UpdateUserInfo(user);
+                if (avatar != null && avatar.Length > 0)
+                {
+                    using var fileStream = avatar.OpenReadStream();
+                    user.Avatar = new byte[avatar.Length];
+                    fileStream.Read(user.Avatar, 0, (int)avatar.Length);
+                }
+                await _userFacade.UpdateUserInfo(user);
             }
 
             return RedirectToAction(nameof(Profile), new { id = user.Id });

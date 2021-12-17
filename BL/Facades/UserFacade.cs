@@ -73,20 +73,20 @@ namespace BL.Facades
             }
         }
 
-        public void UpdateUserInfo(UserUpdateProfileDto user)
+        public async Task UpdateUserInfo(UserUpdateProfileDto user)
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
-                _userService.UpdateUserInfo(user);
+                await _userService.UpdateUserInfo(user);
                 uow.Commit();
             }
         }
 
-        public void ChangePassword(ChangePasswordDto user)
+        public async Task ChangePassword(ChangePasswordDto user)
         {
             using (var uow = _unitOfWorkProvider.Create())
             {
-                _userService.ChangePassword(user);
+                await _userService.ChangePassword(user);
                 uow.Commit();
             }
         }

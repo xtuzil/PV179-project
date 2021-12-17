@@ -13,8 +13,8 @@ namespace BL.Services
 
         public Task<UserInfoDto> GetUserWithEmail(string email);
 
-        public void UpdateUserInfo(UserUpdateProfileDto user);
-        public void ChangePassword(ChangePasswordDto user);
+        public Task UpdateUserInfo(UserUpdateProfileDto user);
+        public Task ChangePassword(ChangePasswordDto user);
 
         public Task RemoveUserMoneyAsync(int userId, double amount);
 
