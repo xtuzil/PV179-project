@@ -112,7 +112,9 @@ namespace BL.Facades
                 }
                 uow.Commit();
 
-                return createdOffer;
+                //TODO: We might do not want to mapping in Facade, but for now it is necessary because of retrieving id
+                var mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
+                return mapper.Map<OfferDto>(createdOffer);
             }
         }
 

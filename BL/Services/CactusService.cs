@@ -120,13 +120,13 @@ namespace BL.Services
             repository.Update(cactus);
         }
 
-        public async Task<CactusDto> CreateNewCactusInstanceForTransfer(CactusDto cactusCreateDto, int amount)
+        public async Task<Cactus> CreateNewCactusInstanceForTransfer(CactusDto cactusCreateDto, int amount)
         {
             var cactus = mapper.Map<Cactus>(cactusCreateDto);
             cactus.OwnerId = null;
             cactus.Amount = amount;
             await repository.Create(cactus);
-            return mapper.Map<CactusDto>(cactus);
+            return cactus;
         }
 
         public async Task<CactusDto> TransferCactus(int userId, int cactusId)

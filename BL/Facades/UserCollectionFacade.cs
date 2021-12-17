@@ -87,7 +87,8 @@ namespace BL.Facades
         {
             using (var uow = uowp.Create())
             {
-                await _cactusService.RemoveCactus(cactusId);
+                //Because of history of transactions we don't want to delete cactus from db
+                await _cactusService.RemoveCactusFromUser(cactusId);
                 uow.Commit();
             }
         }

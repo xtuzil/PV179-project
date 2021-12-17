@@ -89,6 +89,7 @@ namespace BL.Services
         public async Task CreateUser(UserCreateDto userDto)
         {
             var user = mapper.Map<User>(userDto);
+            user.AccountBalance = 100;
             await repository.Create(user);
         }
 
@@ -127,7 +128,7 @@ namespace BL.Services
         {
             var (hash, salt) = CreateHash(user.Password);
             user.Password = string.Join(',', hash, salt);
-
+          
             await CreateUser(user);
         }
 
