@@ -27,6 +27,7 @@ namespace CactusDAL.Models
         public int Amount { get; set; }
 
         public string Note { get; set; }
+        public byte[] Image { get; set; }
         // TODO: separate entity maybe to be able to add dated entries
         // and log some events in the life of the cactus?
     }

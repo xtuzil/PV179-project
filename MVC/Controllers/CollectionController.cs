@@ -1,6 +1,7 @@
 using BL.DTOs;
 using BL.Facades;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
@@ -49,12 +50,18 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add([Bind("GenusId,SpeciesId,ForSale,SowingDate,PotSize,Amount,Note,Id")] CactusCreateDto cactus)
+        public async Task<IActionResult> Add([Bind("GenusId,SpeciesId,ForSale,SowingDate,PotSize,Amount,Note,Id")] CactusCreateDto cactus, IFormFile photo)
         {
             if (ModelState.IsValid)
             {
+                if (photo != null && photo.Length > 0)
+                {
+                    using var fileStream = photo.OpenReadStream();
+                    cactus.Image = new byte[photo.Length];
+                    fileStream.Read(cactus.Image, 0, (int)photo.Length);
+                }
                 cactus.OwnerId = int.Parse(User.Identity.Name);
-                _facade.AddCactusToCollection(cactus);
+                await _facade.AddCactusToCollection(cactus);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GenusId"] = new SelectList(await _facade.GetAllGenuses(), "Id", "Name", cactus.GenusId);
@@ -95,7 +102,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Species,ForSale,SowingDate,PotSize,Amount,Note,Id")] CactusUpdateDto cactus)
+        public async Task<IActionResult> Edit(int id, [Bind("Species,ForSale,SowingDate,PotSize,Amount,Note,Id")] CactusUpdateDto cactus, IFormFile photo)
         {
             if (id != cactus.Id)
             {
@@ -104,6 +111,12 @@ namespace MVC.Controllers
 
             if (ModelState.IsValid)
             {
+                if (photo != null && photo.Length > 0)
+                {
+                    using var fileStream = photo.OpenReadStream();
+                    cactus.Image = new byte[photo.Length];
+                    fileStream.Read(cactus.Image, 0, (int)photo.Length);
+                }
                 cactus.OwnerId = int.Parse(User.Identity.Name);
                 _facade.UpdateCactusInformation(cactus);
                 return RedirectToAction(nameof(Details), new { id = cactus.Id });

@@ -65,11 +65,11 @@ namespace BL.Facades
                 uow.Commit();
             }
         }
-        public void AddCactusToCollection(CactusCreateDto cactus)
+        public async Task AddCactusToCollection(CactusCreateDto cactus)
         {
             using (var uow = uowp.Create())
             {
-                _cactusService.AddCactus(cactus);
+                await _cactusService.AddCactus(cactus);
                 uow.Commit();
             }
         }
