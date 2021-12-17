@@ -22,5 +22,6 @@ namespace BL.DTOs
         public int Amount { get; set; }
         [StringLength(1000, ErrorMessage = "The {0} can not exceed {1} characters long.")]
         public string Note { get; set; }
+        public byte[] Image { get; set; }
     }
 }

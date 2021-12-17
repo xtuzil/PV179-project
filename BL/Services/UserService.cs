@@ -73,8 +73,7 @@ namespace BL.Services
             user.PhoneNumber = userDto.PhoneNumber;
             if(userDto.Avatar != null)
             {
-                user.Avatar = new byte[userDto.Avatar.Length];
-                userDto.Avatar.CopyTo(user.Avatar, 0);
+                user.Avatar = userDto.Avatar;
             }
             repository.Update(user);
         }
