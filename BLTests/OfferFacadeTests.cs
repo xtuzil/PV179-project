@@ -70,7 +70,7 @@ namespace BLTests
                     RequestedCactuses = cactusRequests,
                 };
 
-                var createdOffer = new OfferDto
+                var createdOffer = new Offer
                 {
                     Id = 5,
                     OfferedMoney = 45,
@@ -139,13 +139,13 @@ namespace BLTests
                     Amount = 50
                 };
 
-                var cactus3 = new CactusDto
+                var cactus3 = new Cactus
                 {
                     Id = 3,
                     Amount = 70
                 };
 
-                var cactus4 = new CactusDto
+                var cactus4 = new Cactus
                 {
                     Id = 4,
                     Amount = 30
@@ -282,13 +282,13 @@ namespace BLTests
                     Amount = 50
                 };
 
-                var cactus3 = new CactusDto
+                var cactus3 = new Cactus
                 {
                     Id = 3,
                     Amount = 70
                 };
 
-                var cactus4 = new CactusDto
+                var cactus4 = new Cactus
                 {
                     Id = 4,
                     Amount = 30

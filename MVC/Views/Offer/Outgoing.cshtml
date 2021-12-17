@@ -54,16 +54,16 @@
                 <td>@offer.Recipient.FirstName @offer.Recipient.LastName</td>
                 <td>@offer.OfferedMoney</td>
                 <td>
-                    @for (int i = 0; i < offer.OfferedCactuses.Count; i++)
+                    @for (int i = 0; i < offer.OfferedCactuses.Count(); i++)
                     {
-                        <span>@offer.OfferedCactuses[i].Cactus.Species.Name: <em>@offer.OfferedCactuses[i].Amount pcs</em></span><br />
+                        <span>@offer.OfferedCactuses.ToList()[i].Cactus.Species.Name: <em>@offer.OfferedCactuses.ToList()[i].Amount pcs</em></span><br />
                     }
                 </td>
                 <td>@offer.RequestedMoney</td>
                 <td>
-                    @for (int i = 0; i < offer.RequestedCactuses.Count; i++)
+                    @for (int i = 0; i < offer.RequestedCactuses.Count(); i++)
                     {
-                        <span>@offer.RequestedCactuses[i].Cactus.Species.Name: <em>@offer.RequestedCactuses[i].Amount pcs</em></span><br />
+                        <span>@offer.RequestedCactuses.ToList()[i].Cactus.Species.Name: <em>@offer.RequestedCactuses.ToList()[i].Amount pcs</em></span><br />
                     }
                 </td>
                 <td>@offer.CreationDate</td>

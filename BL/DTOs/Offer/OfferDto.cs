@@ -21,9 +21,8 @@ namespace BL.DTOs
         public OfferDto PreviousOffer { get; set; }
         public DateTime CreationDate { get; set; }
 
-        public List<CactusOfferDto> OfferedCactuses { get; set; }
-        public List<CactusOfferDto> RequestedCactuses { get; set; }
-
+        public IEnumerable<CactusOfferDto> OfferedCactuses { get; set; }
+        public IEnumerable<CactusOfferDto> RequestedCactuses { get; set; }
         public TransferDto Transfer { get; set; }
     }
 }

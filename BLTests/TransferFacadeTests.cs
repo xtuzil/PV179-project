@@ -110,11 +110,11 @@ namespace BLTests
                    .Returns(Task.Run(() => { }));
 
                 mock.Mock<ICactusService>()
-                   .Setup(x => x.UpdateCactusOwnerAsync(offer.RequestedCactuses[0].Id, author.Id))
+                   .Setup(x => x.UpdateCactusOwnerAsync(offer.RequestedCactuses.ToList()[0].Id, author.Id))
                    .Returns(Task.Run(() => { }));
 
                 mock.Mock<ICactusService>()
-                   .Setup(x => x.UpdateCactusOwnerAsync(offer.OfferedCactuses[0].Id, recipient.Id))
+                   .Setup(x => x.UpdateCactusOwnerAsync(offer.OfferedCactuses.ToList()[0].Id, recipient.Id))
                    .Returns(Task.Run(() => { }));
 
                 mock.Mock<ITransferService>()
@@ -227,11 +227,11 @@ namespace BLTests
                    .Returns(Task.Run(() => { }));
 
                 mock.Mock<ICactusService>()
-                   .Setup(x => x.UpdateCactusOwnerAsync(offer.RequestedCactuses[0].Id, author.Id))
+                   .Setup(x => x.UpdateCactusOwnerAsync(offer.RequestedCactuses.ToList()[0].Id, author.Id))
                    .Returns(Task.Run(() => { }));
 
                 mock.Mock<ICactusService>()
-                   .Setup(x => x.UpdateCactusOwnerAsync(offer.OfferedCactuses[0].Id, recipient.Id))
+                   .Setup(x => x.UpdateCactusOwnerAsync(offer.OfferedCactuses.ToList()[0].Id, recipient.Id))
                    .Returns(Task.Run(() => { }));
 
                 mock.Mock<ITransferService>()
