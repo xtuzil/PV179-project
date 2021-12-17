@@ -25,6 +25,6 @@ namespace BL.Services
 
         public Task RemoveCactus(int cactusId);
         public Task RemoveCactusFromUser(int cactusId);
-        public Task<CactusDto> CreateNewCactusInstanceForTransfer(CactusDto cactusCreateDto, int amount);
+        public Task<Cactus> CreateNewCactusInstanceForTransfer(CactusDto cactusCreateDto, int amount);
     }
 }

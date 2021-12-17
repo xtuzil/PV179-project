@@ -49,13 +49,13 @@ namespace BL.Services
             return mapper.Map<OfferDto>(offer);
         }
 
-        public async Task<OfferDto> CreateOffer(OfferCreateDto offerDto)
+        public async Task<Offer> CreateOffer(OfferCreateDto offerDto)
         {
             var offer = mapper.Map<Offer>(offerDto);
             offer.Response = OfferStatus.Created;
             offer.ResponseDate = DateTime.UtcNow;
             await repository.Create(offer);
-            return mapper.Map<OfferDto>(offer);
+            return offer;
         }
 
         public async Task<IEnumerable<OfferDto>> GetTransferedOffersOfUser(int userId)
@@ -90,6 +90,11 @@ namespace BL.Services
         {
             IPredicate predicate = new SimplePredicate(nameof(Offer.RecipientId), userId, ValueComparingOperator.Equal);
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
+        }
+
+        public async Task RemoveOffer(int offerId)
+        {
+            await repository.Delete(offerId);
         }
 
     }

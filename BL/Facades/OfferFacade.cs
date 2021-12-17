@@ -112,7 +112,9 @@ namespace BL.Facades
                 }
                 uow.Commit();
 
-                return createdOffer;
+                //TODO: We might do not want to mapping in Facade, but for now it is necessary because of retrieving id
+                var mapper = new Mapper(new MapperConfiguration(MappingConfig.ConfigureMapping));
+                return mapper.Map<OfferDto>(createdOffer);
             }
         }
 
@@ -130,6 +132,25 @@ namespace BL.Facades
             {
                 await _offerService.UpdateOfferStatus(offerId, OfferStatus.Declined);
                 uow.Commit();
+            }
+        }
+
+        public async Task<bool> RemoveOffer(int offerId)
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                var offer = await _offerService.GetOffer(offerId);
+
+                // Offer can be deleted only when recipient did not answer yet
+                if (offer.Response != Enums.OfferStatus.Created) 
+                {
+                    return false;
+                }
+
+                await _offerService.RemoveOffer(offerId);
+                uow.Commit();
+
+                return true;
             }
         }
     }
