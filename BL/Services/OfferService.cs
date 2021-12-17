@@ -92,5 +92,10 @@ namespace BL.Services
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
 
+        public async Task RemoveOffer(int offerId)
+        {
+            await repository.Delete(offerId);
+        }
+
     }
 }

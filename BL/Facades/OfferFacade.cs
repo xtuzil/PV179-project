@@ -134,5 +134,24 @@ namespace BL.Facades
                 uow.Commit();
             }
         }
+
+        public async Task<bool> RemoveOffer(int offerId)
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                var offer = await _offerService.GetOffer(offerId);
+
+                // Offer can be deleted only when recipient did not answer yet
+                if (offer.Response != Enums.OfferStatus.Created) 
+                {
+                    return false;
+                }
+
+                await _offerService.RemoveOffer(offerId);
+                uow.Commit();
+
+                return true;
+            }
+        }
     }
 }
