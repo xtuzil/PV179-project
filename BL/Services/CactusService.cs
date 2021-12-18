@@ -134,7 +134,8 @@ namespace BL.Services
 
         public async Task<Cactus> CreateNewCactusInstanceForTransfer(CactusDto cactusCreateDto, int amount)
         {
-            var cactus = mapper.Map<Cactus>(cactusCreateDto);
+            var createDto = mapper.Map<CactusCreateDto>(cactusCreateDto);
+            var cactus = mapper.Map<Cactus>(createDto);
             cactus.OwnerId = null;
             cactus.Amount = amount;
             await repository.Create(cactus);

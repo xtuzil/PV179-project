@@ -42,6 +42,7 @@ namespace BL.Config
             config.CreateMap<User, ChangePasswordDto>().ReverseMap();
             config.CreateMap<User, UserInfoDto>().ReverseMap();
             config.CreateMap<UserInfoDto, UserUpdateProfileDto>().ReverseMap();
+            config.CreateMap<CactusCreateDto, CactusDto>().ReverseMap();
         }
     }
 }

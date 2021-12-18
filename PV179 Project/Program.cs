@@ -89,7 +89,7 @@ namespace PV179_Project
                 RequestedCactuses = cactusRequests,
             };
 
-            var createdOffer = offerFacade.CreateOffer(offer);
+            var createdOffer = await offerFacade.CreateOffer(offer);
 
 
             var getOffer = await offerFacade.GetOffer(createdOffer.Id);
