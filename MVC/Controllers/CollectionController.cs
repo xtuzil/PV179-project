@@ -95,8 +95,6 @@ namespace MVC.Controllers
                 Image = cactus.Image,
             };
 
-            ViewData["GenusId"] = new SelectList(await _facade.GetAllGenuses(), "Id", "Name", updateDto.Species.Genus.Id);
-            ViewData["SpeciesId"] = new SelectList(await _facade.GetAllApprovedSpeciesWithGenus(updateDto.Species.Genus.Id), "Id", "Name", cactus);
             return View(updateDto);
         }
 
@@ -123,8 +121,7 @@ namespace MVC.Controllers
                 await _facade.UpdateCactusInformation(cactus);
                 return RedirectToAction(nameof(Details), new { id = cactus.Id });
             }
-            ViewData["GenusId"] = new SelectList(await _facade.GetAllGenuses(), "Id", "Name", cactus.Species.Genus.Id);
-            ViewData["SpeciesId"] = new SelectList(await _facade.GetAllApprovedSpeciesWithGenus(cactus.Species.Genus.Id), "Id", "Name", cactus);
+
             return View(cactus);
         }
 

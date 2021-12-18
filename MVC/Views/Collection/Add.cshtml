@@ -4,9 +4,8 @@
     ViewData["Title"] = "Add Cactus";
 }
 
-<h1>Create</h1>
+<h1>Add cactus</h1>
 
-<h4>Cactus</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,7 +19,7 @@
                 <span asp-validation-for="GenusId" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="SpeciesId" class="control-label"></label>
+                <label asp-for="SpeciesId" class="control-label">Species</label>
                 <select asp-for="SpeciesId" class="form-control" asp-items="ViewBag.SpeciesId">
                     <option>Select one...</option>
                 </select>
@@ -28,31 +27,37 @@
             </div>
             <div class="mb-3 form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ForSale" /> @Html.DisplayNameFor(model => model.ForSale)
+                    <input class="form-check-input" asp-for="ForSale" /> For sale
                 </label>
             </div>
             <div class="mb-3">
-                <label asp-for="SowingDate" class="control-label"></label>
+                <label asp-for="SowingDate" class="control-label">Sowing date</label>
                 <input asp-for="SowingDate" class="form-control" />
                 <span asp-validation-for="SowingDate" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="PotSize" class="control-label"></label>
-                <input asp-for="PotSize" class="form-control" />
+                <label asp-for="PotSize" class="control-label">Pot size</label>
+                <div class="input-group">
+                    <input asp-for="PotSize" class="form-control" />
+                    <span class="input-group-text">cm</span>
+                </div>
                 <span asp-validation-for="PotSize" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" />
+                <label asp-for="Amount" class="control-label">Amount</label>
+                <div class="input-group">
+                    <input asp-for="Amount" class="form-control" />
+                    <span class="input-group-text">pcs</span>
+                </div>
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Note" class="control-label"></label>
+                <label asp-for="Note" class="control-label">Note</label>
                 <textarea asp-for="Note" class="form-control"></textarea>
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label class="control-label">Photo:</label>
+                <label class="control-label">Photo</label>
                 <input type="file" name="photo" class="form-control" />
             </div>
             <div class="mb-3">

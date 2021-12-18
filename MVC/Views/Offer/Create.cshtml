@@ -7,24 +7,28 @@
 <h1>New Offer to @ViewBag.UserDetails.FirstName @ViewBag.UserDetails.LastName</h1>
 
 <hr />
-<span class="text-danger">@Html.ValidationMessage("General")</span>
+<p class="text-danger">@Html.ValidationMessage("General")</p>
 <div class="row">
 
     <form asp-action="Create">
-        <div class="col-md-4">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="AuthorId" />
-            <input type="hidden" asp-for="RecipientId" />
-            <input type="hidden" asp-for="PreviousOfferId" />
-            <div class="mb-3">
-                <label asp-for="OfferedMoney" class="control-label"></label>
-                <input asp-for="OfferedMoney" class="form-control" />
-                <span asp-validation-for="OfferedMoney" class="text-danger"></span>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="AuthorId" />
+        <input type="hidden" asp-for="RecipientId" />
+        <input type="hidden" asp-for="PreviousOfferId" />
+        <div class="row">
+            <div class="col-md-3">
+                <div class="mb-3">
+                    <label asp-for="OfferedMoney" class="control-label">Offered money</label>
+                    <input asp-for="OfferedMoney" class="form-control" />
+                    <span asp-validation-for="OfferedMoney" class="text-danger"></span>
+                </div>
             </div>
-            <div class="mb-3">
-                <label asp-for="RequestedMoney" class="control-label"></label>
-                <input asp-for="RequestedMoney" class="form-control" />
-                <span asp-validation-for="RequestedMoney" class="text-danger"></span>
+            <div class="col-md-3">
+                <div class="mb-3">
+                    <label asp-for="RequestedMoney" class="control-label">Requested money</label>
+                    <input asp-for="RequestedMoney" class="form-control" />
+                    <span asp-validation-for="RequestedMoney" class="text-danger"></span>
+                </div>
             </div>
         </div>
         <h3>Offered cactuses</h3>
@@ -40,17 +44,24 @@
                 </tr>
             </thead>
             <tbody>
+                @if (ViewBag.MyCollection.Count == 0)
+                {
+                    <tr><td colspan="5">No cactus for sale in your collection.</td></tr>
+                }
                 @for (int i = 0; i < ViewBag.MyCollection.Count; i++)
                 {
                     <tr>
                         <td>@ViewBag.MyCollection[i].Species.Name</td>
-                        <td>@ViewBag.MyCollection[i].SowingDate.ToLongDateString()</td>
-                        <td>@ViewBag.MyCollection[i].PotSize</td>
-                        <td>@ViewBag.MyCollection[i].Amount</td>
+                        <td>@ViewBag.MyCollection[i].SowingDate.ToShortDateString()</td>
+                        <td>@ViewBag.MyCollection[i].PotSize cm</td>
+                        <td>@ViewBag.MyCollection[i].Amount pcs</td>
                         <td>
                             <div class="mb-3">
                                 <input type="hidden" name="OfferedCactuses[@i].Key" value="@ViewBag.MyCollection[i].Id" />
-                                <input type="number" name="OfferedCactuses[@i].Value" value="@(Model.OfferedCactuses.ContainsKey(ViewBag.MyCollection[i].Id) ? Model.OfferedCactuses[ViewBag.MyCollection[i].Id] : 0)" class="form-control" />
+                                <div class="input-group">
+                                    <input type="number" name="OfferedCactuses[@i].Value" value="@(Model.OfferedCactuses.ContainsKey(ViewBag.MyCollection[i].Id) ? Model.OfferedCactuses[ViewBag.MyCollection[i].Id] : 0)" class="form-control" />
+                                    <span class="input-group-text">pcs</span>
+                                </div>
                                 @*@Html.ValidationMessage($"OfferedCactuses[{i}].Value")*@
                             </div>
                         </td>
@@ -71,17 +82,24 @@
                 </tr>
             </thead>
             <tbody>
+                @if (ViewBag.YourCollection.Count == 0)
+                {
+                    <tr><td colspan="5">No cactus for sale in the collection of @ViewBag.UserDetails.FirstName @ViewBag.UserDetails.LastName.</td></tr>
+                }
                 @for (int i = 0; i < ViewBag.YourCollection.Count; i++)
                 {
                     <tr>
                         <td>@ViewBag.YourCollection[i].Species.Name</td>
                         <td>@ViewBag.YourCollection[i].SowingDate.ToLongDateString()</td>
-                        <td>@ViewBag.YourCollection[i].PotSize</td>
-                        <td>@ViewBag.YourCollection[i].Amount</td>
+                        <td>@ViewBag.YourCollection[i].PotSize cm</td>
+                        <td>@ViewBag.YourCollection[i].Amount pcs</td>
                         <td>
                             <div class="mb-3">
                                 <input type="hidden" name="RequestedCactuses[@i].Key" value="@ViewBag.YourCollection[i].Id" />
-                                <input type="number" name="RequestedCactuses[@i].Value" value="@(Model.RequestedCactuses.ContainsKey(ViewBag.YourCollection[i].Id) ? Model.RequestedCactuses[ViewBag.YourCollection[i].Id] : 0)" class="form-control" />
+                                <div class="input-group">
+                                    <input type="number" name="RequestedCactuses[@i].Value" value="@(Model.RequestedCactuses.ContainsKey(ViewBag.YourCollection[i].Id) ? Model.RequestedCactuses[ViewBag.YourCollection[i].Id] : 0)" class="form-control" />
+                                    <span class="input-group-text">pcs</span>
+                                </div>
                                 @*@Html.ValidationMessage($"RequestedCactuses[{i}].Value")*@
                             </div>
                         </td>
@@ -91,7 +109,7 @@
         </table>
         <div class="col-md-4">
             <div class="mb-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create offer" class="btn btn-primary" />
             </div>
         </div>
     </form>

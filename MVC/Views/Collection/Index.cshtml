@@ -1,4 +1,4 @@
-@model IEnumerable<CactusDto>
+﻿@model IEnumerable<CactusDto>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,53 +7,33 @@
 <h1>My collection</h1>
 
 <p>
-    <a class="btn btn-primary" asp-action="Add">Add New Cactus</a>
+    <a class="btn btn-primary" asp-action="Add">Add new cactus</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Species)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ForSale)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SowingDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PotSize)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
+            <th>Species</th>
+            <th>For sale</th>
+            <th>Sowing date</th>
+            <th>Pot size</th>
+            <th>Amount</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+   @foreach (var item in Model) {
         <tr>
-            <td>
-                @item.Species.Name
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ForSale)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SowingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PotSize)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
+            <td>@item.Species.Name</td>
+            <td>@Html.DisplayFor(modelItem => item.ForSale)</td>
+            <td>@item.SowingDate.ToShortDateString()</td>
+            <td>@item.PotSize cm</td>
+            <td>@item.Amount pcs</td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

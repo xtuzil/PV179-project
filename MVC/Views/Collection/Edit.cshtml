@@ -13,46 +13,47 @@
         <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="mb-3">
-                <label asp-for="Species.Genus.Id" class="control-label">Genus</label>
-                <select asp-for="Species.Genus.Id" class="form-control" asp-items="ViewBag.GenusId">
-                    <option disabled>Select one...</option>
-                </select>
-                <span asp-validation-for="Species.Genus.Id" class="text-danger"></span>
+                <label for="genus" class="control-label">Genus</label>
+                <input id="genus" class="form-control" value="@Model.Species.Genus.Name" disabled />
             </div>
             <div class="mb-3">
-                <label asp-for="Species.Id" class="control-label"></label>
-                <select asp-for="Species.Id" class="form-control" asp-items="ViewBag.SpeciesId">
-                    <option disabled>Select one...</option>
-                </select>
-                <span asp-validation-for="Species.Id" class="text-danger"></span>
+                <label for="species" class="control-label">Species</label>
+                <input id="species" class="form-control" value="@Model.Species.Name" disabled />
+                <input type="hidden" name="Species.Id" value="@Model.Species.Id" />
             </div>
             <div class="mb-3 form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ForSale" /> @Html.DisplayNameFor(model => model.ForSale)
+                    <input class="form-check-input" asp-for="ForSale" /> For sale
                 </label>
             </div>
             <div class="mb-3">
-                <label asp-for="SowingDate" class="control-label"></label>
-                <input asp-for="SowingDate" class="form-control" />
+                <label asp-for="SowingDate" class="control-label">Sowing date</label>
+                <input type="date" asp-for="SowingDate" class="form-control" />
                 <span asp-validation-for="SowingDate" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="PotSize" class="control-label"></label>
-                <input asp-for="PotSize" class="form-control" />
+                <label asp-for="PotSize" class="control-label">Pot size</label>
+                <div class="input-group">
+                    <input asp-for="PotSize" class="form-control" />
+                    <span class="input-group-text">cm</span>
+                </div>
                 <span asp-validation-for="PotSize" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" />
+                <label asp-for="Amount" class="control-label">Amount</label>
+                <div class="input-group">
+                    <input asp-for="Amount" class="form-control" />
+                    <span class="input-group-text">pcs</span>
+                </div>
                 <span asp-validation-for="Amount" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label asp-for="Note" class="control-label"></label>
+                <label asp-for="Note" class="control-label">Note</label>
                 <textarea asp-for="Note" class="form-control"></textarea>
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label class="control-label">Photo:</label>
+                <label class="control-label">Photo</label>
                 <input type="file" name="photo" class="form-control" />
             </div>
             <div class="mb-3">
