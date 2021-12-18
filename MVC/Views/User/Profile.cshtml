@@ -5,7 +5,7 @@
 }
 @{
     String imgSrc = null;
-    if (Model.Avatar != null)
+    if (Model.Avatar != null && Model.Avatar.Length > 0)
     {
         var base64 = Convert.ToBase64String(Model.Avatar);
         imgSrc = String.Format("data:image/png;base64,{0}", base64);
