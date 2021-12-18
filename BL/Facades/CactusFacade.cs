@@ -103,5 +103,13 @@ namespace BL.Facades
                 return await speciesService.GetAllRejectedSpecies();
             }
         }
+
+        public async Task<SpeciesDto> GetSpecies(int id)
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                return await speciesService.GetSpecies(id);
+            }
+        }
     }
 }

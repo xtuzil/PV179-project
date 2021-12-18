@@ -11,16 +11,18 @@ namespace MVC.Controllers
     [Authorize]
     public class CollectionController : WithUserInfoController
     {
-        private readonly IUserCollectionFacade _facade;
+        private readonly IUserCollectionFacade _userCollectionFacade;
+        private readonly ICactusFacade _cactusFacade;
 
-        public CollectionController(IUserCollectionFacade facade, IUserFacade userFacade) : base(userFacade)
+        public CollectionController(IUserCollectionFacade userCollectionFacade, ICactusFacade cactusFacade, IUserFacade userFacade) : base(userFacade)
         {
-            _facade = facade;
+            _userCollectionFacade = userCollectionFacade;
+            _cactusFacade = cactusFacade;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _facade.GetAllUserCactuses(int.Parse(User.Identity.Name)));
+            return View(await _userCollectionFacade.GetAllUserCactuses(int.Parse(User.Identity.Name)));
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -30,7 +32,7 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            var cactus = await _facade.GetCactus((int)id);
+            var cactus = await _userCollectionFacade.GetCactus((int)id);
             if (cactus == null)
             {
                 return NotFound();
@@ -42,7 +44,7 @@ namespace MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            ViewData["GenusId"] = new SelectList(await _facade.GetAllGenuses(), "Id", "Name");
+            ViewData["GenusId"] = new SelectList(await _userCollectionFacade.GetAllGenuses(), "Id", "Name");
             return View();
         }
 
@@ -52,6 +54,12 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add([Bind("GenusId,SpeciesId,ForSale,SowingDate,PotSize,Amount,Note,Id")] CactusCreateDto cactus, IFormFile photo)
         {
+            var species = await _cactusFacade.GetSpecies(cactus.SpeciesId);
+            if (species == null || species.Genus.Id != cactus.GenusId)
+            {
+                ModelState.AddModelError("SpeciesId", "Invalid species.");
+            }
+
             if (ModelState.IsValid)
             {
                 if (photo != null && photo.Length > 0)
@@ -61,11 +69,12 @@ namespace MVC.Controllers
                     fileStream.Read(cactus.Image, 0, (int)photo.Length);
                 }
                 cactus.OwnerId = int.Parse(User.Identity.Name);
-                await _facade.AddCactusToCollection(cactus);
+                await _userCollectionFacade.AddCactusToCollection(cactus);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GenusId"] = new SelectList(await _facade.GetAllGenuses(), "Id", "Name", cactus.GenusId);
-            ViewData["SpeciesId"] = new SelectList(await _facade.GetAllApprovedSpeciesWithGenus(cactus.GenusId), "Id", "Name", cactus.SpeciesId);
+
+            ViewData["GenusId"] = new SelectList(await _userCollectionFacade.GetAllGenuses(), "Id", "Name", cactus.GenusId);
+            ViewData["SpeciesId"] = new SelectList(await _userCollectionFacade.GetAllApprovedSpeciesWithGenus(cactus.GenusId), "Id", "Name", cactus.SpeciesId);
             return View(cactus);
         }
 
@@ -76,7 +85,7 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            var cactus = await _facade.GetCactus(id.Value);
+            var cactus = await _userCollectionFacade.GetCactus(id.Value);
             if (cactus == null)
             {
                 return NotFound();
@@ -118,7 +127,7 @@ namespace MVC.Controllers
                     fileStream.Read(cactus.Image, 0, (int)photo.Length);
                 }
                 cactus.OwnerId = int.Parse(User.Identity.Name);
-                await _facade.UpdateCactusInformation(cactus);
+                await _userCollectionFacade.UpdateCactusInformation(cactus);
                 return RedirectToAction(nameof(Details), new { id = cactus.Id });
             }
 
@@ -132,7 +141,7 @@ namespace MVC.Controllers
                 return NotFound();
             }
 
-            var cactus = await _facade.GetCactus(id.Value);
+            var cactus = await _userCollectionFacade.GetCactus(id.Value);
             if (cactus == null)
             {
                 return NotFound();
@@ -145,7 +154,7 @@ namespace MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _facade.RemoveCactus(id);
+            await _userCollectionFacade.RemoveCactus(id);
             return RedirectToAction(nameof(Index));
         }
     }

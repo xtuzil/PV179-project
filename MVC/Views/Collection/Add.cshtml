@@ -14,14 +14,14 @@
             <div class="mb-3">
                 <label asp-for="GenusId" class="control-label">Genus</label>
                 <select asp-for="GenusId" class="form-control" asp-items="ViewBag.GenusId">
-                    <option>Select one...</option>
+                    <option disabled selected>Select one...</option>
                 </select>
                 <span asp-validation-for="GenusId" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="SpeciesId" class="control-label">Species</label>
                 <select asp-for="SpeciesId" class="form-control" asp-items="ViewBag.SpeciesId">
-                    <option>Select one...</option>
+                    <option disabled selected>Select one...</option>
                 </select>
                 <span asp-validation-for="SpeciesId" class="text-danger"></span>
             </div>
@@ -32,13 +32,13 @@
             </div>
             <div class="mb-3">
                 <label asp-for="SowingDate" class="control-label">Sowing date</label>
-                <input asp-for="SowingDate" class="form-control" />
+                <input asp-for="SowingDate" class="form-control" required />
                 <span asp-validation-for="SowingDate" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label asp-for="PotSize" class="control-label">Pot size</label>
                 <div class="input-group">
-                    <input asp-for="PotSize" class="form-control" />
+                    <input asp-for="PotSize" class="form-control" required />
                     <span class="input-group-text">cm</span>
                 </div>
                 <span asp-validation-for="PotSize" class="text-danger"></span>
@@ -46,7 +46,7 @@
             <div class="mb-3">
                 <label asp-for="Amount" class="control-label">Amount</label>
                 <div class="input-group">
-                    <input asp-for="Amount" class="form-control" />
+                    <input asp-for="Amount" class="form-control" required />
                     <span class="input-group-text">pcs</span>
                 </div>
                 <span asp-validation-for="Amount" class="text-danger"></span>
@@ -80,7 +80,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const speciesSelect = document.getElementById('SpeciesId')
-                    speciesSelect.innerHTML = "<option>Select one...</option>";
+                    speciesSelect.innerHTML = "<option disabled selected>Select one...</option>";
                     data.forEach(species => speciesSelect.insertAdjacentHTML('beforeend', `<option value="${species.id}">${species.name}</option>`))
                     //speciesSelect.disabled = data.length == 0;
                 });

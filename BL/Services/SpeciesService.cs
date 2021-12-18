@@ -25,6 +25,12 @@ namespace BL.Services
             this.repository = repository;
             this.queryObject = queryObject;
         }
+
+        public async Task<SpeciesDto> GetSpecies(int id)
+        {
+            return mapper.Map<SpeciesDto>(await repository.GetAsync(id));
+        }
+
         public async Task<IEnumerable<SpeciesDto>> GetAllSpecies()
         {
             var species = await repository.GetAll();
@@ -87,6 +93,5 @@ namespace BL.Services
             IPredicate predicate = new SimplePredicate(nameof(Species.ApprovalStatus), ApprovalStatus.Pending, ValueComparingOperator.Equal);
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
-
     }
 }
