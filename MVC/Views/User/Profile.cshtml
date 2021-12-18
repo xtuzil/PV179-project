@@ -1,7 +1,7 @@
 ﻿@model UserInfoDto
 
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "My Profile";
 }
 @{
     String imgSrc = null;
@@ -11,25 +11,15 @@
         imgSrc = String.Format("data:image/png;base64,{0}", base64);
     }
 }
-<h1>Profile</h1>
+<h1>My Profile</h1>
 
 <hr />
 <div class="row d-flex justify-content-center">
     <div class="col-md-4">
         <div class="card border-success" style="width: 18rem;">
             <div class="card-body">
-                <h5 class="card-title text-center text-success">@Model.FirstName @Model.LastName</h5>
-                <div class="row d-flex justify-content-center">
-                    <div class="col-md-4">
-                        @if (imgSrc == null)
-                        {
-                            <img class='img-circle' src='~/img/cactus-avatar.png' width="80" />
-                        }
-                        else
-                        {
-                            <img class='img-circle' src='@imgSrc' width="80" />
-                        }
-                    </div>
+                <div class="d-flex justify-content-center">
+                    <img class='rounded-circle' src='@((imgSrc != null) ? imgSrc : "~/img/cactus-avatar.png")' width="80" />
                 </div>
                 <form>
                     <div class="form-group">
