@@ -28,6 +28,28 @@
     }
 }
 
+@if (TempData.ContainsKey(MVC.Controllers.OfferController.SKEY_OFFER_DELETED))
+{
+    @if ((bool)TempData[MVC.Controllers.OfferController.SKEY_OFFER_DELETED])
+    {
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
+            <div>
+                Offer cancelled.
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+            <div>
+                Offers can only be cancelled before the recipient would have accepted it.
+            </div>
+        </div>
+    }
+}
+
 <table class="table table-bordered">
     <thead style="text-align: center; vertical-align: middle">
         <tr>
@@ -69,6 +91,13 @@
                 <td>@offer.CreationDate</td>
                 <td>@offer.Response</td>
                 <td>
+                    @if (offer.Response == BL.Enums.OfferStatus.Created)
+                    {
+                        <form asp-action="Delete" onsubmit="confirm('Are you sure you want to cancel this offer?')">
+                            <input type="hidden" name="id" value="@offer.Id" />
+                            <button type="submit" class="btn btn-outline-danger">Cancel</button>
+                        </form>
+                    }
                     @if (offer.Response == BL.Enums.OfferStatus.Accepted && !offer.Transfer.AuthorAprovedDelivery)
                     {
                         <form asp-action="Confirm">

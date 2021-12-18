@@ -25,6 +25,7 @@ namespace MVC.Controllers
 
         public static readonly string SKEY_OFFER_ACCEPTED = "_offerAccepted";
         public static readonly string SKEY_OFFER_DECLINED = "_offerDeclined";
+        public static readonly string SKEY_OFFER_DELETED = "_offerDeleted";
         public static readonly string SKEY_DELIVERY_APPROVED = "_deliveryApproved";
         public static readonly string SKEY_OFFER_MODEL = "_offerModel";
 
@@ -240,6 +241,25 @@ namespace MVC.Controllers
             TempData.Add(SKEY_DELIVERY_APPROVED, success);
 
             return RedirectToAction(redirect);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var offer = await _offerFacade.GetOffer(id.Value);
+            if (offer == null)
+            {
+                return NotFound();
+            }
+
+            var deleted = await _offerFacade.RemoveOffer(id.Value);
+            TempData.Add(SKEY_OFFER_DELETED, deleted);
+            return RedirectToAction("Outgoing");
         }
     }
 }
