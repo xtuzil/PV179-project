@@ -27,10 +27,7 @@ namespace BL.Services
         public async Task<OfferDto> GetOffer(int offerId)
         {
             var offer = await repository.GetAsync(offerId);
-            var offerDto = mapper.Map<OfferDto>(offer);
-            offerDto.OfferedCactuses = mapper.Map<List<CactusOfferDto>>(offer.CactusOffers);
-            offerDto.RequestedCactuses = mapper.Map<List<CactusOfferDto>>(offer.CactusRequests);
-            return offerDto;
+            return mapper.Map<OfferDto>(offer); ;
         }
 
         public async Task<OfferDto> AcceptOffer(int offerId)
@@ -44,6 +41,7 @@ namespace BL.Services
 
             offer.Response = OfferStatus.Accepted;
             offer.ResponseDate = DateTime.UtcNow;
+
             repository.Update(offer);
 
             return mapper.Map<OfferDto>(offer);

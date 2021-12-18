@@ -2,6 +2,7 @@
 using BL.DTOs;
 using CactusDAL.Models;
 using Infrastructure.Query;
+using System.Collections.Generic;
 
 namespace BL.Config
 {
@@ -19,7 +20,10 @@ namespace BL.Config
             config.CreateMap<CactusRequest, CactusOfferDto>().ReverseMap();
             config.CreateMap<CactusRequest, CactusOfferCreateDto>().ReverseMap();
             config.CreateMap<Genus, GenusDto>().ReverseMap();
-            config.CreateMap<Offer, OfferDto>().ReverseMap();
+            config.CreateMap<Offer, OfferDto>()
+                .ForMember(offerDto => offerDto.OfferedCactuses, opt => opt.MapFrom(src => src.CactusOffers))
+                .ForMember(offerDto => offerDto.RequestedCactuses, opt => opt.MapFrom(src => src.CactusRequests))
+                .ReverseMap();
             config.CreateMap<Offer, OfferCreateDto>().ReverseMap();
             config.CreateMap(typeof(QueryResult<>), typeof(QueryResultDto<>)).ReverseMap();
             //config.CreateMap<QueryResultDto<Cactus>, QueryResultDto<CactusDto>>().ReverseMap();
