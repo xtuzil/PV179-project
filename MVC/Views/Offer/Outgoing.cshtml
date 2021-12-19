@@ -10,21 +10,11 @@
 {
     @if ((bool)TempData[MVC.Controllers.OfferController.SKEY_DELIVERY_APPROVED])
     {
-        <div class="alert alert-success d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
-            <div>
-                Delivery confirmed.
-            </div>
-        </div>
+        await Html.RenderPartialAsync("_AlertPartial", new AlertViewModel { Type = AlertType.Success, Message = "Delivery confirmed." });
     }
     else
     {
-        <div class="alert alert-danger d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
-            <div>
-                The delivery could not be confirmed.
-            </div>
-        </div>
+        await Html.RenderPartialAsync("_AlertPartial", new AlertViewModel { Type = AlertType.Error, Message = "The delivery could not be confirmed." });
     }
 }
 
@@ -32,21 +22,11 @@
 {
     @if ((bool)TempData[MVC.Controllers.OfferController.SKEY_OFFER_DELETED])
     {
-        <div class="alert alert-success d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
-            <div>
-                Offer cancelled.
-            </div>
-        </div>
+        await Html.RenderPartialAsync("_AlertPartial", new AlertViewModel { Type = AlertType.Success, Message = "Offer cancelled." });
     }
     else
     {
-        <div class="alert alert-danger d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
-            <div>
-                Offers can only be cancelled before the recipient would have accepted it.
-            </div>
-        </div>
+        await Html.RenderPartialAsync("_AlertPartial", new AlertViewModel { Type = AlertType.Error, Message = "Offers can only be cancelled before the recipient would have accepted it." });
     }
 }
 

@@ -1,0 +1,7 @@
+﻿@model MVC.Models.AlertViewModel
+
+
+<div class="alert alert-@Model.Class d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img"><use xlink:href="#@Model.Icon" /></svg>
+    <div>@Model.Message</div>
+</div>
