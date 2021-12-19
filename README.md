@@ -72,4 +72,5 @@
 - As the system admin, I want to be able to ban users who don't follow the rules, so that the usage of the site would provide a pleasantful experience to everyone else.
 
 
-* Bonus use cases which can be implemented in the future
+
+\* Bonus use cases which can be implemented in the future
