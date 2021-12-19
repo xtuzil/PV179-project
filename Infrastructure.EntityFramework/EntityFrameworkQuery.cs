@@ -30,14 +30,17 @@ namespace Infrastructure.EntityFramework
         {
             IQueryable<TEntity> result = _query;
             IList<TEntity> resultList;
+            var queryResult = new QueryResult<TEntity>();
+            queryResult.TotalItemsCount = _query.Count();
             if (Predicate != null)
             {
                 result = UseFilterCriteria(result);
+                queryResult.TotalItemsCount = result.Count();
             }
 
             if (DesiredPage != 0)
             {
-                result = result.Skip(DesiredPage).Take(PageSize);
+                result = result.Skip((DesiredPage-1)*PageSize).Take(PageSize);
             }
 
             if (SortAccordingTo != null)
@@ -46,8 +49,6 @@ namespace Infrastructure.EntityFramework
             }
             resultList = await result.ToListAsync();
 
-            var queryResult = new QueryResult<TEntity>();
-            queryResult.TotalItemsCount = resultList.Count();
             queryResult.RequestedPageNumber = DesiredPage;
             queryResult.PageSize = PageSize;
             queryResult.PagingEnabled = DesiredPage == 0 ? false : true;

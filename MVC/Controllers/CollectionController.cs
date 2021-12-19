@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MVC.Models;
 using System.Threading.Tasks;
 
 namespace MVC.Controllers
@@ -20,9 +21,17 @@ namespace MVC.Controllers
             _cactusFacade = cactusFacade;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? page)
         {
-            return View(await _userCollectionFacade.GetAllUserCactuses(int.Parse(User.Identity.Name)));
+            int paginationPage = 1;
+            if (page != null)
+            {
+                paginationPage = int.Parse(page);
+            }
+            var queryResult = await _userCollectionFacade.GetAllUserCactuses(int.Parse(User.Identity.Name), paginationPage);
+
+            ViewData["Pagination"] = new PaginationViewModel(paginationPage, (int)queryResult.TotalItemsCount, queryResult.PageSize);
+            return View(queryResult);
         }
 
         public async Task<IActionResult> Details(int? id)

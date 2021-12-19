@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CactusDto>
+﻿@model QueryResultDto<CactusDto>
 
 @{
     ViewData["Title"] = "Collection";
@@ -17,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Items)
         {
             <tr>
                 <td>@item.Species.Name</td>
@@ -29,9 +29,8 @@
         }
     </tbody>
 </table>
-
 <div>
     @{
-        await Html.RenderPartialAsync("_PaginationPartial", Model.Pagination);
+        await Html.RenderPartialAsync("_PaginationPartial", ViewData["Pagination"]);
     }
 </div>

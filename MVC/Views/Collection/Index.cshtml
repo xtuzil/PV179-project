@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CactusDto>
+﻿@model QueryResultDto<CactusDto>
 
 @{
     ViewData["Title"] = "Index";
@@ -21,19 +21,25 @@
         </tr>
     </thead>
     <tbody>
-   @foreach (var item in Model) {
-        <tr>
-            <td>@item.Species.Name</td>
-            <td>@Html.DisplayFor(modelItem => item.ForSale)</td>
-            <td>@item.SowingDate.ToShortDateString()</td>
-            <td>@item.PotSize cm</td>
-            <td>@item.Amount pcs</td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-    }
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Species.Name</td>
+                <td>@Html.DisplayFor(modelItem => item.ForSale)</td>
+                <td>@item.SowingDate.ToShortDateString()</td>
+                <td>@item.PotSize cm</td>
+                <td>@item.Amount pcs</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div>
+    @{
+        await Html.RenderPartialAsync("_PaginationPartial", ViewData["Pagination"]);
+    }
+</div>

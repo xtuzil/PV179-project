@@ -10,7 +10,7 @@ namespace BL.Facades
 
         public Task<IEnumerable<GenusDto>> GetAllGenuses();
 
-        public Task<IEnumerable<CactusDto>> GetAllUserCactuses(int userId, int RequestedPageNumber = 0, int PageSize = 10);
+        public Task<QueryResultDto<CactusDto>> GetAllUserCactuses(int userId, int RequestedPageNumber = 0, int PageSize = 10);
 
         public Task<IEnumerable<CactusDto>> GetUserCactusesForSale(int userId);
 
