@@ -23,6 +23,7 @@ namespace MVC.Controllers
 
         public static readonly string SKEY_REGISTERED = "_registered";
         public static readonly string SKEY_BANNED = "_banned";
+        public static readonly string SKEY_MADE_ADMIN = "_madeAdmin";
 
         public UserController(IUserFacade userFacade,
             IAdministrationFacade administrationFacade,
@@ -278,6 +279,27 @@ namespace MVC.Controllers
             ViewBag.UserDetails = await _userFacade.GetUserInfo(id.Value);
             ViewData["Pagination"] = new PaginationViewModel(paginationPage, (int)queryResult.TotalItemsCount, queryResult.PageSize);
             return View(queryResult);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> MakeAdmin(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userFacade.GetUserInfo(id.Value);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _administrationFacade.MakeAdmin(id.Value);
+            TempData.Add(SKEY_MADE_ADMIN, $"{user.FirstName} {user.LastName}");
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

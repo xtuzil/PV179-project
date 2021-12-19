@@ -172,6 +172,11 @@ namespace BL.Services
             repository.Update(user);
         }
 
-
+        public async Task MakeAdmin(int userId)
+        {
+            var user = await repository.GetAsync(userId);
+            user.Role = Role.Admin;
+            repository.Update(user);
+        }
     }
 }

@@ -66,6 +66,15 @@ namespace BL.Facades
             }
         }
 
+        public async Task MakeAdmin(int userId)
+        {
+            using (var uow = unitOfWorkProvider.Create())
+            {
+                await userService.MakeAdmin(userId);
+                uow.Commit();
+            }
+        }
+
         //public Task<List<ReportDto>> GetAllReports()
         //{
         //    throw new NotImplementedException();

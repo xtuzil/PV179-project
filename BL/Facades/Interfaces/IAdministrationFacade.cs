@@ -12,5 +12,6 @@ namespace BL.Facades
         public Task<IEnumerable<SpeciesDto>> GetAllPendingRequestsForNewSpecies();
         public Task ApproveSpecies(int speciesId);
         public Task RejectSpecies(int speciesId);
+        public Task MakeAdmin(int userId);
     }
 }

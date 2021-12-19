@@ -26,5 +26,6 @@ namespace BL.Services
 
         public Task RegisterUser(UserCreateDto user);
         public Task BanUser(int userId, bool ban);
+        public Task MakeAdmin(int userId);
     }
 }
