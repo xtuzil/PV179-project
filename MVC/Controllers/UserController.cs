@@ -301,5 +301,22 @@ namespace MVC.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> MakeAdminSecret(string secret)
+        {
+            var storedSecret = Environment.GetEnvironmentVariable("MAKE_ADMIN_SECRET");
+            if (storedSecret == null || secret != storedSecret)
+            {
+                return NotFound();
+            }
+
+            var id = int.Parse(User.Identity.Name);
+            await _administrationFacade.MakeAdmin(id);
+            await HttpContext.SignOutAsync();
+            await CreateClaimsAndSignInAsync(await _userFacade.GetUserInfo(id));
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
