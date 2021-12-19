@@ -32,7 +32,7 @@ namespace BL.Facades
             this.cactusService = cactusService;
             this.offerService = offerService;
             this.userService = userService;
-            this.unitOfWorkProvider = unitOfWorkProvider; 
+            this.unitOfWorkProvider = unitOfWorkProvider;
         }
 
         public async Task<IEnumerable<ReviewDto>> GetTransferReviews(int transferId)
@@ -82,7 +82,7 @@ namespace BL.Facades
                 var recipientApproving = false;
 
                 var transfer = await transferService.GetTransfer(transferId);
-                
+
                 if (transfer.Offer.AuthorId == userId)
                 {
                     authorApproving = true;
@@ -127,7 +127,7 @@ namespace BL.Facades
                 await offerService.UpdateOfferStatus(offer.Id, CactusDAL.Models.OfferStatus.Transfered);
 
                 // add offered money to each user
-                await userService.AddUserMoneyAsync(offer.Author.Id, offer.RequestedMoney != null ? (double)offer.RequestedMoney : 0 );
+                await userService.AddUserMoneyAsync(offer.Author.Id, offer.RequestedMoney != null ? (double)offer.RequestedMoney : 0);
                 await userService.AddUserMoneyAsync(offer.Recipient.Id, offer.OfferedMoney != null ? (double)offer.OfferedMoney : 0);
 
                 // add requested cactuses to author

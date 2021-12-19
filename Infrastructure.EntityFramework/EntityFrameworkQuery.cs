@@ -40,7 +40,7 @@ namespace Infrastructure.EntityFramework
 
             if (DesiredPage != 0)
             {
-                result = result.Skip((DesiredPage-1)*PageSize).Take(PageSize);
+                result = result.Skip((DesiredPage - 1) * PageSize).Take(PageSize);
             }
 
             if (SortAccordingTo != null)

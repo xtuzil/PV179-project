@@ -2,7 +2,6 @@
 using BL.DTOs;
 using CactusDAL.Models;
 using Infrastructure.Query;
-using System.Collections.Generic;
 
 namespace BL.Config
 {

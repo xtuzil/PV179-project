@@ -32,11 +32,11 @@ namespace BL.Services
         }
 
         public async Task<TransferDto> GetTransferByOfferId(int offerId)
-        { 
- 
+        {
+
             IPredicate predicate = new SimplePredicate(nameof(Transfer.OfferId), offerId, ValueComparingOperator.Equal);
             var result = await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true });
-            var list = (List<TransferDto>) result.Items;
+            var list = (List<TransferDto>)result.Items;
             return list[0];
         }
 
@@ -62,7 +62,8 @@ namespace BL.Services
             if (authorApproving)
             {
                 transfer.AuthorAprovedDelivery = true;
-            } else
+            }
+            else
             {
                 transfer.RecipientAprovedDelivery = true;
             }

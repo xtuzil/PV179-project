@@ -1,10 +1,8 @@
 ﻿using Autofac;
-using Module = Autofac.Module;
-using System.Linq;
-using System.Reflection;
-using Infrastructure.Query;
 using CactusDAL;
+using Infrastructure.Query;
 using Infrastructure.UnitOfWork;
+using Module = Autofac.Module;
 
 namespace Infrastructure.EntityFramework
 {

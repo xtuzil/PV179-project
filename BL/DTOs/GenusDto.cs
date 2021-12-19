@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BL.DTOs
+﻿namespace BL.DTOs
 {
     public class GenusDto
     {

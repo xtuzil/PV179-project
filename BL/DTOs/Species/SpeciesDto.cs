@@ -1,5 +1,4 @@
 ﻿using BL.Enums;
-using System.ComponentModel.DataAnnotations;
 
 namespace BL.DTOs
 {

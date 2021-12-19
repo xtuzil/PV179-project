@@ -71,7 +71,7 @@ namespace BL.Services
             user.LastName = userDto.LastName;
             user.Email = userDto.Email;
             user.PhoneNumber = userDto.PhoneNumber;
-            if(userDto.Avatar != null)
+            if (userDto.Avatar != null)
             {
                 user.Avatar = userDto.Avatar;
             }
@@ -128,7 +128,7 @@ namespace BL.Services
         {
             var (hash, salt) = CreateHash(user.Password);
             user.Password = string.Join(',', hash, salt);
-          
+
             await CreateUser(user);
         }
 

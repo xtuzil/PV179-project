@@ -6,10 +6,8 @@ using BL.Services;
 using CactusDAL;
 using Infrastructure.EntityFramework;
 using Infrastructure.UnitOfWork;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -84,7 +82,7 @@ namespace BLTests
 
                 mock.Mock<ICactusService>()
                    .Setup(x => x.GetCactusesWithSpecies(specieses))
-                   .Returns(Task.Run(() => (IEnumerable<CactusDto>) cactuses));
+                   .Returns(Task.Run(() => (IEnumerable<CactusDto>)cactuses));
 
 
                 var cls = mock.Create<CactusFacade>();

@@ -1,16 +1,11 @@
 ﻿using BL.DTOs;
 using BL.Exceptions;
 using BL.Facades;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MVC.Models;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MVC.Controllers
@@ -160,7 +155,7 @@ namespace MVC.Controllers
             {
                 return NotFound();
             }
-            
+
             try
             {
                 await _offerFacade.AcceptOfferAsync(id.Value);

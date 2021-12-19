@@ -24,7 +24,7 @@ namespace Infrastructure.EntityFramework
 
         public EntityFrameworkRepository(IUnitOfWorkProvider unitOfWorkProvider)
         {
-            this.unitOfWorkProvider = (EntityFrameworkUnitOfWorkProvider) unitOfWorkProvider;
+            this.unitOfWorkProvider = (EntityFrameworkUnitOfWorkProvider)unitOfWorkProvider;
         }
 
         public virtual async Task<TEntity> GetAsync(int id)

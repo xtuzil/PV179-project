@@ -120,7 +120,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  IActionResult Edit(int id, [Bind("Species,ForSale,SowingDate,PotSize,Amount,Note,Id")] CactusUpdateDto cactus, IFormFile photo)
+        public IActionResult Edit(int id, [Bind("Species,ForSale,SowingDate,PotSize,Amount,Note,Id")] CactusUpdateDto cactus, IFormFile photo)
         {
             if (id != cactus.Id)
             {

@@ -94,7 +94,7 @@ namespace BL.Services
 
         public async Task UpdateCactusAmountAsync(int cactusId, int amount)
         {
-            
+
             var cactus = await repository.GetAsync(cactusId);
             cactus.Amount += amount;
             repository.Update(cactus);

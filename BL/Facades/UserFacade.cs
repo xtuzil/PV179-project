@@ -127,7 +127,7 @@ namespace BL.Facades
             {
                 var userOffers = await _offerService.GetTransferedOffersOfUser(userId);
 
-                var transfers = new List <TransferDto> { };
+                var transfers = new List<TransferDto> { };
 
                 foreach (var offer in userOffers)
                 {

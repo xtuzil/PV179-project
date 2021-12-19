@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using MVC.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -148,7 +147,7 @@ namespace MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Profile(int? id)
         {
-            if(id == null ||(User.Identity.Name != id.Value.ToString() && !User.IsInRole("Admin")))
+            if (id == null || (User.Identity.Name != id.Value.ToString() && !User.IsInRole("Admin")))
             {
                 return NotFound();
             }
@@ -169,7 +168,8 @@ namespace MVC.Controllers
 
             UserInfoDto user = await _userFacade.GetUserInfo(id.Value);
 
-            return View(new UserUpdateProfileDto {
+            return View(new UserUpdateProfileDto
+            {
                 Id = user.Id,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -239,7 +239,7 @@ namespace MVC.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult BanUser(int? id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return NotFound();
             }

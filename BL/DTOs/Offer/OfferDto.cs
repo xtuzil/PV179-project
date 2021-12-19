@@ -1,7 +1,6 @@
 ﻿using BL.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace BL.DTOs
 {

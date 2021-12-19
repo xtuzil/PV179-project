@@ -1,6 +1,5 @@
 ﻿
 using CactusDAL.Models;
-using System.ComponentModel.DataAnnotations;
 
 namespace BL.DTOs
 {

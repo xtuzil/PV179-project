@@ -5,10 +5,8 @@ using BL.Services;
 using CactusDAL;
 using Infrastructure.EntityFramework;
 using Infrastructure.UnitOfWork;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -435,10 +433,10 @@ namespace BLTests
                     AuthorAprovedDelivery = true,
                     RecipientAprovedDelivery = true,
                     AuthorReview = existingReview
-                  
+
                 };
 
-               
+
                 var review = new ReviewCreateDto
                 {
                     Text = "Everything went smooth!",

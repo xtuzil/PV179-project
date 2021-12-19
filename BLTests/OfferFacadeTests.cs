@@ -433,7 +433,7 @@ namespace BLTests
                     RequestedMoney = 0,
                     OfferedCactuses = cactusOffers,
                     Response = BL.Enums.OfferStatus.Created
-            };
+                };
 
                 var rejectedOffer = new OfferDto
                 {
@@ -516,7 +516,7 @@ namespace BLTests
                     }
                 };
 
-                var cactusRequests = new List<CactusOfferDto>{};
+                var cactusRequests = new List<CactusOfferDto> { };
 
                 var offer = new OfferDto
                 {

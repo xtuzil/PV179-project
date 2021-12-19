@@ -1,22 +1,11 @@
-using AutoMapper;
-using BL.Config;
+using Autofac;
+using BL;
 using BL.DTOs;
 using BL.Facades;
-using BL.Services;
-using BL;
 using CactusDAL;
-using CactusDAL.Models;
-using Infrastructure.EntityFramework;
-using Infrastructure.Predicates;
-using Infrastructure.Predicates.Operators;
-using Infrastructure.UnitOfWork;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace PV179_Project
 {
@@ -27,7 +16,7 @@ namespace PV179_Project
             // DEV: just so that we don't have to drop the DB manually
             using (var db = new CactusDbContext("Server=(localdb)\\mssqllocaldb;Integrated Security=True;MultipleActiveResultSets=True;Database=CactusesManager;Trusted_Connection=True;"))
             {
-                db.Database.EnsureDeleted();    
+                db.Database.EnsureDeleted();
                 db.Database.EnsureCreated();
 
             }
@@ -61,7 +50,7 @@ namespace PV179_Project
                 {
                     Console.WriteLine($"  - Cactus with ID: {cactus.Id},  species ID: {cactus.Species.Name}");
                 }
-                    
+
 
             }
 
@@ -104,11 +93,11 @@ namespace PV179_Project
             var transferFacade = container.Resolve<ITransferFacade>();
 
             await transferFacade.ProcessTransfer(2);
-           
 
-           //Console.WriteLine($"Offer with iD: {createdOffer.Id} with offered money: {createdOffer.OfferedMoney} and author Id: {createdOffer.Author.Id}");
 
-           
+            //Console.WriteLine($"Offer with iD: {createdOffer.Id} with offered money: {createdOffer.OfferedMoney} and author Id: {createdOffer.Author.Id}");
+
+
 
 
 
