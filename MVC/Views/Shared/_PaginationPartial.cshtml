@@ -1,0 +1,28 @@
+﻿@model MVC.Models.PaginationViewModel
+
+
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link waves-effect orange lighten-3" href="?page=@Model.LeftBound"><<</a></li>
+        @if (Model.Current - 1 >= Model.LeftBound)
+        {
+            <li class="page-item"><a class="page-link waves-effect orange lighten-3" href="?page=@(Model.Current-1)">&lt;</a></li>
+        }
+        @for (var i = Model.LeftBound; i <= Model.RightBound; i++)
+        {
+            if (i == Model.Current)
+            {
+                <li class="page-item"><a class="page-link orange lighten-3 active" href="?page=@i">@i</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link waves-effect orange lighten-3" href="?page=@i">@i</a></li>
+            }
+        }
+        @if (Model.Current + 1 <= Model.Last)
+        {
+            <li class="page-item"><a class="page-link waves-effect orange lighten-3" href="?page=@(Model.Current+1)">></a></li>
+        }
+        <li class="page-item"><a class="page-link waves-effect orange lighten-3" href="?page=@Model.Last">>></a></li>
+    </ul>
+</nav>

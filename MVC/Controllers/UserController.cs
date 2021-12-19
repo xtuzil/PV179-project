@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -262,15 +263,21 @@ namespace MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Collection(int? id)
+        public async Task<IActionResult> Collection(int? id, string? page)
         {
             if (id == null)
             {
                 return NotFound();
             }
-
+            int paginationPage = 1;
+            if (page != null)
+            {
+                paginationPage = int.Parse(page);
+            }
+            var queryResult = await _userCollectionFacade.GetAllUserCactuses(id.Value);
             ViewBag.UserDetails = await _userFacade.GetUserInfo(id.Value);
-            return View(await _userCollectionFacade.GetAllUserCactuses(id.Value));
+            ViewData["Pagination"] = new PaginationViewModel(paginationPage, (int)queryResult.TotalItemsCount, queryResult.PageSize);
+            return View(queryResult);
         }
     }
 }
