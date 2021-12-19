@@ -1,4 +1,4 @@
-﻿@model OfferCreateDto
+@model OfferCreateDto
 
 @{
     ViewData["Title"] = "New Offer";
@@ -46,7 +46,7 @@
             <tbody>
                 @if (ViewBag.MyCollection.Count == 0)
                 {
-                    <tr><td colspan="5">No cactus for sale in your collection.</td></tr>
+                    <tr><td colspan="5">No cactuses for sale in your collection.</td></tr>
                 }
                 @for (int i = 0; i < ViewBag.MyCollection.Count; i++)
                 {
@@ -84,7 +84,7 @@
             <tbody>
                 @if (ViewBag.YourCollection.Count == 0)
                 {
-                    <tr><td colspan="5">No cactus for sale in the collection of @ViewBag.UserDetails.FirstName @ViewBag.UserDetails.LastName.</td></tr>
+                    <tr><td colspan="5">No cactuses for sale in the collection of @ViewBag.UserDetails.FirstName @ViewBag.UserDetails.LastName.</td></tr>
                 }
                 @for (int i = 0; i < ViewBag.YourCollection.Count; i++)
                 {
