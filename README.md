@@ -4,6 +4,8 @@
 - Xuan Linh Phamová
 - Matěj Tužil
 
+> Keď prihlásený používateľ naviguje na `/user/makeadminsecret?secret=******`, tak sa z neho stane admin, kde parameter `secret` musí byť hodnota premennej prostredia `MAKE_ADMIN_SECRET`.
+
 **Aplikace pro pěstitele kaktusů. Aplikace se bude skládat ze dvou hlavních částí – správy vlastní sbírky kaktusů a obchodování s kaktusy.**
 
 ## Uživatelé
