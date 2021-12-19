@@ -51,7 +51,7 @@
                 @for (int i = 0; i < ViewBag.MyCollection.Count; i++)
                 {
                     <tr>
-                        <td><a asp-controller="Collection" asp-action="Details" asp-route-id="@ViewBag.MyCollection[i].Id">@ViewBag.MyCollection[i].Species.Name</a></td>
+                        <td>@ViewBag.MyCollection[i].Species.Name</td>
                         <td>@ViewBag.MyCollection[i].SowingDate.ToShortDateString()</td>
                         <td>@ViewBag.MyCollection[i].PotSize cm</td>
                         <td>@ViewBag.MyCollection[i].Amount pcs</td>
@@ -89,7 +89,7 @@
                 @for (int i = 0; i < ViewBag.YourCollection.Count; i++)
                 {
                     <tr>
-                        <td><a asp-controller="Collection" asp-action="Details" asp-route-id="@ViewBag.YourCollection[i].Id">@ViewBag.MyCollection[i].Species.Name</a></td>
+                        <td>@ViewBag.YourCollection[i].Species.Name</td>
                         <td>@ViewBag.YourCollection[i].SowingDate.ToShortDateString()</td>
                         <td>@ViewBag.YourCollection[i].PotSize cm</td>
                         <td>@ViewBag.YourCollection[i].Amount pcs</td>
