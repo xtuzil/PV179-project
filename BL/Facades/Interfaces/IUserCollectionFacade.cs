@@ -14,11 +14,11 @@ namespace BL.Facades
 
         public Task<IEnumerable<CactusDto>> GetUserCactusesForSale(int userId);
 
-        public Task AddCactusForSale(CactusUpdateDto cactus);
+        public void AddCactusForSale(CactusUpdateDto cactus);
 
         public Task AddCactusToCollection(CactusCreateDto cactus);
 
-        public Task UpdateCactusInformation(CactusUpdateDto cactus);
+        public void UpdateCactusInformation(CactusUpdateDto cactus);
 
         public Task RemoveCactus(int cactusId);
 

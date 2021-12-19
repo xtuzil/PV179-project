@@ -56,12 +56,12 @@ namespace BL.Facades
             }
         }
 
-        public async Task AddCactusForSale(CactusUpdateDto cactus)
+        public void AddCactusForSale(CactusUpdateDto cactus)
         {
             using (var uow = uowp.Create())
             {
                 cactus.ForSale = true;
-                await _cactusService.UpdateCactusInformation(cactus);
+                _cactusService.UpdateCactusInformation(cactus);
                 uow.Commit();
             }
         }
@@ -74,11 +74,11 @@ namespace BL.Facades
             }
         }
 
-        public async Task UpdateCactusInformation(CactusUpdateDto cactus)
+        public void UpdateCactusInformation(CactusUpdateDto cactus)
         {
             using (var uow = uowp.Create())
             {
-                await _cactusService.UpdateCactusInformation(cactus);
+                _cactusService.UpdateCactusInformation(cactus);
                 uow.Commit();
             }
         }

@@ -86,21 +86,9 @@ namespace BL.Services
             await repository.Create(cactus);
         }
 
-        public async Task UpdateCactusInformation(CactusUpdateDto cactusDto)
+        public void UpdateCactusInformation(CactusUpdateDto cactusDto)
         {
-            var cactus = await repository.GetAsync(cactusDto.Id);
-            cactus.Note = cactusDto.Note;
-            cactus.OwnerId = cactusDto.OwnerId;
-            cactus.SpeciesId = cactusDto.Species.Id;
-            cactus.PotSize = cactusDto.PotSize;
-            cactus.ForSale = cactusDto.ForSale;
-            cactus.Amount = cactusDto.Amount;
-            cactus.SowingDate = cactusDto.SowingDate;
-
-            if (cactusDto.Image != null)
-            {
-                cactus.Image = cactusDto.Image;
-            }
+            var cactus = mapper.Map<Cactus>(cactusDto);
             repository.Update(cactus);
         }
 

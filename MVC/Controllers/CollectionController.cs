@@ -111,7 +111,7 @@ namespace MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Species,ForSale,SowingDate,PotSize,Amount,Note,Id")] CactusUpdateDto cactus, IFormFile photo)
+        public  IActionResult Edit(int id, [Bind("Species,ForSale,SowingDate,PotSize,Amount,Note,Id")] CactusUpdateDto cactus, IFormFile photo)
         {
             if (id != cactus.Id)
             {
@@ -127,7 +127,7 @@ namespace MVC.Controllers
                     fileStream.Read(cactus.Image, 0, (int)photo.Length);
                 }
                 cactus.OwnerId = int.Parse(User.Identity.Name);
-                await _userCollectionFacade.UpdateCactusInformation(cactus);
+                _userCollectionFacade.UpdateCactusInformation(cactus);
                 return RedirectToAction(nameof(Details), new { id = cactus.Id });
             }
 
