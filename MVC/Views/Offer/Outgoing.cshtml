@@ -98,13 +98,20 @@
                             <button type="submit" class="btn btn-outline-danger">Cancel</button>
                         </form>
                     }
-                    @if (offer.Response == BL.Enums.OfferStatus.Accepted && !offer.Transfer.AuthorAprovedDelivery)
+                    else if (offer.Response == BL.Enums.OfferStatus.Accepted)
                     {
-                        <form asp-action="Confirm">
-                            <input type="hidden" name="id" value="@offer.Id" />
-                            <input type="hidden" name="redirect" value="Outgoing" />
-                            <button type="submit" class="btn btn-outline-primary">Confirm delivery</button>
-                        </form>
+                        if (offer.Transfer.AuthorAprovedDelivery)
+                        {
+                            <span>Waiting for the recipient to confirm the delivery.</span>
+                        }
+                        else
+                        {
+                            <form asp-action="Confirm">
+                                <input type="hidden" name="id" value="@offer.Id" />
+                                <input type="hidden" name="redirect" value="Outgoing" />
+                                <button type="submit" class="btn btn-outline-primary">Confirm delivery</button>
+                            </form>
+                        }
                     }
                 </td>
             </tr>
