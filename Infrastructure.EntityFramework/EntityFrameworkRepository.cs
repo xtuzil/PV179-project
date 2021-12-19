@@ -57,6 +57,7 @@ namespace Infrastructure.EntityFramework
         public async Task Delete(int id)
         {
             TEntity entityToDelete = await Context.Set<TEntity>().FindAsync(id);
+            Delete(entityToDelete);
         }
 
         public void Delete(TEntity entityToDelete)

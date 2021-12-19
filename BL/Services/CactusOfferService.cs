@@ -68,5 +68,15 @@ namespace BL.Services
             repositoryRequest.Update(cactusRequest);
         }
 
+        public async Task RemoveCactusOffer(int Id)
+        {
+            await repositoryOffer.Delete(Id);
+        }
+
+        public async Task RemoveCactusRequest(int Id)
+        {
+            await repositoryRequest.Delete(Id);
+        }
+
     }
 }

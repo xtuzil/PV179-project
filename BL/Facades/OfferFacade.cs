@@ -147,6 +147,18 @@ namespace BL.Facades
                     return false;
                 }
 
+                // remove CactusOffers
+                foreach (var cactusOffer in offer.OfferedCactuses)
+                {
+                    await _cactusOfferService.RemoveCactusOffer(cactusOffer.Id);
+                }
+
+                // remove CactusRequests
+                foreach (var cactusRequest in offer.RequestedCactuses)
+                {
+                   await _cactusOfferService.RemoveCactusRequest(cactusRequest.Id);
+                }
+
                 await _offerService.RemoveOffer(offerId);
                 uow.Commit();
 
