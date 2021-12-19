@@ -133,12 +133,6 @@ namespace CactusDAL
                 Name = "Echinocactus"
             };
 
-            var genus2 = new Genus
-            {
-                Id = 2,
-                Name = "Parodia"
-            };
-
             var species = new Species
             {
                 Id = 1,
@@ -146,6 +140,30 @@ namespace CactusDAL
                 LatinName = "Echinocactus grusonii",
                 GenusId = genus.Id,
                 ApprovalStatus = ApprovalStatus.Approved,
+            };
+
+            var speciesG11 = new Species
+            {
+                Id = 9,
+                Name = "Eagles's Claw",
+                LatinName = "Echinocactus horizonthalonius",
+                GenusId = genus.Id,
+                ApprovalStatus = ApprovalStatus.Approved,
+            };
+
+            var speciesG12 = new Species
+            {
+                Id = 10,
+                Name = "Horse Crippler",
+                LatinName = "Echinocactus texensis",
+                GenusId = genus.Id,
+                ApprovalStatus = ApprovalStatus.Approved,
+            };
+
+            var genus2 = new Genus
+            {
+                Id = 2,
+                Name = "Parodia"
             };
 
             var species2 = new Species
@@ -157,12 +175,80 @@ namespace CactusDAL
                 ApprovalStatus = ApprovalStatus.Approved,
             };
 
+            var genus3 = new Genus
+            {
+                Id = 3,
+                Name = "Hatiora"
+            };
+
+            var speciesG31 = new Species
+            {
+                Id = 3,
+                Name = "Rose Easter Cactus",
+                LatinName = "Hatiora rosea",
+                GenusId = genus3.Id,
+                ApprovalStatus = ApprovalStatus.Approved,
+            };
+
+            var speciesG32 = new Species
+            {
+                Id = 4,
+                Name = "Easter Cactus",
+                LatinName = "Hatiora gaertneri",
+                GenusId = genus3.Id,
+                ApprovalStatus = ApprovalStatus.Approved,
+            };
+
+            var speciesG33 = new Species
+            {
+                Id = 5,
+                Name = "Dancing Bones",
+                LatinName = "Hatiora salicorniodes",
+                GenusId = genus3.Id,
+                ApprovalStatus = ApprovalStatus.Approved,
+            };
+
+            var genus4 = new Genus
+            {
+                Id = 4,
+                Name = "Rebutia"
+            };
+
+            var speciesG41 = new Species
+            {
+                Id = 6,
+                Name = "Orange Crown Cactus",
+                LatinName = "Rebutia fiebrigii",
+                GenusId = genus4.Id,
+                ApprovalStatus = ApprovalStatus.Approved,
+            };
+
+            var speciesG42 = new Species
+            {
+                Id = 7,
+                Name = "Orange Snowball",
+                LatinName = "Rebutia muscula",
+                GenusId = genus4.Id,
+                ApprovalStatus = ApprovalStatus.Approved,
+            };
+
+            var speciesG43 = new Species
+            {
+                Id = 8,
+                Name = "Rebutia pulchra",
+                LatinName = "Rebutia pulchra",
+                GenusId = genus4.Id,
+                ApprovalStatus = ApprovalStatus.Approved,
+            };
+            
+
             var cactus = new Cactus
             {
                 Id = 1,
                 SpeciesId = species.Id,
                 OwnerId = user.Id,
-                Amount = 100
+                Amount = 100,
+                ForSale = true
 
             };
 
@@ -171,7 +257,8 @@ namespace CactusDAL
                 Id = 2,
                 SpeciesId = species2.Id,
                 OwnerId = user3.Id,
-                Amount = 50
+                Amount = 50,
+                ForSale = true
             };
 
             var cactusPhoto = new CactusPhoto
@@ -193,8 +280,8 @@ namespace CactusDAL
             modelBuilder.Entity<PostalAddress>().HasData(adminAddress, userAddress, userAddress2, userAddress3);
             modelBuilder.Entity<User>().HasData(admin, user, user2, user3);
             modelBuilder.Entity<ProfilePhoto>().HasData(adminProfilePhoto, userProfilePhoto, userProfilePhoto2, userProfilePhoto3);
-            modelBuilder.Entity<Genus>().HasData(genus, genus2);
-            modelBuilder.Entity<Species>().HasData(species, species2);
+            modelBuilder.Entity<Genus>().HasData(genus, genus2, genus3, genus4);
+            modelBuilder.Entity<Species>().HasData(species, speciesG11, speciesG12, species2, speciesG31, speciesG32, speciesG33, speciesG41, speciesG42, speciesG43);
             modelBuilder.Entity<Cactus>().HasData(cactus, cactus2);
             modelBuilder.Entity<CactusPhoto>().HasData(cactusPhoto, cactusPhoto2);
 
