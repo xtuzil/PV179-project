@@ -40,11 +40,11 @@ namespace BL.Facades
             }
         }
 
-        public async Task<IEnumerable<CactusDto>> GetAllUserCactuses(int userId)
+        public async Task<IEnumerable<CactusDto>> GetAllUserCactuses(int userId, int RequestedPageNumber = 0, int PageSize = 10)
         {
             using (var uow = uowp.Create())
             {
-                return await _cactusService.GetAllUserCactuses(userId);
+                return await _cactusService.GetAllUserCactuses(userId, RequestedPageNumber, PageSize);
             }
         }
 

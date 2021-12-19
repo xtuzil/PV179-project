@@ -65,10 +65,10 @@ namespace BL.Services
             return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
         }
 
-        public async Task<IEnumerable<CactusDto>> GetAllUserCactuses(int userId)
+        public async Task<IEnumerable<CactusDto>> GetAllUserCactuses(int userId, int RequestedPageNumber, int PageSize)
         {
             IPredicate predicate = new SimplePredicate(nameof(Cactus.OwnerId), userId, ValueComparingOperator.Equal);
-            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true })).Items;
+            return (await queryObject.ExecuteQueryAsync(new FilterDto() { Predicate = predicate, SortAscending = true, PageSize = PageSize, RequestedPageNumber = RequestedPageNumber })).Items;
         }
 
         public async Task<IEnumerable<CactusDto>> GetUserCactusesForSale(int userId)
