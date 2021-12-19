@@ -1,4 +1,4 @@
-@model IEnumerable<CactusDto>
+﻿@model IEnumerable<CactusDto>
 
 @{
     ViewData["Title"] = "Collection";
@@ -29,3 +29,9 @@
         }
     </tbody>
 </table>
+
+<div>
+    @{
+        await Html.RenderPartialAsync("_PaginationPartial", Model.Pagination);
+    }
+</div>
