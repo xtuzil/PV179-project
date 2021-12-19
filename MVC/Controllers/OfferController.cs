@@ -99,41 +99,43 @@ namespace MVC.Controllers
                 ModelState.AddModelError("General", "At least one cactus should be requested or offered.");
             }
 
-            if (ModelState.IsValid)
+            if (offer.OfferedMoney > (await _userFacade.GetUserInfo(myId)).AccountBalance)
             {
-                foreach (var offeredCactus in offeredCactuses)
-                {
-                    var found = myCollection.Where(dto => dto.Id == offeredCactus.Key).FirstOrDefault();
-                    if (found == null)
-                    {
-                        ModelState.AddModelError("OfferedCactuses", "Invalid cactus offered.");
-                    }
-                    else if (offeredCactus.Value < 0)
-                    {
-                        ModelState.AddModelError("OfferedCactuses", "Offered amount can't be negative.");
-                        //ModelState.AddModelError("OfferedCactuses[0].Value", "Offered amount can't be negative.");
-                    }
-                    else if (offeredCactus.Value > found.Amount)
-                    {
-                        ModelState.AddModelError("OfferedCactuses", "Offered amount must be less than max amount.");
-                    }
-                }
+                ModelState.AddModelError("OfferedMoney", "You do not have enough money to place this offer. Lower the stake or earn some money.");
+            }
 
-                foreach (var requestedCactus in requestedCactuses)
+            foreach (var offeredCactus in offeredCactuses)
+            {
+                var found = myCollection.Where(dto => dto.Id == offeredCactus.Key).FirstOrDefault();
+                if (found == null)
                 {
-                    var found = yourCollection.Where(dto => dto.Id == requestedCactus.Key).FirstOrDefault();
-                    if (found == null)
-                    {
-                        ModelState.AddModelError("RequestedCactuses", "Invalid cactus requested.");
-                    }
-                    else if (requestedCactus.Value < 0)
-                    {
-                        ModelState.AddModelError("RequestedCactuses", "Requested amount can't be negative.");
-                    }
-                    else if (found.Amount < requestedCactus.Value)
-                    {
-                        ModelState.AddModelError("RequestedCactuses", "Requested amount must be less than max amount.");
-                    }
+                    ModelState.AddModelError("OfferedCactuses", "Invalid cactus offered.");
+                }
+                else if (offeredCactus.Value < 0)
+                {
+                    ModelState.AddModelError("OfferedCactuses", "Offered amount can't be negative.");
+                    //ModelState.AddModelError("OfferedCactuses[0].Value", "Offered amount can't be negative.");
+                }
+                else if (offeredCactus.Value > found.Amount)
+                {
+                    ModelState.AddModelError("OfferedCactuses", "Offered amount must be less than max amount.");
+                }
+            }
+
+            foreach (var requestedCactus in requestedCactuses)
+            {
+                var found = yourCollection.Where(dto => dto.Id == requestedCactus.Key).FirstOrDefault();
+                if (found == null)
+                {
+                    ModelState.AddModelError("RequestedCactuses", "Invalid cactus requested.");
+                }
+                else if (requestedCactus.Value < 0)
+                {
+                    ModelState.AddModelError("RequestedCactuses", "Requested amount can't be negative.");
+                }
+                else if (found.Amount < requestedCactus.Value)
+                {
+                    ModelState.AddModelError("RequestedCactuses", "Requested amount must be less than max amount.");
                 }
             }
 
