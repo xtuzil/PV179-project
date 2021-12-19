@@ -237,28 +237,28 @@ namespace MVC.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public IActionResult BanUser(int? id)
+        public async Task<IActionResult> BanUser(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            _administrationFacade.BlockUser(id.Value);
+            await _administrationFacade.BlockUser(id.Value);
 
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public IActionResult UnbanUser(int? id)
+        public async Task<IActionResult> UnbanUser(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            _administrationFacade.UnblockUser(id.Value);
+            await _administrationFacade.UnblockUser(id.Value);
 
             return RedirectToAction(nameof(Index));
         }
