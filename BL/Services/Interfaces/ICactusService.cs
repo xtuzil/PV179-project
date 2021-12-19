@@ -10,7 +10,7 @@ namespace BL.Services
         public Task<IEnumerable<CactusDto>> GetCactusesOlderThan(int age);
         public Task<IEnumerable<CactusDto>> GetCactusesWithSpecies(int speciesId);
         public Task<IEnumerable<CactusDto>> GetCactusesWithSpecies(IEnumerable<SpeciesDto> speciesList);
-        public Task<IEnumerable<CactusDto>> GetAllUserCactuses(int userId, int RequestedPageNumber, int PageSize);
+        public Task<QueryResultDto<CactusDto>> GetAllUserCactuses(int userId, int RequestedPageNumber, int PageSize);
         public Task<IEnumerable<CactusDto>> GetUserCactusesForSale(int userId);
 
         public Task<CactusDto> GetCactus(int id);

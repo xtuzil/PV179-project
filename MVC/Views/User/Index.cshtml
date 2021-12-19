@@ -6,6 +6,12 @@
 
 <h1>Users</h1>
 
+@if (TempData.ContainsKey(MVC.Controllers.UserController.SKEY_MADE_ADMIN))
+{
+    var name = (string)TempData[MVC.Controllers.UserController.SKEY_MADE_ADMIN];
+    await Html.RenderPartialAsync("_AlertPartial", new AlertViewModel { Type = AlertType.Success, Message = $"Successfully granted admin privileges to {name}." });
+}
+
 <div class="row">
     @foreach (var user in Model)
     {
@@ -61,13 +67,16 @@
                             {
                                 @if (user.Banned)
                                 {
-                                    <a asp-action="UnbanUser" asp-route-id="@user.Id" class="btn btn-primary">Unban user</a>
+                                    <a asp-action="UnbanUser" asp-route-id="@user.Id" class="btn btn-danger">Unban user</a>
                                 }
                                 else
                                 {
-                                    <a asp-action="BanUser" asp-route-id="@user.Id" class="btn btn-primary">Ban user</a>
+                                    <a asp-action="BanUser" asp-route-id="@user.Id" class="btn btn-danger">Ban user</a>
                                 }
-
+                                @if (user.Role == CactusDAL.Models.Role.User)
+                                {
+                                    <a asp-action="MakeAdmin" asp-route-id="@user.Id" class="btn btn-warning">Make admin</a>
+                                }
                             }
                         </div>
                     </div>

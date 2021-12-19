@@ -10,21 +10,11 @@
 {
     @if ((bool)TempData[MVC.Controllers.OfferController.SKEY_OFFER_ACCEPTED])
     {
-        <div class="alert alert-success d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
-            <div>
-                Offer successfully accepted.
-            </div>
-        </div>
+        await Html.RenderPartialAsync("_AlertPartial", new AlertViewModel { Type = AlertType.Success, Message = "Offer successfully accepted." });
     }
     else
     {
-        <div class="alert alert-danger d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
-            <div>
-                The offer could not be accepted. Please make sure that both parties have the required resources.
-            </div>
-        </div>
+        await Html.RenderPartialAsync("_AlertPartial", new AlertViewModel { Type = AlertType.Error, Message = "The offer could not be accepted. Please make sure that both parties have the required resources." });
     }
 }
 
@@ -32,21 +22,11 @@
 {
     @if ((bool)TempData[MVC.Controllers.OfferController.SKEY_DELIVERY_APPROVED])
     {
-        <div class="alert alert-success d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
-            <div>
-                Delivery confirmed.
-            </div>
-        </div>
+        await Html.RenderPartialAsync("_AlertPartial", new AlertViewModel { Type = AlertType.Success, Message = "Delivery confirmed." });
     }
     else
     {
-        <div class="alert alert-danger d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
-            <div>
-                The delivery could not be confirmed.
-            </div>
-        </div>
+        await Html.RenderPartialAsync("_AlertPartial", new AlertViewModel { Type = AlertType.Error, Message = "The delivery could not be confirmed." });
     }
 }
 
@@ -54,23 +34,17 @@
 {
     @if ((bool)TempData[MVC.Controllers.OfferController.SKEY_OFFER_DECLINED])
     {
-        <div class="alert alert-success d-flex align-items-center" role="alert">
-            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill" /></svg>
-            <div>
-                Offer successfully declined.
-            </div>
-        </div>
+        await Html.RenderPartialAsync("_AlertPartial", new AlertViewModel { Type = AlertType.Success, Message = "Offer successfully declined." });
     }
 }
 
 <table class="table table-bordered">
     <thead style="text-align: center; vertical-align: middle">
         <tr>
-            <th scope="col" rowspan="2">ID</th>
             <th scope="col" rowspan="2">Author</th>
+            <th scope="col" rowspan="2">Created</th>
             <th scope="col" colspan="2" style="text-align: center">Offered</th>
             <th scope="col" colspan="2" style="text-align: center">Requested</th>
-            <th scope="col" rowspan="2">Created</th>
             <th scope="col" rowspan="2">State</th>
             <th scope="col" rowspan="2">Actions</th>
         </tr>
@@ -85,23 +59,22 @@
         @foreach (var offer in Model)
         {
             <tr>
-                <td>@offer.Id</td>
                 <td>@offer.Author.FirstName @offer.Author.LastName</td>
-                <td>@offer.OfferedMoney</td>
+                <td>@offer.CreationDate</td>
+                <td class="text-end">@offer.OfferedMoney</td>
                 <td>
                     @for (int i = 0; i < offer.OfferedCactuses.Count(); i++)
                     {
                         <span>@offer.OfferedCactuses.ToList()[i].Cactus.Species.Name: <em>@offer.OfferedCactuses.ToList()[i].Amount pcs</em></span><br />
                     }
                 </td>
-                <td>@offer.RequestedMoney</td>
+                <td class="text-end">@offer.RequestedMoney</td>
                 <td>
                     @for (int i = 0; i < offer.RequestedCactuses.Count(); i++)
                     {
                         <span>@offer.RequestedCactuses.ToList()[i].Cactus.Species.Name: <em>@offer.RequestedCactuses.ToList()[i].Amount pcs</em></span><br />
                     }
                 </td>
-                <td>@offer.CreationDate</td>
                 <td>@offer.Response</td>
                 <td>
                     @if (offer.Response == BL.Enums.OfferStatus.Created)

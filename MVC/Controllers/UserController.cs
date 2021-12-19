@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MVC.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,6 +23,7 @@ namespace MVC.Controllers
 
         public static readonly string SKEY_REGISTERED = "_registered";
         public static readonly string SKEY_BANNED = "_banned";
+        public static readonly string SKEY_MADE_ADMIN = "_madeAdmin";
 
         public UserController(IUserFacade userFacade,
             IAdministrationFacade administrationFacade,
@@ -262,15 +264,42 @@ namespace MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Collection(int? id)
+        public async Task<IActionResult> Collection(int? id, string? page)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            int paginationPage = 1;
+            if (page != null)
+            {
+                paginationPage = int.Parse(page);
+            }
+            var queryResult = await _userCollectionFacade.GetAllUserCactuses(id.Value);
+            ViewBag.UserDetails = await _userFacade.GetUserInfo(id.Value);
+            ViewData["Pagination"] = new PaginationViewModel(paginationPage, (int)queryResult.TotalItemsCount, queryResult.PageSize);
+            return View(queryResult);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> MakeAdmin(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            ViewBag.UserDetails = await _userFacade.GetUserInfo(id.Value);
-            return View(await _userCollectionFacade.GetAllUserCactuses(id.Value));
+            var user = await _userFacade.GetUserInfo(id.Value);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _administrationFacade.MakeAdmin(id.Value);
+            TempData.Add(SKEY_MADE_ADMIN, $"{user.FirstName} {user.LastName}");
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
