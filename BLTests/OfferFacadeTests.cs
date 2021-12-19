@@ -95,6 +95,10 @@ namespace BLTests
                    .Setup(x => x.AddCactusRequest(createdOffer.Id, cactusRequests.Keys.ElementAt(0), cactusRequests.Values.ElementAt(0)))
                    .Returns(Task.Run(() => { }));
 
+                mock.Mock<ICactusService>()
+                    .Setup(x => x.GetCactus(cactus1.Id))
+                    .ReturnsAsync(cactus1);
+
                 var cls = mock.Create<OfferFacade>();
 
                 //Act
